@@ -1,0 +1,215 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{6E288865-41B4-44C3-823B-2382D16ED632}</ProjectGuid>
+        <ProjectVersion>15.3</ProjectVersion>
+        <FrameworkType>VCL</FrameworkType>
+        <MainSource>HiMECSSimulateParamServer.dpr</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Application</AppType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
+        <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
+        <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
+        <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
+        <DCC_E>false</DCC_E>
+        <DCC_N>false</DCC_N>
+        <DCC_S>false</DCC_S>
+        <DCC_F>false</DCC_F>
+        <DCC_K>false</DCC_K>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_UsePackage>ggbar;JvBDE;JvGlobus;NxInspector6Run_dxe5;JvMM;tmsdXE5;JvManagedThreads;FireDACSqliteDriver;DBXSqliteDriver;FireDACPgDriver;fmx;NxInspector6Dsgn_dxe5;JvDlgs;IndySystem;NxCommonRun_dxe5;TeeDB;tmswizdXE5;frx19;JvCrypt;inetdbbde;DBXInterBaseDriver;DataSnapClient;DataSnapCommon;DataSnapServer;NxCommonDsgn_dxe5;JvNet;DataSnapProviderClient;JvDotNetCtrls;DBXSybaseASEDriver;DbxCommonDriver;vclimg;dbxcds;OnGuardDR;DatasnapConnectorsFreePascal;MetropolisUILiveTile;JvXPCtrls;pkCindyPackDXE5;vcldb;ggbutton;vcldsnap;NxGrid6Dsgn_dxe5;fmxFireDAC;NxStandard6Dsgn_dxe5;DBXDb2Driver;DCP_XE5;DBXOracleDriver;CustomIPTransport;JvCore;vclribbon;dsnap;IndyIPServer;NxInspectorRun_dxe5;fmxase;vcl;IndyCore;IndyIPCommon;CloudService;DBXMSSQLDriver;FmxTeeUI;FireDACIBDriver;CodeSiteExpressPkg;NxStandard6Run_dxe5;DataSnapFireDAC;FireDACDBXDriver;DragDropDXE5;JvAppFrm;JvDB;JvRuntimeDesign;inetdbxpress;OmniThreadLibraryRuntime;frxe19;JclDeveloperTools;FireDACDb2Driver;JvDocking;adortl;JvWizards;NxDBGrid6Dsgn_dxe5;frxDB19;NxGridDsgn_dxe5;FireDACASADriver;JvHMI;bindcompfmx;NxLayout6Run_dxe5;JvBands;vcldbx;IocompDelphiXE5;FireDACODBCDriver;NxDBGridRun_dxe5;rtl;dbrtl;DbxClientDriver;FireDACCommon;bindcomp;inetdb;JvPluginSystem;Tee;JclContainers;DBXOdbcDriver;JvCmp;vclFireDAC;NxCollection6Dsgn_dxe5;JvSystem;xmlrtl;svnui;JvTimeFramework;NxSheetRun_dxe5;JvControls;IndyProtocols;DBXMySQLDriver;FireDACCommonDriver;tmsxlsdXE5;bindengine;vclactnband;soaprtl;bindcompdbx;FMXTee;TeeUI;bindcompvcl;JvStdCtrls;JvCustom;Jcl;vclie;JvJans;JvPageComps;JvPrintPreview;pkCindyDBCtrlsPackDXE5;FireDACADSDriver;vcltouch;NxDBGrid6Run_dxe5;PngComponents;NxGridRun_dxe5;NxDBGridDsgn_dxe5;VclSmp;FireDACMSSQLDriver;FireDAC;VCLRESTComponents;Intraweb;DBXInformixDriver;DataSnapConnectors;FireDACDataSnapDriver;NxCollectionDsgn_dxe5;NxInspectorDsgn_dxe5;dsnapcon;DBXFirebirdDriver;inet;fmxobj;JclVcl;JvPascalInterpreter;FireDACMySQLDriver;vclx;svn;DBXSybaseASADriver;tmsexdXE5;FireDACOracleDriver;fmxdae;RESTComponents;NxGrid6Run_dxe5;NxCollection6Run_dxe5;bdertl;NxCollectionRun_dxe5;FireDACMSAccDriver;DataSnapIndy10ServerTransport;dbexpress;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <DCC_UsePackage>NxInspector6Run_dxe5;tmsdXE5;FireDACSqliteDriver;DBXSqliteDriver;FireDACPgDriver;fmx;NxInspector6Dsgn_dxe5;IndySystem;NxCommonRun_dxe5;TeeDB;DBXInterBaseDriver;DataSnapClient;DataSnapCommon;DataSnapServer;NxCommonDsgn_dxe5;DataSnapProviderClient;DBXSybaseASEDriver;DbxCommonDriver;vclimg;dbxcds;OnGuardDR;DatasnapConnectorsFreePascal;MetropolisUILiveTile;vcldb;vcldsnap;NxGrid6Dsgn_dxe5;fmxFireDAC;NxStandard6Dsgn_dxe5;DBXDb2Driver;DCP_XE5;DBXOracleDriver;CustomIPTransport;vclribbon;dsnap;IndyIPServer;NxInspectorRun_dxe5;fmxase;vcl;IndyCore;IndyIPCommon;CloudService;DBXMSSQLDriver;FmxTeeUI;FireDACIBDriver;NxStandard6Run_dxe5;DataSnapFireDAC;FireDACDBXDriver;DragDropDXE5;inetdbxpress;OmniThreadLibraryRuntime;FireDACDb2Driver;adortl;NxGridDsgn_dxe5;FireDACASADriver;bindcompfmx;NxLayout6Run_dxe5;FireDACODBCDriver;NxDBGridRun_dxe5;rtl;dbrtl;DbxClientDriver;FireDACCommon;bindcomp;inetdb;Tee;DBXOdbcDriver;vclFireDAC;NxCollection6Dsgn_dxe5;xmlrtl;NxSheetRun_dxe5;IndyProtocols;DBXMySQLDriver;FireDACCommonDriver;tmsxlsdXE5;bindengine;vclactnband;soaprtl;bindcompdbx;FMXTee;TeeUI;bindcompvcl;vclie;FireDACADSDriver;vcltouch;NxDBGrid6Run_dxe5;PngComponents;NxGridRun_dxe5;NxDBGridDsgn_dxe5;VclSmp;FireDACMSSQLDriver;FireDAC;VCLRESTComponents;Intraweb;DBXInformixDriver;DataSnapConnectors;FireDACDataSnapDriver;NxCollectionDsgn_dxe5;NxInspectorDsgn_dxe5;dsnapcon;DBXFirebirdDriver;inet;fmxobj;FireDACMySQLDriver;vclx;DBXSybaseASADriver;tmsexdXE5;FireDACOracleDriver;fmxdae;RESTComponents;NxGrid6Run_dxe5;NxCollection6Run_dxe5;NxCollectionRun_dxe5;FireDACMSAccDriver;DataSnapIndy10ServerTransport;dbexpress;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+        <DCC_DebugDCUs>true</DCC_DebugDCUs>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+        <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+        <DCC_RemoteDebug>true</DCC_RemoteDebug>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <DCC_Define>USE_SYN_CRYPT;USE_INDY_CRYPT;USE_SCRYPT;USE_BCRYPT;$(DCC_Define)</DCC_Define>
+        <DCC_DcuOutput>Y:\pjh\Dcu\Win32\$(MSBuildProjectName)</DCC_DcuOutput>
+        <DCC_ExeOutput>E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Bin\Applications\</DCC_ExeOutput>
+        <DCC_UnitSearchPath>E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\core;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\crypt;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\db;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\ddd;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\lib;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\misc;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\net;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\orm;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\rest;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\soa;E:\pjh\project\common\OmniThreadLibrary\src;E:\pjh\project\common;E:\pjh\project\common\robstechcorner\rtti;E:\pjh\project\common\LKSLEventUnits;E:\pjh\project\util\HiMECS\Application\Utility\Watch2\common;E:\pjh\project\util\HiMECS\Application\Source\Common;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_kumo\common;E:\pjh\project\common\JEDI API 2.3 and JEDI WSCL 0.9.3\jwa\branches\2.3\Win32API;E:\pjh\project\Common\DeCAL;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_kumo\common;E:\pjh\project\util\HiMECS\Application\Utility\Watch2\common;E:\pjh\project\util\GasEngineMonitoring\modbus_comm_avat\common;E:\pjh\project\util\GasEngineMonitoring\gui\common;E:\pjh\project\util\HiMECS\Application\Utility\CommonFrame;E:\pjh\project\util\HiMECS\Application\Source\Common;E:\pjh\project\util\VisualComm\Component;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_Kral\FlowMeterMonitoring\common;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_HIC\common;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_HIC;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_내구시험장;E:\pjh\project\util\HiMECS\Application\Utility\Watch2\common\IPCClientCommon;E:\pjh\project\common\robstechcorner\rtti;E:\pjh\project\common\LKSLEventUnits;E:\pjh\project\common\GpDelphiUnit\src;E:\pjh\vcl\Graphics32;E:\pjh\project\common\openarr\source;E:\pjh\project\common\OmniXML;E:\pjh\project\common\OmniXML\extras;E:\pjh\Dev\Lang\Delphi\Common;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Common;E:\pjh\Dev\Lang\Delphi\NoGitHub\Util;E:\pjh\Dev\Lang\Delphi\NoGitHub\RecordUnit2\Common;E:\pjh\project\OpenSrc\lib\LKSL-master\Source\Lib\Pascal;E:\pjh\project\util\GSManage\CertManage;E:\pjh\Dev\Lang\Delphi\Project\GSManage\VesselList;E:\pjh\Dev\Lang\Delphi\NoGitHub\RegisterPas2;E:\pjh\project\OpenSrc\lib\bcrypt-for-delphi-master;E:\pjh\project\OpenSrc\lib\scrypt-for-delphi-master;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\TSmBios\Common;E:\pjh\Dev\Lang\Delphi\NoGitHub\RegCodeManager2;E:\pjh\Dev\Lang\Delphi\NoGitHub\RegCodeManager2\Common;E:\pjh\project\util\HiMECS\Application\Utility\SimulateParamServer;E:\pjh\project\util\HiMECS\Application\Utility\ModbusCommunication;E:\pjh\project\util\MacroManagement;E:\pjh\Dev\Lang\Delphi\NoGitHub\Frame2;E:\pjh\project\util\GSManage\FGSSManage;E:\pjh\project\OpenSrc\lib\delphistompclient-master;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Watch;E:\pjh\project\OpenSrc\lib\DeCAL;E:\pjh\project\OpenSrc\lib\GpDelphiUnit\src;E:\pjh\project\OpenSrc\lib\OmniXML;E:\pjh\project\OpenSrc\lib\OmniXML\extras;E:\pjh\project\OpenSrc\lib\JEDI API 2.3 and JEDI WSCL 0.9.3\jwa\branches\2.3\Win32API;E:\pjh\project\OpenSrc\lib\JEDI API 2.3 and JEDI WSCL 0.9.3\jwscl\branches\0.9.3\includes;E:\pjh\project\OpenSrc\lib\robstechcorner\rtti;E:\pjh\project\OpenSrc\lib\OmniThreadLibrary;E:\pjh\project\OpenSrc\lib\OmniThreadLibrary\src;E:\pjh\project\OpenSrc\lib\LKSLEventUnits;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\Delphi-Mocks-master\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DCC_RemoteDebug>false</DCC_RemoteDebug>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="..\..\..\..\..\..\..\project\util\GSManage\VesselList\UnitEngineMasterData.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\..\project\common\Frames\UnitNextGridFrame.pas">
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\SCRManage\UnitSCRData.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\EGCSManage\UnitEGCSData.pas"/>
+        <DCCReference Include="..\HiMECS_Common\UnitFrameWatchGrid2.pas">
+            <Form>FrameWatchGrid2</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\NoGitHub\Frame2\UnitFrameIPCMonitorAll2.pas">
+            <Form>FrameIPCMonitor2</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\UnitSelectUser.pas">
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\UnitCopyModeMenu.pas">
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\WatchConst2.pas"/>
+        <DCCReference Include="FrmParamManage2.pas">
+            <Form>ParamManageF</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FrmSimulateParamEdit2.pas">
+            <Form>SimulateParamEditF</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UnitSimulateParamCommandLineOption2.pas"/>
+        <DCCReference Include="UnitStatusDisplayCommandLineOption2.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\..\project\common\UnitCommandLineUtil.pas"/>
+        <DCCReference Include="..\HiMECS_Watch2\UnitCopyWatchList2.pas">
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\..\MEManage\UnitMEData4MAN.pas"/>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Delphi.Personality>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+                    <VersionInfo Name="MajorVer">1</VersionInfo>
+                    <VersionInfo Name="MinorVer">0</VersionInfo>
+                    <VersionInfo Name="Release">0</VersionInfo>
+                    <VersionInfo Name="Build">0</VersionInfo>
+                    <VersionInfo Name="Debug">False</VersionInfo>
+                    <VersionInfo Name="PreRelease">False</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1042</VersionInfo>
+                    <VersionInfo Name="CodePage">949</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName"/>
+                    <VersionInfoKeys Name="FileDescription"/>
+                    <VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName"/>
+                    <VersionInfoKeys Name="LegalCopyright"/>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename"/>
+                    <VersionInfoKeys Name="ProductName"/>
+                    <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments"/>
+                    <VersionInfoKeys Name="CFBundleName"/>
+                    <VersionInfoKeys Name="CFBundleDisplayName"/>
+                    <VersionInfoKeys Name="UIDeviceFamily"/>
+                    <VersionInfoKeys Name="CFBundleIdentifier"/>
+                    <VersionInfoKeys Name="CFBundleVersion"/>
+                    <VersionInfoKeys Name="CFBundlePackageType"/>
+                    <VersionInfoKeys Name="CFBundleSignature"/>
+                    <VersionInfoKeys Name="CFBundleAllowMixedLocalizations"/>
+                    <VersionInfoKeys Name="UISupportedInterfaceOrientations"/>
+                    <VersionInfoKeys Name="CFBundleExecutable"/>
+                    <VersionInfoKeys Name="CFBundleResourceSpecification"/>
+                    <VersionInfoKeys Name="LSRequiresIPhoneOS"/>
+                    <VersionInfoKeys Name="CFBundleInfoDictionaryVersion"/>
+                    <VersionInfoKeys Name="CFBundleDevelopmentRegion"/>
+                    <VersionInfoKeys Name="package"/>
+                    <VersionInfoKeys Name="label"/>
+                    <VersionInfoKeys Name="versionCode"/>
+                    <VersionInfoKeys Name="versionName"/>
+                    <VersionInfoKeys Name="persistent"/>
+                    <VersionInfoKeys Name="restoreAnyVersion"/>
+                    <VersionInfoKeys Name="installLocation"/>
+                    <VersionInfoKeys Name="largeHeap"/>
+                    <VersionInfoKeys Name="theme"/>
+                </VersionInfoKeys>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="E:\pjh\project\util\VisualComm\Component\bpl\pjhDelphiStandardPkg.bpl">(untitled)</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k190.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp190.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+                <Source>
+                    <Source Name="MainSource">HiMECSSimulateParamServer.dpr</Source>
+                </Source>
+            </Delphi.Personality>
+            <Deployment/>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>

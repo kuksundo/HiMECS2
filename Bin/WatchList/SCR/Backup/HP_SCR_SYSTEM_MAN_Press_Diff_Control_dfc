@@ -1,0 +1,20 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\SCR\HP_SCR_SYSTEM_MAN_Press_Diff_Control_5</DesignFormFileName>
+			<DesignFormCaption>Press.Diff Control</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\SCR\HP_SCR_SYSTEM_MAN_Press_Diff_Control_6</DesignFormFileName>
+			<DesignFormCaption>Press. Diff. Control2</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>HP-SCR for MAN</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

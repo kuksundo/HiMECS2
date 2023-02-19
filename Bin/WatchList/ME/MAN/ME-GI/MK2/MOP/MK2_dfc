@@ -1,0 +1,290 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__5</DesignFormFileName>
+			<DesignFormCaption>Alarm List</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__6</DesignFormFileName>
+			<DesignFormCaption>Event Log</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__7</DesignFormFileName>
+			<DesignFormCaption>Manual Cut-Out List</DesignFormCaption>
+			<DesignFormIndex>7</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__8</DesignFormFileName>
+			<DesignFormCaption>Channel List</DesignFormCaption>
+			<DesignFormIndex>8</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__9</DesignFormFileName>
+			<DesignFormCaption>Operation</DesignFormCaption>
+			<DesignFormIndex>9</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__10</DesignFormFileName>
+			<DesignFormCaption>Status</DesignFormCaption>
+			<DesignFormIndex>10</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__11</DesignFormFileName>
+			<DesignFormCaption>Cylinder Valve Status</DesignFormCaption>
+			<DesignFormIndex>11</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__12</DesignFormFileName>
+			<DesignFormCaption>Running Mode</DesignFormCaption>
+			<DesignFormIndex>12</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__13</DesignFormFileName>
+			<DesignFormCaption>Speed Control</DesignFormCaption>
+			<DesignFormIndex>13</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__14</DesignFormFileName>
+			<DesignFormCaption>Cylinder Process</DesignFormCaption>
+			<DesignFormIndex>14</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__15</DesignFormFileName>
+			<DesignFormCaption>Exhaust Valve Open</DesignFormCaption>
+			<DesignFormIndex>15</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__16</DesignFormFileName>
+			<DesignFormCaption>Pilot Oil Profile</DesignFormCaption>
+			<DesignFormIndex>16</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__17</DesignFormFileName>
+			<DesignFormCaption>Chief Limiters</DesignFormCaption>
+			<DesignFormIndex>17</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__18</DesignFormFileName>
+			<DesignFormCaption>HPS</DesignFormCaption>
+			<DesignFormIndex>18</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__19</DesignFormFileName>
+			<DesignFormCaption>LPS</DesignFormCaption>
+			<DesignFormIndex>19</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__20</DesignFormFileName>
+			<DesignFormCaption>Scavenge Air - Main</DesignFormCaption>
+			<DesignFormIndex>20</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__21</DesignFormFileName>
+			<DesignFormCaption>Scavenge Air - Process Values</DesignFormCaption>
+			<DesignFormIndex>21</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__22</DesignFormFileName>
+			<DesignFormCaption>Second Fuel - Status</DesignFormCaption>
+			<DesignFormIndex>22</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__23</DesignFormFileName>
+			<DesignFormCaption>Second Fuel - Pipes</DesignFormCaption>
+			<DesignFormIndex>23</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__24</DesignFormFileName>
+			<DesignFormCaption>Second Fuel - Outer Pipes</DesignFormCaption>
+			<DesignFormIndex>24</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__25</DesignFormFileName>
+			<DesignFormCaption>Second Fuel - Seal Oil</DesignFormCaption>
+			<DesignFormIndex>25</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__26</DesignFormFileName>
+			<DesignFormCaption>Second Fuel - Cyl Mon</DesignFormCaption>
+			<DesignFormIndex>26</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__27</DesignFormFileName>
+			<DesignFormCaption>Cylinder Lubrication</DesignFormCaption>
+			<DesignFormIndex>27</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__28</DesignFormFileName>
+			<DesignFormCaption>System View IO Test</DesignFormCaption>
+			<DesignFormIndex>28</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__29</DesignFormFileName>
+			<DesignFormCaption>Invalidated Input Channel</DesignFormCaption>
+			<DesignFormIndex>29</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__30</DesignFormFileName>
+			<DesignFormCaption>Network Status</DesignFormCaption>
+			<DesignFormIndex>30</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__31</DesignFormFileName>
+			<DesignFormCaption>Function Test - HCU</DesignFormCaption>
+			<DesignFormIndex>31</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__32</DesignFormFileName>
+			<DesignFormCaption>Function Test - Tacho</DesignFormCaption>
+			<DesignFormIndex>32</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__33</DesignFormFileName>
+			<DesignFormCaption>Function Test - HPS</DesignFormCaption>
+			<DesignFormIndex>33</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__34</DesignFormFileName>
+			<DesignFormCaption>Function Test - LOP</DesignFormCaption>
+			<DesignFormIndex>34</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__35</DesignFormFileName>
+			<DesignFormCaption>Function Test - Bridge</DesignFormCaption>
+			<DesignFormIndex>35</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__36</DesignFormFileName>
+			<DesignFormCaption>Function Test - ECR</DesignFormCaption>
+			<DesignFormIndex>36</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__37</DesignFormFileName>
+			<DesignFormCaption>Trouble Shoot - HCU</DesignFormCaption>
+			<DesignFormIndex>37</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__38</DesignFormFileName>
+			<DesignFormCaption>Trouble Shoot - HPS</DesignFormCaption>
+			<DesignFormIndex>38</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__39</DesignFormFileName>
+			<DesignFormCaption>Trouble Shoot - HCU Events</DesignFormCaption>
+			<DesignFormIndex>39</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__40</DesignFormFileName>
+			<DesignFormCaption>Trouble Shoot - HPS Events</DesignFormCaption>
+			<DesignFormIndex>40</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__41</DesignFormFileName>
+			<DesignFormCaption>Trouble Shoot - Cyl Lub</DesignFormCaption>
+			<DesignFormIndex>41</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__42</DesignFormFileName>
+			<DesignFormCaption>Trouble Shoot - Gas Block</DesignFormCaption>
+			<DesignFormIndex>42</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__43</DesignFormFileName>
+			<DesignFormCaption>Trouble Shoot - Cyl Events</DesignFormCaption>
+			<DesignFormIndex>43</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__44</DesignFormFileName>
+			<DesignFormCaption>Trouble Shoot - Insulation</DesignFormCaption>
+			<DesignFormIndex>44</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__45</DesignFormFileName>
+			<DesignFormCaption>Admin - Set Time</DesignFormCaption>
+			<DesignFormIndex>45</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__46</DesignFormFileName>
+			<DesignFormCaption>Admin - Updates</DesignFormCaption>
+			<DesignFormIndex>46</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__47</DesignFormFileName>
+			<DesignFormCaption>Admin - Licesne Agreement</DesignFormCaption>
+			<DesignFormIndex>47</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__48</DesignFormFileName>
+			<DesignFormCaption>Admin - Version</DesignFormCaption>
+			<DesignFormIndex>48</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__49</DesignFormFileName>
+			<DesignFormCaption>Operation-DualFuel</DesignFormCaption>
+			<DesignFormIndex>49</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__50</DesignFormFileName>
+			<DesignFormCaption>AdvOfficePage50</DesignFormCaption>
+			<DesignFormIndex>50</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2__51</DesignFormFileName>
+			<DesignFormCaption>AdvOfficePage51</DesignFormCaption>
+			<DesignFormIndex>51</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>ME-GI LOP(MK2)</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

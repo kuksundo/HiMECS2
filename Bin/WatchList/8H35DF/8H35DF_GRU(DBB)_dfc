@@ -1,0 +1,20 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhxIOCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\8H35DF\8H35DF_GRU(DBB)__5</DesignFormFileName>
+			<DesignFormCaption>GRU</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhxIOCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\8H35DF\8H35DF_GRU(DBB)__6</DesignFormFileName>
+			<DesignFormCaption>GRU(DBB)</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>Gas Regulation Unit</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

@@ -1,0 +1,20 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_SYSTEM_MAN__5</DesignFormFileName>
+			<DesignFormCaption>HP SCR System</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_SYSTEM_MAN__6</DesignFormFileName>
+			<DesignFormCaption>ERCS-ECS-EMS Interface</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>HP-SCR System for MAN</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

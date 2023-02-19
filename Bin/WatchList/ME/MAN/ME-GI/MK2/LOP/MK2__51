@@ -1,0 +1,28 @@
+object TpjhPanel
+  Tag = 2
+  Left = 0
+  Top = 0
+  Width = 1027
+  Height = 769
+  Align = alClient
+  DoubleBuffered = True
+  ParentDoubleBuffered = False
+  TabOrder = 0
+  NewPath = spAuto
+  ShowScrollBar = False
+  ExplicitWidth = 1910
+  ExplicitHeight = 981
+  object pjhTImage1: TpjhTImage
+    Left = 1
+    Top = 1
+    Width = 1025
+    Height = 767
+    Align = alClient
+    pjhTagInfo.ParamIndex = 0
+    pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
+    ExplicitLeft = 112
+    ExplicitTop = 72
+    ExplicitWidth = 857
+    ExplicitHeight = 569
+  end
+end

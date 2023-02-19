@@ -1,0 +1,14 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\Wago\D-Type\DType_Monotor_8212__5</DesignFormFileName>
+			<DesignFormCaption>Wago D-Type</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>Wago D-Type (SS1134)</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

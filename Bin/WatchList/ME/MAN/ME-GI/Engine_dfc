@@ -1,0 +1,38 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\ME\MAN\ME-GI\Engine_5</DesignFormFileName>
+			<DesignFormCaption>Engine-Operation</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\ME\MAN\ME-GI\Engine_6</DesignFormFileName>
+			<DesignFormCaption>Engine-Status</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\ME\MAN\ME-GI\Engine_7</DesignFormFileName>
+			<DesignFormCaption>Engine-Process Information</DesignFormCaption>
+			<DesignFormIndex>7</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\ME\MAN\ME-GI\Engine_8</DesignFormFileName>
+			<DesignFormCaption>Engine-Process Adjustment</DesignFormCaption>
+			<DesignFormIndex>8</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\ME\MAN\ME-GI\Engine_9</DesignFormFileName>
+			<DesignFormCaption>Engine-Chief Limiters</DesignFormCaption>
+			<DesignFormIndex>9</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>HHI-Scrubber(OpenType)</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

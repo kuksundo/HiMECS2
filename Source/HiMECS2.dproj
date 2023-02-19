@@ -1,0 +1,314 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{875FCC35-9FBF-46BE-8165-8655AB9CF1EA}</ProjectGuid>
+        <ProjectVersion>15.3</ProjectVersion>
+        <MainSource>HiMECS2.dpr</MainSource>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+        <Base>True</Base>
+        <AppType>Application</AppType>
+        <FrameworkType>VCL</FrameworkType>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <TargetedPlatforms>1</TargetedPlatforms>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=2011@Hyundai Heavy Industries.,LTd;LegalTrademarks=;OriginalFilename=;ProductName=HiMSEN Engine Control System;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Locale>1042</VerInfo_Locale>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <UsePackages>true</UsePackages>
+        <BRCC_OutputDir>..\Resource\</BRCC_OutputDir>
+        <DCC_DcuOutput>..\Dcu\</DCC_DcuOutput>
+        <DCC_ExeOutput>..\Bin\</DCC_ExeOutput>
+        <DCC_UnitSearchPath>E:\vclbackup\dpk\공개Security\dcpcrypt\Ciphers;E:\vclbackup\dpk\공개Security\dcpcrypt\Hashes;E:\vclbackup\dpk\공개Pack\Jedi\jvcl\run;E:\vclbackup\dpk\공개Security\dcpcrypt;E:\vclbackup\dpk\공개Bar\sbpro;E:\vclbackup\dcp;bpl;E:\vclbackup\dpk\공개Util\DragDrop\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_DependencyCheckOutputName>..\Bin\HiMECS.exe</DCC_DependencyCheckOutputName>
+        <DCC_UsePackage>vcl;rtl;tmsdedxe2;tmsdxe2;tmsexdxe2;tmswizdxe2;tmsxlsdxe2;cepack;NxAddonsRun_xe2;NxCollectionDsgn_xe2;NxCollectionRun_xe2;NxCommonDsgn_xe2;NxCommonRun_xe2;NxDBGridDsgn_xe2;NxDBGridRun_xe2;NxGridDsgn_xe2;NxGridRun_xe2;NxInspectorDsgn_xe2;NxInspectorRun_xe2;NxSheetRun_xe2;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <DCC_Platform>x86</DCC_Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <Icon_MainIcon>HiMECS_Icon.ico</Icon_MainIcon>
+        <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <Icon_MainIcon>HiMECS_Icon.ico</Icon_MainIcon>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <DCC_Define>HiMECS;$(DCC_Define)</DCC_Define>
+        <Debugger_RunParams>/ufA379042.id</Debugger_RunParams>
+        <Manifest_File>HiMECS.manifest</Manifest_File>
+        <DCC_UnitSearchPath>E:\pjh\project\util\HiMECS\Application\Source\Common;E:\pjh\project\Common;c:\pjh\project\util\HiMECS\Application\Source\Common;c:\pjh\project\Common;E:\pjh\project\common\mORMot\SQLite3;E:\pjh\project\common\mORMot;E:\pjh\project\util\HiMECS\Application\Utility\CommonFrame;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_kumo\common;E:\pjh\project\common\DeCAL;E:\pjh\project\util\HiMECS\Application\Utility\Watch2\common;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_HIC\common;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_HIC;E:\pjh\project\common\Compress</DCC_UnitSearchPath>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_UnitSearchPath>C:\pjh\project\util\HiMECS\Application\Source\Common;C:\pjh\project\Common;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <Debugger_DebugSourcePath>E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\core\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
+        <DCC_DcuOutput>Y:\pjh\Dcu\Win32\$(MSBuildProjectName)</DCC_DcuOutput>
+        <Debugger_RunParams>/UF:.\HiMECS.ID /PF:.\Projects\8H35DF_HiLS.himecs</Debugger_RunParams>
+        <DCC_UsePackage>NxCollectionDsgn_dxe5 ; NxCollectionRun_dxe5 ; NxCommonDsgn_dxe5 ; NxCommonRun_dxe5 ; NxDBGridDsgn_dxe5 ; NxDBGridRun_dxe5 ; NxGridDsgn_dxe5 ; NxGridRun_dxe5 ; NxInspectorDsgn_dxe5 ; NxInspectorRun_dxe5 ; NxSheetRun_dxe5 ; </DCC_UsePackage>
+        <Manifest_File>HiMECS.manifest</Manifest_File>
+        <DCC_Define>HiMECS;MAX_SQLFIELDS_256;USE_REGCODE;DEF_CRYPT_ALL;$(DCC_Define)</DCC_Define>
+        <DCC_UnitSearchPath>E:\pjh\project\OpenSrc\lib\bcrypt-for-delphi-master;E:\pjh\project\OpenSrc\lib\scrypt-for-delphi-master;E:\pjh\project\NoGitHub\RegCodeManager;E:\pjh\project\NoGitHub\RegCodeManager\Common;E:\pjh\project\util\HiMECS\Application\Source\Common;E:\pjh\project\util\HiMECS\Application\Utility\CommonFrame;E:\pjh\project\util\HiMECS\Application\Utility\Watch2\common;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_HIC\common;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_HIC;E:\pjh\project\util\HiMECS\Application\Utility\Watch2;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_내구시험장;E:\pjh\project\OpenSrc\lib\Cromis\IPC;E:\pjh\project\OpenSrc\lib\decTreeView-master\Delphi\Packages\Delphi XE5\Win32\Release;E:\pjh\project\common;E:\pjh\project\OpenSrc\lib\TSmBios\Common;E:\pjh\project\NoGitHub\Util;E:\pjh\project\NoGitHub\Frame;E:\pjh\project\util\HiMECS\Application\Source\Forms;E:\pjh\project\util\HiMECS\Application\Source\;E:\pjh\project\util\HiMECS\Application\Source\Forms\HotImgForm;E:\pjh\project\OpenSrc\vcl\Virtual-TreeView-master\Source;E:\pjh\project\common\Forms\TFormAbout\Helper3delite;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\CEF4Delphi-master\source;E:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_kumo\common;E:\pjh\Dev\Lang\Delphi\Common;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Common;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Form;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\E2ServiceSnapShot;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Source\Common;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\SensorList\Dom;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\SensorList\Infra;E:\pjh\Dev\Lang\Delphi\NoGitHub\Frame2;E:\pjh\Dev\Lang\Delphi\NoGitHub\RecordUnit2\HIMECS;E:\pjh\Dev\Lang\Delphi\NoGitHub\RegCodeManager2;E:\pjh\Dev\Lang\Delphi\NoGitHub\RegCodeManager2\Common;E:\pjh\Dev\Lang\Delphi\NoGitHub\RegisterPas2;E:\pjh\Dev\Lang\Delphi\NoGitHub\Util;E:\pjh\Dev\Lang\Delphi\NoGitHub\RecordUnit2\Common;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\core;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\app;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\crypt;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\db;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\lib;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\ddd;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\misc;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\net;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\orm;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\rest;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\script;E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\soa;E:\pjh\project\OpenSrc\lib\robstechcorner\rtti;E:\pjh\project\OpenSrc\lib\GpDelphiUnit\src;E:\pjh\project\OpenSrc\lib\OmniThreadLibrary\src;E:\pjh\project\OpenSrc\lib\JEDI API 2.3 and JEDI WSCL 0.9.3\jwa\branches\2.3\Win32API;E:\pjh\project\OpenSrc\lib\JEDI API 2.3 and JEDI WSCL 0.9.3\jwscl\branches\0.9.3\includes;E:\pjh\project\OpenSrc\lib\OmniXML\extras;E:\pjh\project\OpenSrc\lib\OmniXML;E:\pjh\project\OpenSrc\lib\DeCAL;E:\pjh\project\OpenSrc\lib\OmniThreadLibrary;E:\pjh\project\OpenSrc\lib\PdfiumLib-master\Source</DCC_UnitSearchPath>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <RcCompile Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\HiMECS_RegInfo.rc">
+            <Form>HiMECS_RegInfo.res</Form>
+        </RcCompile>
+        <DCCReference Include="..\Form\MainUnit2.pas">
+            <Form>MainForm</Form>
+        </DCCReference>
+        <DCCReference Include="Common\UnitHiMECSUserClass2.pas"/>
+        <DCCReference Include="Common\UnitEngineBaseClass2.pas"/>
+        <DCCReference Include="Common\UnitMenuBaseClass2.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECSConst.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECSInterface.pas"/>
+        <DCCReference Include="Common\UnitVesselBaseClass2.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusComm_kumo\common\CommonUtil.pas"/>
+        <DCCReference Include="..\Form\FrmConfig2.pas">
+            <Form>ConfigF</Form>
+        </DCCReference>
+        <DCCReference Include="..\Form\FrmParamList2.pas">
+            <Form>FormParamList</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\EngineConst.pas"/>
+        <DCCReference Include="..\Form\FrmLogin2.pas">
+            <Form>FrmLogin</Form>
+        </DCCReference>
+        <DCCReference Include="..\Form\FrmSelectProject2.pas">
+            <Form>SelectProjectForm</Form>
+        </DCCReference>
+        <DCCReference Include="..\Utility\HiMECS_Common\UnitSetMatrix2.pas">
+            <Form>SetMatrixForm</Form>
+        </DCCReference>
+        <DCCReference Include="..\Form\FrmConfigProjectFile2.pas">
+            <Form>ConfigProjectFileForm</Form>
+        </DCCReference>
+        <DCCReference Include="..\Form\FrmSetScalarValue2.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\UnitDummyForm.pas">
+            <Form>DummyForm</Form>
+        </DCCReference>
+        <DCCReference Include="Common\UnitHiMECSMonitorListClass2.pas"/>
+        <DCCReference Include="Common\UnitHiMECSExeCollect2.pas"/>
+        <DCCReference Include="Common\UnitAutoRunClass2.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Utility\MON_LAUNCHER\Source\Forms\Common\MonitornewApp_Unit.pas">
+            <Form>newMonApp_Frm</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Utility\MON_LAUNCHER\Source\Forms\Common\CommnewApp_Unit.pas">
+            <Form>newCommApp_Frm</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\UnitTileConfig.pas">
+            <Form>TileConfigF</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\IPCThrd_HiMECS_MDI.pas"/>
+        <DCCReference Include="Common\UnitKillProcessListClass2.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\UnitKillProcessList.pas">
+            <Form>KillProcessListF</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\UnitSelectUser.pas">
+            <Form>SelectUserF</Form>
+        </DCCReference>
+        <DCCReference Include="Common\UnitHiMECSManualClass2.pas"/>
+        <DCCReference Include="..\Form\FrmPdfViewMDIChild2.pas">
+            <Form>PDFViewMDIChildF</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\UnitEngineParamConst.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\UnitHiMECSCommandLine.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\GSManage\VesselList\UnitEngineMasterData.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModbusComConst.pas"/>
+        <DCCReference Include="Common\UnitHiMECSManualRecord2.pas"/>
+        <DCCReference Include="..\Utility\E2ServiceSnapShot\UnitE2SRecord2.pas"/>
+        <DCCReference Include="..\Utility\E2ServiceSnapShot\FrmAvatParamView2.pas">
+            <Form>AvatParamViewF</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\common\UnitStringUtil.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\common\UnitFormUtil.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\common\UnitTreeViewUtil.pas"/>
+        <DCCReference Include="..\Form\FrmSensorCableRoute2.pas">
+            <Form>SensorCableRouteF</Form>
+        </DCCReference>
+        <DCCReference Include="Common\UnitEngineElecPartClass2.pas"/>
+        <DCCReference Include="..\Utility\SensorList\Dom\DomSensorCQRS2.pas"/>
+        <DCCReference Include="..\Utility\SensorList\Dom\DomSensorInterfaces2.pas"/>
+        <DCCReference Include="..\Utility\SensorList\Dom\DomSensorServices2.pas"/>
+        <DCCReference Include="..\Utility\SensorList\Dom\DomSensorTypes2.pas"/>
+        <DCCReference Include="..\Form\FrmSensorCableRouteEdit2.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Utility\MenuEditor\Forms\MenuSaveUnit.pas"/>
+        <DCCReference Include="..\Form\FrmElecPart2.pas">
+            <Form>ElecPartF</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\Common\Frame\UnitFramePdfView2.pas">
+            <Form>PdfViewFrame</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\Form\FrmPdfView2.pas"/>
+        <DCCReference Include="..\Utility\E2ServiceSnapShot\FrmSnapShotCompareResult2.pas"/>
+        <DCCReference Include="..\Utility\E2ServiceSnapShot\FrmAvatSnapShotNavigation2.pas">
+            <Form>SnapShotNaviF</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\common\Frames\FrmInputData1.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Utility\SimulateParamServer\UnitSimulateParamCommandLineOption.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Utility\SimulateParamServer\UnitSimulateCommonData.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\common\UnitEnumHelper.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\common\Forms\TFormAbout\FormAboutDefs.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\common\Forms\TFormAbout\FormAbout.pas"/>
+        <DCCReference Include="..\..\..\..\..\..\project\common\UnitStreamUtil.pas"/>
+        <DCCReference Include="..\..\..\Common\JHP.Util.gpSharedMem.pas"/>
+        <DCCReference Include="..\..\..\Common\JHP.Util.Bit.pas"/>
+        <DCCReference Include="..\..\..\Common\JHP.Util.Common.pas"/>
+        <DCCReference Include="..\..\..\OpenSrc\lib\deltoo-master\Controls\CheckComboBox.pas"/>
+        <DCCReference Include="..\Form\FrmMCPPanelInside_MDI2.pas">
+            <Form>MCPPanelInsideMDIF</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\HotImgForm\Frame4FormStyleSwitch\FrameACPPanelInside.pas">
+            <Form>Frame2</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\HotImgForm\Frame4FormStyleSwitch\FrameLOPPanelInside.pas">
+            <Form>Frame3</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\HotImgForm\FrmLOPPanelInside_MDI.pas">
+            <Form>LOPPanelInsideMDIF</Form>
+        </DCCReference>
+        <DCCReference Include="..\Form\FrmACPPanelInside_MDI2.pas"/>
+        <DCCReference Include="..\..\..\Common\UnitNxInspectorUtil.pas"/>
+        <DCCReference Include="..\Utility\HiMECS_Common\UnitHiMECSRestAPIInterface.pas"/>
+        <DCCReference Include="..\..\..\Common\UnitFrameTileList2.pas">
+            <Form>TileListFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\Form\FrmEngParamConfig2.pas">
+            <Form>EngParamItemConfigForm2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Utility\HiMECS_Common\UnitFrameEngParamDecTV2.pas">
+            <Form>FrameDecTreeView2</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <None Include="HiMECS2.todo"/>
+        <None Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\EngineParameter.inc"/>
+        <None Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECSManual.inc"/>
+        <None Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\EngineParameterItem.inc"/>
+        <None Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\AssignHiMECSManualItem.inc"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">HiMECS2.dpr</Source>
+                </Source>
+                <Parameters/>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+                    <VersionInfo Name="MajorVer">1</VersionInfo>
+                    <VersionInfo Name="MinorVer">0</VersionInfo>
+                    <VersionInfo Name="Release">0</VersionInfo>
+                    <VersionInfo Name="Build">0</VersionInfo>
+                    <VersionInfo Name="Debug">False</VersionInfo>
+                    <VersionInfo Name="PreRelease">False</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1042</VersionInfo>
+                    <VersionInfo Name="CodePage">949</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName"/>
+                    <VersionInfoKeys Name="FileDescription"/>
+                    <VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName"/>
+                    <VersionInfoKeys Name="LegalCopyright">2011@Hyundai Heavy Industries.,LTd</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename"/>
+                    <VersionInfoKeys Name="ProductName">HiMSEN Engine Control System</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments"/>
+                </VersionInfoKeys>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="E:\pjh\project\util\VisualComm\Component\bpl\pjhDelphiStandardPkg.bpl">(untitled)</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k190.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp190.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+            <ModelSupport>False</ModelSupport>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+</Project>

@@ -1,0 +1,20 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_WinGD__5</DesignFormFileName>
+			<DesignFormCaption>HP-SCR (WinGD)</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_WinGD__6</DesignFormFileName>
+			<DesignFormCaption>Urea Dosing Unit</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>HP SCR WinGD</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

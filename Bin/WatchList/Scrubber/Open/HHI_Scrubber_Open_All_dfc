@@ -1,0 +1,50 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Open\HHI_Scrubber_Open_All_5</DesignFormFileName>
+			<DesignFormCaption>Process</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Open\HHI_Scrubber_Open_All_6</DesignFormFileName>
+			<DesignFormCaption>Safety</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Open\HHI_Scrubber_Open_All_7</DesignFormFileName>
+			<DesignFormCaption>Sequence</DesignFormCaption>
+			<DesignFormIndex>7</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Open\HHI_Scrubber_Open_All_8</DesignFormFileName>
+			<DesignFormCaption>Parameter</DesignFormCaption>
+			<DesignFormIndex>8</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Open\HHI_Scrubber_Open_All_9</DesignFormFileName>
+			<DesignFormCaption>Alarm</DesignFormCaption>
+			<DesignFormIndex>9</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Open\HHI_Scrubber_Open_All_10</DesignFormFileName>
+			<DesignFormCaption>Trend</DesignFormCaption>
+			<DesignFormIndex>10</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Open\HHI_Scrubber_Open_All_11</DesignFormFileName>
+			<DesignFormCaption>CEMS/WMS</DesignFormCaption>
+			<DesignFormIndex>11</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>Source : pjhiPipeJoint2_pjh15 ==> pjhiPipe2_pjh32 ==> pjhiValve2_pjh4 ==> pjhiPipe2_pjh33</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

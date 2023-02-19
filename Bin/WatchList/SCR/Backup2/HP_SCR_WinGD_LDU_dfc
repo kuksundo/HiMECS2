@@ -1,0 +1,38 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_WinGD_LDU__5</DesignFormFileName>
+			<DesignFormCaption>SCR System Status</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_WinGD_LDU__6</DesignFormFileName>
+			<DesignFormCaption>SCR System Overview</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_WinGD_LDU__7</DesignFormFileName>
+			<DesignFormCaption>SCR Interfaces</DesignFormCaption>
+			<DesignFormIndex>7</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_WinGD_LDU__8</DesignFormFileName>
+			<DesignFormCaption>Man.Ctrl</DesignFormCaption>
+			<DesignFormIndex>8</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\SCR\HP_SCR_WinGD_LDU__9</DesignFormFileName>
+			<DesignFormCaption>Index</DesignFormCaption>
+			<DesignFormIndex>9</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>HP-SCR for WinGD</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

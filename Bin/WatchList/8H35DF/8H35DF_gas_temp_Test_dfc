@@ -1,0 +1,20 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\8H35DF\8H35DF_gas_temp_Test_5</DesignFormFileName>
+			<DesignFormCaption>8H35DF Gas Temp</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\8H35DF\8H35DF_gas_temp_Test_6</DesignFormFileName>
+			<DesignFormCaption>AdvOfficePage6</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>8H35DF Engine Monitoring</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

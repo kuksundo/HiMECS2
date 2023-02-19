@@ -1,0 +1,38 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Hybrid\HHI_Scrubber_All_5</DesignFormFileName>
+			<DesignFormCaption>Scrubber</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Hybrid\HHI_Scrubber_All_6</DesignFormFileName>
+			<DesignFormCaption>Damper</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Hybrid\HHI_Scrubber_All_7</DesignFormFileName>
+			<DesignFormCaption>NaOH DOSING</DesignFormCaption>
+			<DesignFormIndex>7</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Hybrid\HHI_Scrubber_All_8</DesignFormFileName>
+			<DesignFormCaption>Holding Tank</DesignFormCaption>
+			<DesignFormIndex>8</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhxIOCompPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>E:\pjh\project\util\HiMECS\Application\Bin\WatchList\Scrubber\Hybrid\HHI_Scrubber_All_9</DesignFormFileName>
+			<DesignFormCaption>Safety</DesignFormCaption>
+			<DesignFormIndex>9</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>Source = pjhiPipe_pjh47  ==>   pjhiValve2_pjh6</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>
