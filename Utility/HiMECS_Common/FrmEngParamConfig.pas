@@ -430,6 +430,16 @@ procedure TEngParamItemConfigForm2.LoadConfigEngParamItem2Form(
 var
   LStr: string;
 begin
+  //--------- Classfy Page Init--------------
+  ParameterType2Combo(ParamTypeCombo);
+//  SensorType2Combo(SensorTypeCombo);
+  g_SensorType.SetType2Combo(SensorTypeCombo);
+  ParameterSource2Combo(ParamSourceCombo);
+  ParameterCatetory2Combo(ParamCategoryCombo);
+
+  if not Assigned(AEPItem) then
+    exit;
+
   //--------- General Page --------------
   ProjNoEdit.Text := AEPItem.ProjNo;
   EngNoEdit.Text := AEPItem.EngNo;
@@ -462,6 +472,7 @@ begin
   else
     LStr := AEPItem.SharedName;
 
+  //--------- Classfy Page --------------
   SharedNameEdit.Text := LStr;
   MemIndexEdit.Text := IntToStr(AEPItem.AbsoluteIndex);
   AddressEdit.Text := AEPItem.Address;
@@ -473,13 +484,6 @@ begin
 
   if AEPItem.ParameterSource = psManualInput then
     ManualInputValueEdit.Text := AEPItem.Value;
-
-  //--------- Classfy Page --------------
-  ParameterType2Combo(ParamTypeCombo);
-//  SensorType2Combo(SensorTypeCombo);
-  g_SensorType.SetType2Combo(SensorTypeCombo);
-  ParameterSource2Combo(ParamSourceCombo);
-  ParameterCatetory2Combo(ParamCategoryCombo);
 
   SensorTypeCombo.Text := g_SensorType.ToString(AEPItem.SensorType);
   ParamCategoryCombo.Text := ParameterCatetory2String(AEPItem.ParameterCatetory);

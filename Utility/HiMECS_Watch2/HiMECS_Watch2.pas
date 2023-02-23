@@ -66,7 +66,7 @@ uses
   mormot.core.base, mormot.core.rtti, mormot.core.variants, mormot.core.data,
   mormot.core.text, mormot.core.log, mormot.core.json,
   UnitEngineParameterClass2, UnitMultiStateRecord2, UnitSimulateParamRecord2,
-  pjhTJvTransparentButtonConst, UnitFileType
+  pjhTJvTransparentButtonConst, UnitFileType, pjhPipeFlowInterface, UnitBalloonConst2
   //UnitSelectControl
  {$IFDEF USECODESITE} ,CodeSiteLogging {$ENDIF}
 
@@ -318,6 +318,8 @@ type
     SaveItemsToDB1: TMenuItem;
     EditPropertyValue4Simulate2: TMenuItem;
     MergeCommandJsonwith1: TMenuItem;
+    CheckCircularofNextStep1: TMenuItem;
+    FindComponentByName1: TMenuItem;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -462,7 +464,7 @@ type
 
     FMonitorStart: Boolean; //타이머 동작 완료하면 True
     FFirst: Boolean; //타이머 동작 완료하면 True
-    FMsgList: TStringList;  //Message를 저장하는 리스트
+    FMsgList: TStringList;//Message를 저장하는 리스트
 
     //FEngineParameter: TEngineParameter;
 
@@ -493,7 +495,10 @@ type
     FCreateTagItemMode: Boolean;//Mouse로 선택한 Component에 Item 생성 및 할당 모드(PopUp Menu에서 선택함)
     FCreateTagItemWhenAltKeyDown: Boolean;// Alt Key 를 누르는 동안 True
     FCheckCircularNextStepMode: Boolean;//Popup에서 "Check Circular of NextStep"를 선택하면 True
-    FCheckCircularNextStepList: TStringList;
+    FTopologicalSortItemList,//NextStep을 저장하여 TPipeFlowTree 중복 생성을 방지 하는데 사용함
+    FPipeFlowTreeList: TStringList;
+    FRootPipeFlowTree: TPipeFlowTree;
+    FArrivalDepartureCount: integer;//각 Node별 Arrival, Departure 계산을 위한 임시 변수 임
 
     FRevSrcCompConnectMode,//Alt+3 를 누르는 동안 True
     FRevDestCompConnectMode: Boolean; // Alt+4 를 누르는 동안 True
@@ -862,7 +867,12 @@ type
     //현재 page의 모든 Component의 NextStep Property를 nil로 변경함
     //MultiSelect를 이용하여 CommandJson을 만들떄 필요함
     procedure ClearAllNextStepProperty;
-    procedure CheckCirculationOfNextStep(AStartNextStep: TControl; ANextList: TStringList);
+    procedure CheckCirculationOfNextStep(AStartNextStep: TControl);
+    function MakePipeFlowTree(APrevStep: TPipeFlowTree; ANextStep: TControl): TPipeFlowTree;
+    procedure FreePipeFlowTree(APipeFlowTree: TPipeFlowTree);
+    function GetPipeFlowTreeByName(ARoot: TPipeFlowTree; AName: string): TPipeFlowTree;
+    function GetPipeFlowTreeByNameFromList(AName: string): TPipeFlowTree;
+    function RemovePrevStepFromNextByName(ANode: TPipeFlowTree; APrevName: string): TPipeFlowTree;
 
     procedure SetRevSourceComponent(aControl: TControl);
     procedure SetRevSrcCheckComp(aControl: TControl);
@@ -900,10 +910,10 @@ var
 implementation
 
 uses CommonUtil, UnitAxisSelect, UnitCopyWatchList2, frmMainInterface, FrmInputEdit,
-  pjhDesignCompIntf2, UtilUnit, jclNTFS, VCL.cyGraphics,
+  pjhDesignCompIntf2, UtilUnit, jclNTFS, VCL.cyGraphics, UnitStringStack,
   HiMECSWatchCommon2, pjhclasses, UnitSetMatrix2, UnitCaptionInput,
-  WindowUtil, otlComm, StompTypes, UnitFormUtil,
-  UnitVesselData2, UnitBase64Util2, pjhPipeFlowInterface, UnitRevFlowInterface,
+  WindowUtil, otlComm, OtlContainers, OtlCommon, StompTypes, UnitFormUtil,
+  UnitVesselData2, UnitBase64Util2, UnitRevFlowInterface,
   UnitSimulateParamCommandLineOption2, UnitRttiUtil2, UnitDFMUtil, XSuperObject,
   FrmStringsEdit, UnitSimulateCommonData, sndkey32, UnitTransparentBtnInterface,
   JHP.Util.Bit, UnitJHCustomComponent, pjhBalloonCompIntf;
@@ -1127,7 +1137,8 @@ begin
   FSimParamJsonData4Edit := '';
 
   InitJsonCompValue4Simulate();
-  FCheckCircularNextStepList := TStringList.Create;
+  FTopologicalSortItemList := TStringList.Create;
+  FPipeFlowTreeList := TStringList.Create;
 end;
 
 procedure TWatchF2.AssignPanel2Designer(AForm: TForm);
@@ -3010,15 +3021,11 @@ begin
     if MessageDlg('Clear NextStep value for all Components?',mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       ClearAllNextStepProperty;
 
-<<<<<<< HEAD
-    FIsCreateJson4ClearNextStep := MessageDlg('Create Json for Clear NextStep to selected before setting nextstep?',mtConfirmation, [mbYes, mbNo], 0) = mrYes;
-=======
     //선택된 Control의 xStep을 nil로 Setting 하는 Json을 생성함
     FIsCreateJson4ClearNextStep := MessageDlg('Create json 4 Clear NextStep to selected before setting nextstep?',mtConfirmation, [mbYes, mbNo], 0) = mrYes;
 
     //마지막에 선택된 Control의 xStep을 nil로 Setting 하는 Json을 생성함(메인라인 선택 시에는 yes, 분기 라인 선택시에는 No)
     FIsCreateJson4ClearLastSelectedControl := MessageDlg('Create json 4 Clear NextStep of last selected control?',mtConfirmation, [mbYes, mbNo], 0) = mrYes;
->>>>>>> a88235ae635a7fc9450e996babb20997451f7403
   end
   else
   begin
@@ -3278,13 +3285,10 @@ begin
         //FSimulateCompValuesJson4ConnectNextStep에 nil을 할당하는 Json을 추가함
         if FIsCreateJson4ClearNextStep then
         begin
-<<<<<<< HEAD
-=======
           //FComponentConnectMode = False가 될때 마지막 선택된 Component의 xStep을 nil로 할당하는 Json을 생성하는데 사용함
           FLastSelectedControlWhenMultiConnect := LSelectedControl;
 //          FXStepNameListWithComma := LStr;
 
->>>>>>> a88235ae635a7fc9450e996babb20997451f7403
           while LStr <> '' do
           begin
             LxStepName := GetTokenWithComma(LStr);
@@ -4080,7 +4084,8 @@ begin
   Timer1.Enabled := False;
   SendMessage(FOwnerHandle, WM_WATCHFORM_CLOSE, FOwnerListIndex, 0);
 
-  FCheckCircularNextStepList.Free;
+  FTopologicalSortItemList.Free;
+  FPipeFlowTreeList.Free;
   FCommandLine.Free;
   FEEPTarget4Tag.Free;
   FPJHTimerPool.RemoveAll;
@@ -5680,48 +5685,101 @@ procedure TWatchF2.CheckCircularofNextStep1Click(Sender: TObject);
 var
   LPanel: TpjhPanel;
 begin
+  if not FCheckCircularNextStepMode then
+    ShowMessage('Click starting component to check cycle!');
+
   FCheckCircularNextStepMode := not FCheckCircularNextStepMode;
   CheckCircularofNextStep1.Checked := FCheckCircularNextStepMode;
 
   CreateNActivatepjhSelector;
 end;
 
-procedure TWatchF2.CheckCirculationOfNextStep(AStartNextStep: TControl; ANextList: TStringList);
+procedure TWatchF2.CheckCirculationOfNextStep(AStartNextStep: TControl);
+//Topological sort algorithm 참조(Wikipidia)
+//Directed Acyclic Graph인지 검사(Topological sort를 실패하면 Graph 내에 Cycle이 존재한다는 의미임 (사용안함)
+//DFS를 이용하여 TPipeFlowTree 생성 후 Arrival, Departure Index를 설정 후
+//Departure[PrevNode] < Departure[NextNode] 인 경우 Cycle이 존재함을 확인
 var
   LPanel: TpjhPanel;
   LPFI: IpjhPipeFlowInterface;
-  i: integer;
-  LStr, LxStepName: string;
+  i, LPFTCount: integer;
+  LStr: string;
   LControl: TControl;
-//  LNextList: TStringList;
+//  LEdgeQueue: TOmniQueue;
+//  LOmniValue: TOmniValue;
+  LPipeFlowTree: TPipeFlowTree;
+//  LStringStack: TStringStack;
+
+  function _CheckCirculationUsingDFS(ACurrentNode: TPipeFlowTree): TPipeFlowTree;
+  begin
+    if ACurrentNode = nil then
+      exit;
+
+    if Assigned(ACurrentNode.FNextStep) then
+    begin
+      //Back Edge 이면
+      if ACurrentNode.FDeparture < ACurrentNode.FNextStep.FDeparture then
+      begin
+        ShowMessage('Cycle exist : ' + ACurrentNode.FName + ' -> ' + ACurrentNode.FNextStep.FName);
+        FindComponentByNameUsingBalloon(ACurrentNode.FName);
+//        FindComponentByNameUsingBalloon(ACurrentNode.FNextStep.FName);
+        exit;
+      end;
+
+      LPipeFlowTree := _CheckCirculationUsingDFS(ACurrentNode.FNextStep);
+    end;
+
+    if Assigned(ACurrentNode.FNextStep2) then
+    begin
+      //Back Edge 이면
+      if ACurrentNode.FDeparture < ACurrentNode.FNextStep2.FDeparture then
+      begin
+        ShowMessage('Cycle exist : ' + ACurrentNode.FName + ' -> ' + ACurrentNode.FNextStep2.FName);
+        FindComponentByNameUsingBalloon(ACurrentNode.FName);
+//        FindComponentByNameUsingBalloon(ACurrentNode.FNextStep2.FName);
+        exit;
+      end;
+
+      LPipeFlowTree := _CheckCirculationUsingDFS(ACurrentNode.FNextStep2);
+    end;
+
+    if Assigned(ACurrentNode.FNextStep3) then
+    begin
+      //Back Edge 이면
+      if ACurrentNode.FDeparture < ACurrentNode.FNextStep3.FDeparture then
+      begin
+        ShowMessage('Cycle exist : ' + ACurrentNode.FName + ' -> ' + ACurrentNode.FNextStep3.FName);
+        FindComponentByNameUsingBalloon(ACurrentNode.FName);
+//        FindComponentByNameUsingBalloon(ACurrentNode.FNextStep3.FName);
+        exit;
+      end;
+
+      LPipeFlowTree := _CheckCirculationUsingDFS(ACurrentNode.FNextStep3);
+    end;
+  end;
 begin
   if not Assigned(AStartNextStep) then
     exit;
 
-//  LNextList := TStringList.Create;
+//  LPFTCount := 0;
+//  LStringStack := TStringStack.Create;
   try
     if Supports(AStartNextStep, IpjhPipeFlowInterface, LPFI) then
     begin
-      if ANextList.IndexOf(AStartNextStep.Name) <> -1 then
-      begin
-        ShowMessage('Circulation found at "' + AStartNextStep.Name + '"');
-        FindComponentByNameUsingBalloon(AStartNextStep.Name);
-        exit;
-      end;
-
-      ANextList.Add(AStartNextStep.Name);
-      LStr := LPFI.GetNextStepListWithComma;
-
-      while LStr <> '' do
-      begin
-        LxStepName := GetTokenWithComma(LStr);
-        LControl := GetComponentByNameFrompjhPanel(LxStepName);
-        CheckCirculationOfNextStep(LControl, ANextList);
+      //변수 초기화
+      FArrivalDepartureCount := -1;
+      //AStartNextStep부터 시작하는 Pipe Graph를 구성함
+      LPipeFlowTree := MakePipeFlowTree(nil, AStartNextStep);
+      try
+//        LPFTCount := FPipeFlowTreeList.Count;
+        _CheckCirculationUsingDFS(FRootPipeFlowTree);
+      finally
+        FreePipeFlowTree(FRootPipeFlowTree);
       end;
     end;
 
   finally
-//    LNextList.Free;
+//    LStringStack.Free;
   end;
 end;
 
@@ -5971,7 +6029,8 @@ begin
       if ApjhDCI.pjhTagInfo.TagName <> '' then
         LEPIRefGridData := FWG.GetEngParamItemFromGridIdx(ApjhDCI.pjhTagInfo.ParamIndex);
 
-      if Assigned(LEPIRefGridData) then
+        //Nil 이어도 ComboBox 초기화를 위해 실행 되어야 함
+//      if Assigned(LEPIRefGridData) then
         LoadConfigEngParamItem2Form(LEPIRefGridData);
 
       if ShowModal = mrOK then
@@ -6972,8 +7031,9 @@ end;
 procedure TWatchF2.ProcessMouseEvent4CheckCircularNextStep(aPoint: TPoint;
   aControl: TControl; ControlRect, HandlerRect: TRect; Job: TControlJob);
 begin
-  FCheckCircularNextStepList.Clear;
-  CheckCirculationOfNextStep(aControl, FCheckCircularNextStepList);
+  FPipeFlowTreeList.Clear;
+  CheckCirculationOfNextStep(aControl);
+  CheckCircularofNextStep1Click(nil);
 end;
 
 procedure TWatchF2.ProcessMouseEvent4CreateItem(aPoint: TPoint;
@@ -7151,6 +7211,66 @@ begin
     AControl.Controls[i].Free;
 end;
 
+function TWatchF2.RemovePrevStepFromNextByName(ANode: TPipeFlowTree;
+  APrevName: string): TPipeFlowTree;
+var
+  LPFT: TPipeFlowTree;
+  LMatched: Boolean;
+begin
+  if ANode = nil then
+    exit;
+
+  LPFT := ANode.FNextStep;
+
+  if not Assigned(LPFT) then
+    exit;
+
+  LMatched := False;
+  Result := LPFT.FPrevStep;
+
+  if Assigned(Result) then
+  begin
+    if Result.FName = APrevName then
+    begin
+      LPFT.FPrevStep := nil;
+      LMatched := True;
+    end;
+  end;
+
+  if not LMatched then
+  begin
+    Result := LPFT.FPrevStep2;
+
+    if Assigned(Result) then
+    begin
+      if LPFT.FName = APrevName then
+      begin
+        LPFT.FPrevStep2 := nil;
+        LMatched := True;
+      end;
+    end;
+  end;
+
+  if not LMatched then
+  begin
+    Result := LPFT.FPrevStep3;
+
+    if Assigned(Result) then
+    begin
+      if LPFT.FName = APrevName then
+      begin
+        LPFT.FPrevStep3 := nil;
+        LMatched := True;
+      end;
+    end;
+  end;
+
+  if (LPFT.FPrevStep = nil) and (LPFT.FPrevStep2 = nil) and (LPFT.FPrevStep3 = nil)then
+    Result := LPFT
+  else
+    Result := nil;
+end;
+
 //x축이 key값이면 AIsXAxis = true
 procedure TWatchF2.ReplaceOrAddMap(AMap: DMultiMap; AKey, AValue: double;
   AIsXAxis: Boolean);
@@ -7267,6 +7387,115 @@ begin
     end;
   finally
     LEngParamDic.Free;
+  end;
+end;
+
+function TWatchF2.MakePipeFlowTree(APrevStep: TPipeFlowTree; ANextStep: TControl): TPipeFlowTree;
+//Graph를 만듬(Tree)
+var
+  LPanel: TpjhPanel;
+  LPFI: IpjhPipeFlowInterface;
+  LStr, LxStepName, LNextStepCompName: string;
+//  LPFT: TPipeFlowTree;
+  LControl: TControl;
+  i: integer;
+  LVisited: Boolean;//True = 이미 한번 방문한 경우
+
+  function CreatePipeFlowTree(AName: string): TPipeFlowTree;
+  begin
+    Result := TPipeFlowTree.Create;
+    Inc(FArrivalDepartureCount);
+
+    with Result do
+    begin
+      FName := AName;
+      FVisitedIndex := 1;
+      FIsVisited := False;
+      FArrival := FArrivalDepartureCount;
+      FDeparture := -1;
+
+      FNextStep := nil;
+      FNextStep2 := nil;
+      FNextStep3 := nil;
+
+      FPrevStep := nil;
+      FPrevStep2 := nil;
+      FPrevStep3 := nil;
+    end;
+  end;
+begin
+  if not Assigned(ANextStep) then
+    exit;
+
+  if Supports(ANextStep, IpjhPipeFlowInterface, LPFI) then
+  begin
+    if FPipeFlowTreeList.IndexOf(ANextStep.Name) = -1 then
+    begin
+      Result := CreatePipeFlowTree(ANextStep.Name);
+      FPipeFlowTreeList.AddObject(ANextStep.Name, Result);
+
+      if APrevStep = nil then
+        FRootPipeFlowTree := Result;
+
+      LVisited := False;
+    end
+    else
+    begin
+      Result := GetPipeFlowTreeByNameFromList(ANextStep.Name);
+      LVisited := True;
+    end;
+
+    if not Assigned(Result.FPrevStep) then
+      Result.FPrevStep := APrevStep
+    else
+    if not Assigned(Result.FPrevStep2) then
+      Result.FPrevStep2 := APrevStep
+    else
+    if not Assigned(Result.FPrevStep3) then
+      Result.FPrevStep3 := APrevStep;
+
+    //이미 생성된 노드의 NextStep은 다시 할 필요 없음
+    if LVisited then
+      exit;
+
+    //TPipeFlowTree에 NextStep 할당
+    LStr := LPFI.GetNextStepListWithComma;
+//    i := 1;
+
+    while LStr <> '' do
+    begin
+      LxStepName := GetTokenWithComma(LStr);
+
+//      //이미 NextSetp을 처리한 경우 NextStep2를 처리하기 위한 루틴
+//      if i < Result.FVisitedIndex then
+//      begin
+//        Inc(i);
+//        continue;
+//      end;
+
+      LControl := GetComponentByNameFrompjhPanel(LxStepName);
+
+      case Result.FVisitedIndex of
+        1: begin
+          Result.FNextStep := MakePipeFlowTree(Result, LControl);
+          Inc(Result.FVisitedIndex);
+        end;
+        2: begin
+          Result.FNextStep2 := MakePipeFlowTree(Result, LControl);
+          Inc(Result.FVisitedIndex);
+        end;
+        3: begin
+          Result.FNextStep3 := MakePipeFlowTree(Result, LControl);
+          Inc(Result.FVisitedIndex);
+        end;
+      end;
+    end;//while
+  end;
+
+  if Result.FDeparture = -1 then
+  begin
+    Inc(FArrivalDepartureCount);
+    Result.FDeparture := FArrivalDepartureCount;
   end;
 end;
 
@@ -8407,6 +8636,28 @@ begin
   Self.Caption := Self.Caption + FLabelName;
 end;
 
+procedure TWatchF2.FreePipeFlowTree(APipeFlowTree: TPipeFlowTree);
+begin
+  if (APipeFlowTree = nil) or (APipeFlowTree.FName = '') then
+    exit;
+
+  if APipeFlowTree.FIsVisited then
+    exit
+  else
+    APipeFlowTree.FIsVisited := True;
+
+  if Assigned(APipeFlowTree.FNextStep) then
+    FreePipeFlowTree(APipeFlowTree.FNextStep);
+
+  if Assigned(APipeFlowTree.FNextStep2) then
+    FreePipeFlowTree(APipeFlowTree.FNextStep2);
+
+  if Assigned(APipeFlowTree.FNextStep3) then
+    FreePipeFlowTree(APipeFlowTree.FNextStep3);
+
+  FreeAndNil(APipeFlowTree);
+end;
+
 procedure TWatchF2.FullScreen1Click(Sender: TObject);
 begin
   ToggleBorderStyle(TForm(Self));
@@ -8446,6 +8697,42 @@ begin
     Result := aY
   else if AAxes = 'Z' then
     Result := aZ;
+end;
+
+function TWatchF2.GetBalloonCompFromCurPage: TControl;
+var
+  LPanel: TpjhPanel;
+  IpjhBCI: IpjhBalloonCompInterface;
+  i: integer;
+begin
+  Result := nil;
+  LPanel := GetTpjhPanelOfCurrentPage;
+
+  for i := 0 to LPanel.ComponentCount - 1 do
+  begin
+    if Supports(LPanel.Components[i], IpjhBalloonCompInterface, IpjhBCI) then
+    begin
+      Result := TControl(LPanel.Components[i]);
+      Break;
+    end;
+  end;
+end;
+
+function TWatchF2.GetBalloonRecord2Json4FindComponent(
+  ACompName: string): TBalloonRecord;
+var
+  LControl: TControl;
+begin
+  LControl := GetComponentByNameFrompjhPanel(ACompName);
+
+  if Assigned(LControl) then
+  begin
+    Result.Header := 'Find Component';
+    Result.Text := ACompName;
+    Result.CompName := ACompName;
+    Result.X := LControl.Left + LControl.Width div 2;
+    Result.Y := LControl.Top;
+  end;
 end;
 
 procedure TWatchF2.GetBplNamesFromDesignPanel(ABplNameList: TStringList;
@@ -8970,6 +9257,60 @@ begin
     end;
   finally
     FreeAndNil(LCA);
+  end;
+end;
+
+function TWatchF2.GetPipeFlowTreeByName(ARoot: TPipeFlowTree; AName: string): TPipeFlowTree;
+begin
+  Result := nil;
+
+  if AName = '' then
+    exit;
+
+  if ARoot.FName = AName then
+  begin
+    Result := ARoot;
+    exit;
+  end;
+
+  if Assigned(ARoot.FNextStep) then
+  begin
+    Result := GetPipeFlowTreeByName(ARoot.FNextStep, AName);
+
+    if Assigned(Result) then
+      exit;
+  end;
+
+  if Assigned(ARoot.FNextStep2) then
+  begin
+    Result := GetPipeFlowTreeByName(ARoot.FNextStep2, AName);
+
+    if Assigned(Result) then
+      exit;
+  end;
+
+  if Assigned(ARoot.FNextStep3) then
+  begin
+    Result := GetPipeFlowTreeByName(ARoot.FNextStep3, AName);
+
+    if Assigned(Result) then
+      exit;
+  end;
+end;
+
+function TWatchF2.GetPipeFlowTreeByNameFromList(AName: string): TPipeFlowTree;
+var
+  i: integer;
+begin
+  Result := nil;
+
+  for i := 0 to FPipeFlowTreeList.Count - 1 do
+  begin
+    if FPipeFlowTreeList.Strings[i] = AName then
+    begin
+      Result := TPipeFlowTree(FPipeFlowTreeList.Objects[i]);
+      Break;
+    end;
   end;
 end;
 

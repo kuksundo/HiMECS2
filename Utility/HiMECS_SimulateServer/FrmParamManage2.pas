@@ -9,7 +9,7 @@ uses
   Vcl.ExtCtrls, AdvSmoothSplashScreen, Vcl.Menus, Vcl.ImgList, NxColumnClasses,
   NxColumns, NxScrollControl, NxCustomGridControl, NxCustomGrid, NxGrid, SBPro,
   AdvOfficeTabSet, Vcl.StdCtrls, AeroButtons, JvExControls, JvLabel,
-  CurvyControls, AdvOfficePager, Vcl.ComCtrls,
+  CurvyControls, AdvOfficePager, Vcl.ComCtrls, IniFiles,
   UnitSTOMPClass, UnitWorker4OmniMsgQ,
   mormot.core.variants, mormot.core.base, mormot.core.data, mormot.core.text,
   mormot.core.datetime, mormot.core.unicode,
@@ -157,6 +157,8 @@ type
     FWG: TFrameWatchGrid2;
     IPCMonitorAll1: TFrameIPCMonitor2;
     CreateSimulateDB1: TMenuItem;
+    Savecurrentsetting1: TMenuItem;
+    N5: TMenuItem;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -188,6 +190,7 @@ type
     procedure ransferselectedstep1Click(Sender: TObject);
     procedure CreateSimulateDB1Click(Sender: TObject);
     procedure ParamDBEditButtonClick(Sender: TObject);
+    procedure Savecurrentsetting1Click(Sender: TObject);
   private
     FCommandLine: TSimulateParamCLO2;
     FpjhSTOMPClass: TpjhSTOMPClass;
@@ -271,6 +274,9 @@ type
 
     procedure ShowParamEditFormFromGrid(ARow: integer);
     procedure ProcessSimulateOneStep;
+
+    procedure SaveCondition2IniFile;
+    procedure LoadCondition2Form;
   public
     FIPCClientAll : TIPCClientAll;
     FSettings : TConfigSettings;
@@ -947,12 +953,15 @@ begin
 //  FPauseEvent := MyKernelObject4GpSharedMem.TEvent.Create('SimulateEvent', False);
   g_ShipProductType.InitArrayRecord(R_ShipProductType);
   g_ShipProductType.SetType2List(ProdTypeCB.Items);
-  ProdTypeCB.ItemIndex := ord(shptSCR);
-  ProdTypeCBChange(ProdTypeCB);
+//  ProdTypeCB.ItemIndex := ord(shptSCR);
 
   ShowMessage('FCommandJson을Client에 전달하기 위해서는(gpShaeredMemory 사용)' + #13#10 +
     'ParamServer.exe 프로그램을Client 보다 먼저 실행해야 함!!!');
 
+  if FSettings.LoadCondOnStart then
+    LoadCondition2Form;
+
+  ProdTypeCBChange(ProdTypeCB);
 //  if (FCommandLine.JsonParamCollect <> '') and (FCommandLine.FCSVValues <> '') then
 //  begin
 ////    FCommandLine.JsonParamCollect := MakeBase64ToString(FCommandLine.JsonParamCollect);
@@ -964,6 +973,27 @@ begin
 //  begin
 //
 //  end;
+end;
+
+procedure TParamManageF.LoadCondition2Form;
+var
+  ini: TIniFile;
+  LStr: string;
+begin
+  ini := TIniFile.Create(FSettings.IniFileName);
+
+  try
+    LStr := ini.ReadString('Start Condition', 'Product Type', '');
+    ProdTypeCB.ItemIndex := Ord(g_ShipProductType.ToOrdinal(LStr));
+    ModelNameCB.Text := ini.ReadString('Start Condition', 'Model Name', '');
+    ProjectNameCB.Text := ini.ReadString('Start Condition', 'Project Name', '');
+    SystemNameCB.Text := ini.ReadString('Start Condition', 'System Name', '');
+    SubSystemNameCB.Text := ini.ReadString('Start Condition', 'SubSystem', '');
+    ParamDBEdit.Text := ini.ReadString('Start Condition', 'Param DB', '');
+    SubjectEdit.Text := ini.ReadString('Start Condition', 'Subject', '');
+  finally
+    ini.Free;
+  end;
 end;
 
 procedure TParamManageF.LoadConfig2Form(AForm: TConfigF);
@@ -1107,6 +1137,31 @@ end;
 //    LStrList.Free;
 //  end;
 //end;
+
+procedure TParamManageF.SaveCondition2IniFile;
+var
+  ini: TIniFile;
+begin
+  ini := TIniFile.Create(FSettings.IniFileName);
+
+  try
+    ini.WriteString('Start Condition', 'Product Type', ProdTypeCB.Text);
+    ini.WriteString('Start Condition', 'Model Name', ModelNameCB.Text);
+    ini.WriteString('Start Condition', 'Project Name', ProjectNameCB.Text);
+    ini.WriteString('Start Condition', 'System Name', SystemNameCB.Text);
+    ini.WriteString('Start Condition', 'SubSystem', SubSystemNameCB.Text);
+    ini.WriteString('Start Condition', 'Param DB', ParamDBEdit.Text);
+    ini.WriteString('Start Condition', 'Subject', SubjectEdit.Text);
+
+  finally
+    ini.Free;
+  end;
+end;
+
+procedure TParamManageF.Savecurrentsetting1Click(Sender: TObject);
+begin
+  SaveCondition2IniFile;
+end;
 
 procedure TParamManageF.SaveItemstoNewName1Click(Sender: TObject);
 var

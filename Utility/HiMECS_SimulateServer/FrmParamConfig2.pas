@@ -22,7 +22,8 @@ type
     FParamFileName: string;
 
     FUseSharedMM,
-    FUseSTOMP: Boolean;
+    FUseSTOMP,
+    FLoadCondOnStart: Boolean;
   public
     //Control.hint = 값이 저장되는 필드명 (예: Caption, Text, Value)
     //Section Name, Key Name, Default Key Value, Component Tag No
@@ -42,8 +43,10 @@ type
     property UseSharedMM : Boolean read FUseSharedMM write FUseSharedMM;
     [IniValue('File','Use STOMP','False',12)]
     property UseSTOMP : Boolean read FUseSTOMP write FUseSTOMP;
-    [IniValue('File','Param File Name','')]
+    [IniValue('File','Param File Name','',13)]
     property ParamFileName : string read FParamFileName write FParamFileName;
+    [IniValue('File','Load Condition on start', 'False',14)]
+    property LoadCondOnStart : Boolean read FLoadCondOnStart write FLoadCondOnStart;
   end;
 
   TConfigF = class(TForm)
@@ -72,6 +75,7 @@ type
     GroupBox1: TGroupBox;
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
   private
     { Private declarations }
   public

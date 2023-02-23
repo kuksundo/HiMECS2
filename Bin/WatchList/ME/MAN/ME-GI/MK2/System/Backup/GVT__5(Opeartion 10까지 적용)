@@ -7452,6 +7452,7 @@ object TpjhPanel
     Width = 19
     Height = 11
     Vesrion = '0.0.2'
+    NextStep = pjhiValve2_pjh14
     PrevStep = pjhiPipeJoint2_pjh35
     FlowInterval = 50
     FlowReverse = False
@@ -8411,6 +8412,7 @@ object TpjhPanel
     ValveKind = pvtManualPush
     NextStep = pjhiPipe2_pjh31
     PrevStep = pjhiPipe2_pjh29
+    PrevStep2 = pjhiPipe2_pjh60
     Opened = False
     OpenedColor = clLime
     ClosedColor = clRed

@@ -47,7 +47,7 @@ object ConfigF: TConfigF
     Top = 0
     Width = 378
     Height = 327
-    ActivePage = TabSheet2
+    ActivePage = FileTS
     Align = alClient
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -59,10 +59,6 @@ object ConfigF: TConfigF
     object TabSheet1: TTabSheet
       Caption = #51200#51109#51068#49884
       TabVisible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabSheet2: TTabSheet
       Caption = 'STOMP Server'
@@ -187,10 +183,6 @@ object ConfigF: TConfigF
     object FileTS: TTabSheet
       Caption = 'File'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label6: TLabel
         Left = 36
         Top = 16
@@ -201,6 +193,7 @@ object ConfigF: TConfigF
         ShowHint = False
       end
       object ParaFilenameEdit: TJvFilenameEdit
+        Tag = 13
         Left = 36
         Top = 38
         Width = 286
@@ -237,6 +230,16 @@ object ConfigF: TConfigF
           Caption = 'Use STOMP'
           TabOrder = 1
         end
+      end
+      object CheckBox3: TCheckBox
+        Tag = 14
+        Left = 36
+        Top = 191
+        Width = 153
+        Height = 33
+        Hint = 'Checked'
+        Caption = 'Lod condition on start'
+        TabOrder = 2
       end
     end
   end

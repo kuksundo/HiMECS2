@@ -511,7 +511,7 @@ object WatchF2: TWatchF2
         end
         inherited ImageList1: TImageList
           Bitmap = {
-            494C010106000900B40310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+            494C010106000900CC0310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
             0000000000003600000028000000400000002000000001002000000000000020
             0000000000000000000000000000000000000000000000000000000000000000
             000040B0C00040C0C00030B0C00030B0C00030B0C00030B0B00030A8B00030A8
@@ -2528,6 +2528,10 @@ object WatchF2: TWatchF2
       Hint = 'Alt Key'#47484' '#45572#47476#47732#49436' Component Select '#54624#44163
       OnClick = SetCreateItem4Selected1Click
     end
+    object CheckCircularofNextStep1: TMenuItem
+      Caption = 'Set Check Circular of NextStep'
+      OnClick = CheckCircularofNextStep1Click
+    end
     object N25: TMenuItem
       Caption = '-'
     end
@@ -2551,6 +2555,10 @@ object WatchF2: TWatchF2
     object ShowUnAssignedList1: TMenuItem
       Caption = 'Show Tag UnAssigned List'
       OnClick = ShowUnAssignedList1Click
+    end
+    object FindComponentByName1: TMenuItem
+      Caption = 'Find Component By Name'
+      OnClick = FindComponentByName1Click
     end
     object N18: TMenuItem
       Caption = '-'
