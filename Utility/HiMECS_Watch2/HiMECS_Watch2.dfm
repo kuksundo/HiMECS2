@@ -511,7 +511,7 @@ object WatchF2: TWatchF2
         end
         inherited ImageList1: TImageList
           Bitmap = {
-            494C010106000900CC0310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+            494C010106000900D00310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
             0000000000003600000028000000400000002000000001002000000000000020
             0000000000000000000000000000000000000000000000000000000000000000
             000040B0C00040C0C00030B0C00030B0C00030B0C00030B0B00030A8B00030A8
@@ -2536,7 +2536,7 @@ object WatchF2: TWatchF2
       Caption = '-'
     end
     object EditPropertyValue4Simulate1: TMenuItem
-      Caption = 'Edit  Property Value 4 Simulate'
+      Caption = 'Edit  Property Value 4 Simulate(CommandJson)'
       Hint = 'JSON'#51004#47196' '#51200#51109#46108' Property Value'#47484' '#54869#51064' '#54980' '#54200#51665#54632'(FCommandJson)'
       OnClick = EditPropertyValue4Simulate1Click
     end

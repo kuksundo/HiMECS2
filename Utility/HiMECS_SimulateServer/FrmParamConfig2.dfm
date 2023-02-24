@@ -192,6 +192,28 @@ object ConfigF: TConfigF
         ParentShowHint = False
         ShowHint = False
       end
+      object Label9: TLabel
+        Left = 36
+        Top = 230
+        Width = 260
+        Height = 16
+        Hint = 
+          'SendgpSM '#54632#49688' '#49892#54665' '#54980' PulseEvnt '#49892#54665' '#51204#44620#51648' Sleep'#54624' '#49884#44036' '#49444#51221'(gpSM '#45936#51060#53552' '#52376#47532' '#50756#47308' '#54980' ' +
+          'Pulse Data'#47484' '#52376#47532#54616#44592' '#50948#54632'-Valve'#47484' open'#54616#50688#51004#45208' NextStrp '#49444#51221#51060' '#45734#50612#51256#49436' Flow'#44032' '#55120#47476#51648' ' +
+          #50506#45716' '#47928#51228' '#54644#44208')'
+        Caption = 'Interval time for SendgpSM and PulseEvent:'
+        ParentShowHint = False
+        ShowHint = False
+      end
+      object Label10: TLabel
+        Left = 99
+        Top = 255
+        Width = 26
+        Height = 16
+        Caption = '(ms)'
+        ParentShowHint = False
+        ShowHint = False
+      end
       object ParaFilenameEdit: TJvFilenameEdit
         Tag = 13
         Left = 36
@@ -238,8 +260,18 @@ object ConfigF: TConfigF
         Width = 153
         Height = 33
         Hint = 'Checked'
-        Caption = 'Lod condition on start'
+        Caption = 'Lode condition on start'
         TabOrder = 2
+      end
+      object Edit5: TEdit
+        Tag = 15
+        Left = 36
+        Top = 252
+        Width = 57
+        Height = 24
+        Hint = 'Text'
+        Alignment = taCenter
+        TabOrder = 3
       end
     end
   end

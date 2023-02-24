@@ -55,6 +55,7 @@ type
     FGotoIndex: integer;
     FEventDataType: integer;
     FDocData: TDocVariantData;
+    FInterval4PulseData: integer;
 
     constructor Create(CreateSuspended: Boolean);
     destructor Destroy; override;
@@ -336,6 +337,7 @@ begin
     ACLO.FCommandLine.fParamSourceList := MakeBase64ToString(ACLO.FCommandLine.fParamSourceList);
     ACLO.FCommandLine.FAdditionalData := MakeBase64ToString(ACLO.FCommandLine.FAdditionalData);
     ACLO.FCommandLine.FSimulateCompValuesJson := MakeBase64ToString(ACLO.FCommandLine.FSimulateCompValuesJson);
+    ACLO.FCommandLine.FSkipMsg := 'True';
 
     LParamManageF.FCommandLine := ACLO.FCommandLine;
 //    LParamManageF.FParamSourceList := ACLO.FCommandLine.fParamSourceList; //ECS By AVAT2,SCR By BachMann 형식으로 저장 됨
@@ -491,6 +493,7 @@ begin
     FThreadSimulateEvent.FIPCClientAll := Self.FIPCClientAll;
     FThreadSimulateEvent.ParamListJson := Self.FParamListJson;
     FThreadSimulateEvent.FPause := TransferStepCheck.Checked;
+    FThreadSimulateEvent.FInterval4PulseData := StrToIntDef(FSettings.Interval4PulseData,0);
     FThreadAssigned := True;
   end;
 end;
@@ -955,8 +958,9 @@ begin
   g_ShipProductType.SetType2List(ProdTypeCB.Items);
 //  ProdTypeCB.ItemIndex := ord(shptSCR);
 
-  ShowMessage('FCommandJson을Client에 전달하기 위해서는(gpShaeredMemory 사용)' + #13#10 +
-    'ParamServer.exe 프로그램을Client 보다 먼저 실행해야 함!!!');
+  if not (Assigned(FCommandLine) and (UpperCase(FCommandLine.FSkipMsg) = 'TRUE')) then
+    ShowMessage('FCommandJson을Client에 전달하기 위해서는(gpShaeredMemory 사용)' + #13#10 +
+      'ParamServer.exe 프로그램을Client 보다 먼저 실행해야 함!!!');
 
   if FSettings.LoadCondOnStart then
     LoadCondition2Form;
@@ -1065,7 +1069,9 @@ end;
 procedure TParamManageF.ParamDBEditChange(Sender: TObject);
 begin
   InitParamDB(ParamDBEdit.Text);
-  ShowMessage('MultiState 문자열을 Watch2 화면에 적용하기 위해서는 Watch2 화면에서 "Load Multi-State from Simulate DB"메뉴를 수동으로 실행할 것!! ');
+
+  if not (Assigned(FCommandLine) and (UpperCase(FCommandLine.FSkipMsg) = 'TRUE')) then
+    ShowMessage('MultiState 문자열을 Watch2 화면에 적용하기 위해서는 Watch2 화면에서 "Load Multi-State from Simulate DB"메뉴를 수동으로 실행할 것!! ');
 end;
 
 procedure TParamManageF.ParamListGridCellDblClick(Sender: TObject; ACol,
@@ -1842,6 +1848,9 @@ begin
         begin
           LData.UseCommandJson := True;
           SendData2gpSM(LVar.CommandJson);
+
+          if FInterval4PulseData > 0 then
+            Sleep(FInterval4PulseData);
         end;
 
         FIPCClientAll.PulseEventData<TEventData_Modbus_Standard>(LData); //TEventData_FGSS_KM

@@ -2981,9 +2981,10 @@ end;
 
 procedure TWatchF2.SetComponentConnectMode1Click(Sender: TObject);
 {**ConnectMode 사용 방법
-1) Popup Menu에서 Set Connect Mode 선택
+1) Popup Menu에서 Set ComponentConnectMode 선택
 2) 다이얼로그 선택(Yse/No) - 아래 소스의 Comment 참조
    - 메인 라인 Multi 선택시에는 3가지 Option 모두 Yes
+     (3번쨰 옵션인 FIsCreateJson4ClearLastSelectedControl은 반드시 Yes를 선택해야 Connected Json이 생성 됨)
    - 분기 라인 Multi 선택시에는 두번째 만 Yes(FIsCreateJson4ClearNextStep)
    - 메인 라인 선택 후 분기 라인 선택 시 Set Connect Mode를 해제 후 다시 선택 해야 함
    - 메인 라인 선택 했을 때의 FSimulateCompValuesJson4ConnectNextStep 내용 과
@@ -3068,7 +3069,7 @@ begin
   begin
     Caption := Caption + '(Make Command Json Mode)';
 
-    if MessageDlg('Init Json Component Value?',mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Init CommandJson Value?',mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       InitJsonCompValue4Simulate;
   end
   else

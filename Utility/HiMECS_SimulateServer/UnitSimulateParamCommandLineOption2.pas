@@ -23,7 +23,8 @@ type
     FJsonParamCollect,
     FCSVValues,
     FAdditionalData,
-    FSimulateCompValuesJson: string;
+    FSimulateCompValuesJson,
+    FSkipMsg: string;
   public
     [CLPName('c'), CLPLongName('ConfigFile'), CLPDescription('Config File Name'), CLPDefault('')]
     property ConfigFileName: string read FConfigFileName write FConfigFileName;
@@ -39,6 +40,8 @@ type
     property AdditionalData: string read FAdditionalData write FAdditionalData;
     [CLPName('d'), CLPLongName('SimulateCompValuesJson', 'Component Values'), CLPDescription('Component Values Data')]
     property SimulateCompValuesJson: string read FSimulateCompValuesJson write FSimulateCompValuesJson;
+    [CLPName('o'), CLPLongName('OmitMsg', 'Omit Show Message when start'), CLPDescription('Omit Show Message when start'), CLPDefault('False')]
+    property SkipMsg: string read FSkipMsg write FSkipMsg;
   end;
 
 const

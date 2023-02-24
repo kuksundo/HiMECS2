@@ -19,7 +19,8 @@ type
     FSTOMPServerUserId,
     FSTOMPServerPasswd,
     FSTOMPServerTopic,
-    FParamFileName: string;
+    FParamFileName,
+    FInterval4PulseData: string;
 
     FUseSharedMM,
     FUseSTOMP,
@@ -47,6 +48,8 @@ type
     property ParamFileName : string read FParamFileName write FParamFileName;
     [IniValue('File','Load Condition on start', 'False',14)]
     property LoadCondOnStart : Boolean read FLoadCondOnStart write FLoadCondOnStart;
+    [IniValue('File','Interval time for SendgpSM and PulseEvent', '500', 15)]
+    property Interval4PulseData : string read FInterval4PulseData write FInterval4PulseData;
   end;
 
   TConfigF = class(TForm)
@@ -76,6 +79,9 @@ type
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
+    Label9: TLabel;
+    Edit5: TEdit;
+    Label10: TLabel;
   private
     { Private declarations }
   public
