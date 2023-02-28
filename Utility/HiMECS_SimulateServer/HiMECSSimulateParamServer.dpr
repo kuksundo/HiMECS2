@@ -18,7 +18,7 @@ uses
   UnitStatusDisplayCommandLineOption2 in 'UnitStatusDisplayCommandLineOption2.pas',
   UnitCommandLineUtil in '..\..\..\..\..\..\..\project\common\UnitCommandLineUtil.pas',
   UnitCopyWatchList2 in '..\HiMECS_Watch2\UnitCopyWatchList2.pas',
-  UnitMEData4MAN in '..\..\..\MEManage\UnitMEData4MAN.pas';
+  UnitMEData4MAN in '..\MEManage\UnitMEData4MAN.pas';
 
 {$R *.res}
 

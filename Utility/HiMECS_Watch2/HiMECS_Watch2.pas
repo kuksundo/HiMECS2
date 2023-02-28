@@ -64,7 +64,7 @@ uses
   JvItemsPanel, UnitParameterManager2, NxCollection, cyResizer,
   UnitSTOMPClass, UnitWorker4OmniMsgQ, UnitMQConst, UnitSynLog2,
   mormot.core.base, mormot.core.rtti, mormot.core.variants, mormot.core.data,
-  mormot.core.text, mormot.core.log, mormot.core.json,
+  mormot.core.text, mormot.core.log, mormot.core.json, mormot.core.unicode,
   UnitEngineParameterClass2, UnitMultiStateRecord2, UnitSimulateParamRecord2,
   pjhTJvTransparentButtonConst, UnitFileType, pjhPipeFlowInterface, UnitBalloonConst2
   //UnitSelectControl
@@ -2474,6 +2474,7 @@ begin
       LParam := LParam + ' /s'+ LParamSrcList;
       LParam := LParam + ' /a'+ LAdditionalData; //Param Sever Edit Form을 띄울때 기 입력한 기본 정보를 표시해줌
       LParam := LParam + ' /d'+ LSimulateCompValuesJson; //Param Server에 저장할 Component Value list를 Json으로 전달함
+      LParam := LParam + ' /o'+ 'True'; //Omit Show Message when start
 //      Llst.Text := LParam;
 //      Llst.SaveToFile('c:\temp\pjh.txt', TEncoding.UTF8);
 //      LParam := '/p' + 'c:\temp\pjh.txt';
@@ -3084,8 +3085,8 @@ begin
 //  {Components: [
 //    {"CompName": "xxx",
 //     "Properties": [
-//        {"PropName": "yyy1", "PropTyprKind": 1, "Value": zzz},
-//        {"PropName": "yyy2", "PropTyprKind": 1, "Value": zzz}
+//        {"PropName": "yyy1", "PropTypeKind": 1, "Value": zzz},
+//        {"PropName": "yyy2", "PropTypeKind": 1, "Value": zzz}
 //        ...
 //     ]
 //    }
@@ -5796,14 +5797,20 @@ end;
 procedure TWatchF2.EditJsonCompValue4Simulate(var AJson: string);
 var
   LStr: string;
+  LUtf8: RawUTF8;
   LSO: ISuperObject;
 begin
-//  LStr := JSONReformat(FSimulateCompValuesJson, jsonHumanReadable);
+//  AJson := JSONReformat(AJson, jsonHumanReadable);
   LSO := SO(AJson);
   LStr := LSO.AsJson(True);
 
   if TpjhStringsEditorDlg.Execute(LStr) then
   begin
+    LUtf8 := StringToUTF8(LStr);
+    LUtf8 := JSONReformat(LUtf8, jsonHumanReadable);
+    LStr := UTF8ToString(LUtf8);
+    ShowMessage(IntToStr(Length(LStr)));
+//    TpjhStringsEditorDlg.Execute(LStr);
     LSO := SO(LStr);
     AJson := LSO.AsJson(False);
   end;
@@ -6278,8 +6285,8 @@ begin
 //  {Components: [
 //    {"CompName": "xxx",
 //     "Properties": [
-//        {"PropName": "yyy1", "PropTyprKind": 1, "Value": zzz},
-//        {"PropName": "yyy2", "PropTyprKind": 1, "Value": zzz}
+//        {"PropName": "yyy1", "PropTypeKind": 1, "Value": zzz},
+//        {"PropName": "yyy2", "PropTypeKind": 1, "Value": zzz}
 //        ...
 //     ]
 //    }
@@ -7785,7 +7792,7 @@ begin
     with A['Properties'].O[LPropNameIdx] do
     begin
       S['PropName'] := APropName;
-      I['PropTyprKind'] := AValueType;
+      I['PropTypeKind'] := AValueType;
       S['Value'] := AValue;
     end;
   end;
@@ -7981,7 +7988,7 @@ begin
 //    with A['Properties'].O[LPropNameIdx] do
 //    begin
 //      S['PropName'] := LPropName;
-//      I['PropTyprKind'] := ARecToPass.ValueType;
+//      I['PropTypKind'] := ARecToPass.ValueType;
 //      S['Value'] := LValue;
 //    end;
 //  end;

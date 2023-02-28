@@ -79,7 +79,6 @@ type
     Panel1: TPanel;
     btn_Search: TAeroButton;
     btn_Close: TAeroButton;
-    AeroButton1: TAeroButton;
     ProdTypeCB: TComboBox;
     ModelNameCB: TComboBox;
     TaskTab: TAdvOfficeTabSet;
@@ -160,6 +159,9 @@ type
     CreateSimulateDB1: TMenuItem;
     Savecurrentsetting1: TMenuItem;
     N5: TMenuItem;
+    Panel3: TPanel;
+    AeroButton1: TAeroButton;
+    AeroButton2: TAeroButton;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -192,6 +194,7 @@ type
     procedure CreateSimulateDB1Click(Sender: TObject);
     procedure ParamDBEditButtonClick(Sender: TObject);
     procedure Savecurrentsetting1Click(Sender: TObject);
+    procedure AeroButton2Click(Sender: TObject);
   private
     FCommandLine: TSimulateParamCLO2;
     FpjhSTOMPClass: TpjhSTOMPClass;
@@ -368,6 +371,11 @@ end;
 procedure TParamManageF.AeroButton1Click(Sender: TObject);
 begin
   TransferSimData;
+end;
+
+procedure TParamManageF.AeroButton2Click(Sender: TObject);
+begin
+  TransferSimData(-1,True);
 end;
 
 procedure TParamManageF.ApplyUI;
