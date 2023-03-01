@@ -52,8 +52,7 @@ uses
   FrmInputEdit in '..\..\..\..\..\..\..\project\common\Forms\FrmInputEdit.pas',
   UnitBalloonConst2 in 'UnitBalloonConst2.pas',
   pjhBalloonCompIntf in '..\..\..\..\..\..\..\project\util\VisualComm\Component\pjhDelphiStandardComp\pjhBalloonCompIntf.pas',
-  Delphi.Mocks.Helpers in '..\..\..\..\OpenSrc\lib\Delphi-Mocks-master\Source\Delphi.Mocks.Helpers.pas',
-  UnitStringStack in '..\..\..\..\Common\UnitStringStack.pas';
+  Delphi.Mocks.Helpers in '..\..\..\..\OpenSrc\lib\Delphi-Mocks-master\Source\Delphi.Mocks.Helpers.pas';
 
 {$R *.res}
 

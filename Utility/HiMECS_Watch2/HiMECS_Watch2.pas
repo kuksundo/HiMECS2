@@ -910,7 +910,7 @@ var
 implementation
 
 uses CommonUtil, UnitAxisSelect, UnitCopyWatchList2, frmMainInterface, FrmInputEdit,
-  pjhDesignCompIntf2, UtilUnit, jclNTFS, VCL.cyGraphics, UnitStringStack,
+  pjhDesignCompIntf2, UtilUnit, jclNTFS, VCL.cyGraphics, //UnitStringStack,
   HiMECSWatchCommon2, pjhclasses, UnitSetMatrix2, UnitCaptionInput,
   WindowUtil, otlComm, OtlContainers, OtlCommon, StompTypes, UnitFormUtil,
   UnitVesselData2, UnitBase64Util2, UnitRevFlowInterface,
@@ -5797,7 +5797,6 @@ end;
 procedure TWatchF2.EditJsonCompValue4Simulate(var AJson: string);
 var
   LStr: string;
-  LUtf8: RawUTF8;
   LSO: ISuperObject;
 begin
 //  AJson := JSONReformat(AJson, jsonHumanReadable);
@@ -5806,11 +5805,8 @@ begin
 
   if TpjhStringsEditorDlg.Execute(LStr) then
   begin
-    LUtf8 := StringToUTF8(LStr);
-    LUtf8 := JSONReformat(LUtf8, jsonHumanReadable);
-    LStr := UTF8ToString(LUtf8);
-    ShowMessage(IntToStr(Length(LStr)));
-//    TpjhStringsEditorDlg.Execute(LStr);
+    //1라인에 4096문자 이상일때 에러발생
+    //TpjhStringsEditorDlg의 TRichEdit Component를 TMemo로 변경 후 해결 됨
     LSO := SO(LStr);
     AJson := LSO.AsJson(False);
   end;

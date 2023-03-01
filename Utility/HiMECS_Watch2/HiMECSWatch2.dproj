@@ -194,7 +194,6 @@
         <DCCReference Include="UnitBalloonConst2.pas"/>
         <DCCReference Include="..\..\..\..\..\..\..\project\util\VisualComm\Component\pjhDelphiStandardComp\pjhBalloonCompIntf.pas"/>
         <DCCReference Include="..\..\..\..\OpenSrc\lib\Delphi-Mocks-master\Source\Delphi.Mocks.Helpers.pas"/>
-        <DCCReference Include="..\..\..\..\Common\UnitStringStack.pas"/>
         <None Include="HiMECSWatch2.todo"/>
         <None Include="..\..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECS.inc"/>
         <BuildConfiguration Include="Release">

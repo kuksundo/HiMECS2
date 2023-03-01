@@ -1,11 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.520,=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Watch2\New1.txt</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.702,=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Watch2\New1.txt</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.144,=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Watch2\New1.txt</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.529,E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Watch2\Unit1.pas=E:\pjh\Dev\Lang\Delphi\Common\UnitStringStack.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.073,=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Watch2\Unit1.pas</Transaction>
-    <Transaction>2023-02-28 14:30:02.580,=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Watch2\New1.txt</Transaction>
-  </Transactions>
-</BorlandProject>
+<BorlandProject/>
