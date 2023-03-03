@@ -2353,14 +2353,16 @@ end;
 procedure TWatchF2.SaveItemsToFile(AFileName: string; APropmtSaveConfirm: Boolean);
 begin
 //  SetCurrentDir(FFilePath);
-  JvSaveDialog1.InitialDir := RelToAbs(WatchListPath, FFilePath);
+//  JvSaveDialog1.InitialDir := RelToAbs(WatchListPath, FFilePath);
 
   if AFileName = '' then
   begin
-    if JvSaveDialog1.Execute then
-    begin
-      AFileName := JvSaveDialog1.FileName;
-    end;
+    AFileName := GetFileNameFromWatchList;
+
+//    if JvSaveDialog1.Execute then
+//    begin
+//      AFileName := JvSaveDialog1.FileName;
+//    end;
   end;
 
   if APropmtSaveConfirm and FileExists(AFileName) then
@@ -9096,8 +9098,19 @@ function TWatchF2.GetFileNameFromWatchList: string;
 begin
   Result := '';
   SetCurrentDir(FFilePath);
-  JvOpenDialog1.InitialDir := ExtractFilePath(PageControl1.ActivePage.Hint);// '..\WatchList';
+
+  if PageControl1.ActivePageIndex < 5 then //Design Screen Page가 아닌 경우
+  begin
+    if PageControl1.AdvPageCount < 6 then
+      JvOpenDialog1.InitialDir := RelToAbs(WatchListPath, FFilePath)
+    else
+      JvOpenDialog1.InitialDir := ExtractFilePath(PageControl1.AdvPages[5].Hint);
+  end
+  else
+    JvOpenDialog1.InitialDir := ExtractFilePath(PageControl1.ActivePage.Hint);// '..\WatchList';
+
   JvOpenDialog1.Filter := '*.*';
+
   if JvOpenDialog1.Execute then
   begin
     if jvOpenDialog1.FileName <> '' then
