@@ -320,6 +320,8 @@ type
     MergeCommandJsonwith1: TMenuItem;
     CheckCircularofNextStep1: TMenuItem;
     FindComponentByName1: TMenuItem;
+    FindComponentByTagName1: TMenuItem;
+    N26: TMenuItem;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -452,6 +454,7 @@ type
     procedure MergeCommandJsonwith1Click(Sender: TObject);
     procedure FindComponentByName1Click(Sender: TObject);
     procedure CheckCircularofNextStep1Click(Sender: TObject);
+    procedure FindComponentByTagName1Click(Sender: TObject);
   private
     FFilePath: string;      //파일을 저장할 경로
     FProgramMode: TProgramMode;
@@ -644,9 +647,10 @@ type
     procedure CreateNActivatepjhSelector(ApjhPanel: TpjhPanel=nil);
     //아래 FindComponentByNameUsingSelector 함수는 미완성임(사용불가)
     procedure FindComponentByNameUsingSelector(ACompName: string='');
-    procedure FindComponentByNameUsingBalloon(ACompName: string='');
-    function GetComponentByNameFrompjhPanel(var ACompName: string): TControl;
-    function GetBalloonRecord2Json4FindComponent(ACompName: string): TBalloonRecord;
+    procedure FindComponentByNameUsingBalloon(ACompName: string=''; AUseTagName: Boolean=False);
+    function GetComponentByNameFrompjhPanel(var ACompName: string; AUseTagName: Boolean): TControl;
+    function GetComponentByAssignedTagNameFrompjhPanel(var ATagName: string): TControl;
+    function GetBalloonRecord2Json4FindComponent(ACompName: string; AUseTagName: Boolean): TBalloonRecord;
     function GetComponentPositionFromControl(AControl: TControl): TPoint;
 
     procedure InitJsonCompValue4Simulate;
@@ -3918,7 +3922,7 @@ begin
   end;//for
 end;
 
-procedure TWatchF2.FindComponentByNameUsingBalloon(ACompName: string);
+procedure TWatchF2.FindComponentByNameUsingBalloon(ACompName: string; AUseTagName: Boolean);
 var
   LJson: TBalloonRecord;
   LpjhTPanelWithBalloon: TControl;
@@ -3927,7 +3931,7 @@ begin
 
   if Assigned(LpjhTPanelWithBalloon) then
   begin
-    LJson := GetBalloonRecord2Json4FindComponent(ACompName);
+    LJson := GetBalloonRecord2Json4FindComponent(ACompName, AUseTagName);
 
     AddCompValue2Json(LpjhTPanelWithBalloon.Name, 'BalloonHeader', LJson.Header, 7, FSimulateCompValuesJson);
     AddCompValue2Json(LpjhTPanelWithBalloon.Name, 'BalloonText', LJson.Text, 7, FSimulateCompValuesJson);
@@ -3938,6 +3942,7 @@ begin
     AddCompValue2Json(LpjhTPanelWithBalloon.Name, 'BalloonHideIfMouseMove', 'True', 7, FSimulateCompValuesJson);
 
     IPCMonitorAll1.FIsUseBalloon := True;
+    //Design Form의 Balloon Component에 CommandJson을 보냄
     MoveReceivedgpSHMMValue2ComponentValue(FSimulateCompValuesJson);
   end
   else
@@ -3950,7 +3955,7 @@ var
   LpjhPanel: TpjhPanel;
   LRect: TRect;
 begin
-  LComp := GetComponentByNameFrompjhPanel(ACompName);
+  LComp := GetComponentByNameFrompjhPanel(ACompName, False);
 
   if Assigned(LComp) then
   begin
@@ -3970,6 +3975,11 @@ begin
       FpjhSelector.DeActivate;
     end;
   end;
+end;
+
+procedure TWatchF2.FindComponentByTagName1Click(Sender: TObject);
+begin
+  FindComponentByNameUsingBalloon('', True);
 end;
 
 procedure TWatchF2.FindComponentByName1Click(Sender: TObject);
@@ -7479,7 +7489,7 @@ begin
 //        continue;
 //      end;
 
-      LControl := GetComponentByNameFrompjhPanel(LxStepName);
+      LControl := GetComponentByNameFrompjhPanel(LxStepName, False);
 
       case Result.FVisitedIndex of
         1: begin
@@ -8725,11 +8735,11 @@ begin
 end;
 
 function TWatchF2.GetBalloonRecord2Json4FindComponent(
-  ACompName: string): TBalloonRecord;
+  ACompName: string; AUseTagName: Boolean): TBalloonRecord;
 var
   LControl: TControl;
 begin
-  LControl := GetComponentByNameFrompjhPanel(ACompName);
+  LControl := GetComponentByNameFrompjhPanel(ACompName, AUseTagName);
 
   if Assigned(LControl) then
   begin
@@ -8777,7 +8787,35 @@ begin
   end;
 end;
 
-function TWatchF2.GetComponentByNameFrompjhPanel(var ACompName: string): TControl;
+function TWatchF2.GetComponentByAssignedTagNameFrompjhPanel(
+  var ATagName: string): TControl;
+var
+  i, j, PnlIndex: integer;
+  LPanel: TpjhPanel;
+  IpjhDI: IpjhDesignCompInterface;
+begin
+  Result := nil;
+
+  with PageControl1.ActivePage do
+  begin
+    LPanel := GetTpjhPanelOfCurrentPage;
+
+    for i := 0 to LPanel.ComponentCount - 1 do
+    begin
+      if Supports(LPanel.Components[i], IpjhDesignCompInterface, IpjhDI) then
+      begin
+        if IpjhDI.pjhTagInfo.TagName = ATagName then
+        begin
+          Result := TControl(LPanel.Components[i]);
+          break;
+        end;
+      end;
+    end;//for
+  end;//with
+end;
+
+function TWatchF2.GetComponentByNameFrompjhPanel(var ACompName: string;
+  AUseTagName: Boolean): TControl;
 var
   LComp: TComponent;
   LpjhPanel: TpjhPanel;
@@ -8785,8 +8823,13 @@ begin
   if ACompName = '' then
     ACompName := CreateInputEdit('Find Component', 'Component Name', '');
 
-  LpjhPanel := GetTpjhPanelOfCurrentPage;
-  LComp := LpjhPanel.FindComponent(ACompName);
+  if AUseTagName then
+    LComp := GetComponentByAssignedTagNameFrompjhPanel(ACompName)
+  else
+  begin
+    LpjhPanel := GetTpjhPanelOfCurrentPage;
+    LComp := LpjhPanel.FindComponent(ACompName);
+  end;
 
   Result := TControl(LComp);
 end;

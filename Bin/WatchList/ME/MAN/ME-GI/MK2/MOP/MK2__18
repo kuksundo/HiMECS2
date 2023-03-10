@@ -10,8 +10,6 @@ object TpjhPanel
   TabOrder = 0
   NewPath = spAuto
   ShowScrollBar = False
-  ExplicitWidth = 568
-  ExplicitHeight = 391
   object pjhTImage1: TpjhTImage
     Left = 1
     Top = 1
@@ -3072,7 +3070,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '18'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton211: TpjhTJvTransparentButton2
     Left = 138
@@ -3082,6 +3080,31 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '19'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
+  end
+  object pjhTCyBevel8: TpjhTCyBevel
+    Left = 904
+    Top = 335
+    Width = 105
+    Height = 67
+    Visible = False
+    Bevels = <
+      item
+        HighlightColor = clRed
+        ShadowColor = clRed
+        Width = 2
+      end>
+    pjhTagInfo.TagName = 'CheckReduceAgentFlow'
+    pjhTagInfo.Description = 'Check Reducing Agent Flow (Dosing System Running)'
+    pjhTagInfo.ParamIndex = 75
+    pjhValue = '0'
+    pjhBplFileName = 'pjhCyCompPkg.bpl'
+    BevelColor = clRed
+    BevelOffColor = clBtnHighlight
+    BevelWidth = 2
+    BevelStyle = bcRaised
+    Blink = True
+    BlinkTimeInterval = 1000
+    BevelShapeType = stRectangle
   end
 end

@@ -10,9 +10,6 @@ object TpjhPanel
   TabOrder = 0
   NewPath = spAuto
   ShowScrollBar = False
-  DesignSize = (
-    1028
-    771)
   object pjhTImage1: TpjhTImage
     Left = 1
     Top = 1
@@ -2408,6 +2405,81 @@ object TpjhPanel
     pjhValue = '26'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
     pjhBtnActionKind = tbakLoadDFMFromFile
+  end
+  object pjhTCyBevel8: TpjhTCyBevel
+    Left = 19
+    Top = 192
+    Width = 204
+    Height = 313
+    Visible = False
+    Bevels = <
+      item
+        HighlightColor = clRed
+        ShadowColor = clRed
+        Width = 2
+      end>
+    pjhTagInfo.TagName = 'CheckReduceAgentFlow'
+    pjhTagInfo.Description = 'Check Reducing Agent Flow (Dosing System Running)'
+    pjhTagInfo.ParamIndex = 75
+    pjhValue = '0'
+    pjhBplFileName = 'pjhCyCompPkg.bpl'
+    BevelColor = clRed
+    BevelOffColor = clBtnHighlight
+    BevelWidth = 2
+    BevelStyle = bcRaised
+    Blink = True
+    BlinkTimeInterval = 1000
+    BevelShapeType = stRectangle
+  end
+  object pjhTCyBevel1: TpjhTCyBevel
+    Left = 133
+    Top = 68
+    Width = 130
+    Height = 38
+    Visible = False
+    Bevels = <
+      item
+        HighlightColor = clRed
+        ShadowColor = clRed
+        Width = 2
+      end>
+    pjhTagInfo.TagName = 'CheckReduceAgentFlow'
+    pjhTagInfo.Description = 'Check Reducing Agent Flow (Dosing System Running)'
+    pjhTagInfo.ParamIndex = 75
+    pjhValue = '0'
+    pjhBplFileName = 'pjhCyCompPkg.bpl'
+    BevelColor = clRed
+    BevelOffColor = clBtnHighlight
+    BevelWidth = 2
+    BevelStyle = bcRaised
+    Blink = True
+    BlinkTimeInterval = 1000
+    BevelShapeType = stRectangle
+  end
+  object pjhTCyBevel2: TpjhTCyBevel
+    Left = 261
+    Top = 68
+    Width = 130
+    Height = 38
+    Visible = False
+    Bevels = <
+      item
+        HighlightColor = clRed
+        ShadowColor = clRed
+        Width = 2
+      end>
+    pjhTagInfo.TagName = 'CheckReduceAgentFlow'
+    pjhTagInfo.Description = 'Check Reducing Agent Flow (Dosing System Running)'
+    pjhTagInfo.ParamIndex = 75
+    pjhValue = '0'
+    pjhBplFileName = 'pjhCyCompPkg.bpl'
+    BevelColor = clRed
+    BevelOffColor = clBtnHighlight
+    BevelWidth = 2
+    BevelStyle = bcRaised
+    Blink = True
+    BlinkTimeInterval = 1000
+    BevelShapeType = stRectangle
   end
   object pjhiEdit2: TpjhiEdit
     Left = 24

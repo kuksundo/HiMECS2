@@ -511,7 +511,7 @@ object WatchF2: TWatchF2
         end
         inherited ImageList1: TImageList
           Bitmap = {
-            494C010106000900DC0310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+            494C010106000900E00310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
             0000000000003600000028000000400000002000000001002000000000000020
             0000000000000000000000000000000000000000000000000000000000000000
             000040B0C00040C0C00030B0C00030B0C00030B0C00030B0B00030A8B00030A8
@@ -2556,9 +2556,20 @@ object WatchF2: TWatchF2
       Caption = 'Show Tag UnAssigned List'
       OnClick = ShowUnAssignedList1Click
     end
+    object N26: TMenuItem
+      Caption = '-'
+    end
     object FindComponentByName1: TMenuItem
       Caption = 'Find Component By Name'
       OnClick = FindComponentByName1Click
+    end
+    object FindComponentByTagName1: TMenuItem
+      Caption = 'Find Component By TagName'
+      OnClick = FindComponentByTagName1Click
+    end
+    object ShowDFMFileName1: TMenuItem
+      Caption = 'Show current DFM File Name'
+      OnClick = ShowDFMFileName1Click
     end
     object N18: TMenuItem
       Caption = '-'
@@ -2609,10 +2620,6 @@ object WatchF2: TWatchF2
     object ClearMainFormCaption1: TMenuItem
       Caption = 'Clear MainFormCaption'
       OnClick = ClearMainFormCaption1Click
-    end
-    object ShowDFMFileName1: TMenuItem
-      Caption = 'Show current DFM File Name'
-      OnClick = ShowDFMFileName1Click
     end
     object N2: TMenuItem
       Caption = '-'
