@@ -966,7 +966,7 @@ begin
   g_ShipProductType.SetType2List(ProdTypeCB.Items);
 //  ProdTypeCB.ItemIndex := ord(shptSCR);
 
-  if not (Assigned(FCommandLine) and (UpperCase(FCommandLine.FSkipMsg) = 'TRUE')) then
+  if (not Assigned(FCommandLine)) or (UpperCase(FCommandLine.FSkipMsg) = 'FALSE') then
     ShowMessage('FCommandJson을Client에 전달하기 위해서는(gpShaeredMemory 사용)' + #13#10 +
       'ParamServer.exe 프로그램을Client 보다 먼저 실행해야 함!!!');
 
@@ -1078,7 +1078,7 @@ procedure TParamManageF.ParamDBEditChange(Sender: TObject);
 begin
   InitParamDB(ParamDBEdit.Text);
 
-  if not (Assigned(FCommandLine) and (UpperCase(FCommandLine.FSkipMsg) = 'TRUE')) then
+  if (not Assigned(FCommandLine)) or (UpperCase(FCommandLine.FSkipMsg) = 'FALSE') then
     ShowMessage('MultiState 문자열을 Watch2 화면에 적용하기 위해서는 Watch2 화면에서 "Load Multi-State from Simulate DB"메뉴를 수동으로 실행할 것!! ');
 end;
 

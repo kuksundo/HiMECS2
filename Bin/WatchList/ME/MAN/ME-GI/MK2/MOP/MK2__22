@@ -2541,4 +2541,32 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 6
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
+  object pjhTPanelWithBalloon1: TpjhTPanelWithBalloon
+    Left = 912
+    Top = 608
+    Width = 57
+    Height = 49
+    Caption = 'pjhTPanelWithBalloon1'
+    TabOrder = 3
+    Visible = False
+    pjhTagInfo.ParamIndex = 0
+    pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
+    BalloonIsShow = False
+    BalloonUseMousePos = False
+    BalloonFindComponent4Pos = True
+    BalloonKind = bkBalloonBasic
+    BalloonShowOnlyMine = False
+    BalloonFont.Charset = DEFAULT_CHARSET
+    BalloonFont.Color = clWindowText
+    BalloonFont.Height = -13
+    BalloonFont.Name = 'MS Sans Serif'
+    BalloonFont.Style = []
+    BalloonX = -1
+    BalloonY = -1
+    BalloonAlign = alRight
+    BalloonDivisionChar = #0
+    BalloonHideIfMouseMove = False
+    BalloonShape = sRoundRect
+    BalloonTextAlign = taCenter
+  end
 end

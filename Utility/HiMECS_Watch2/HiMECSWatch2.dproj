@@ -81,7 +81,7 @@
         <DCC_UnitSearchPath>C:\pjh\project\Common\DeCAL;C:\pjh\project\util\HiMECS\Application\Utility\ModbusComm_kumo\common;C:\pjh\project\util\HiMECS\Application\Utility\Watch2\common;C:\pjh\project\util\GasEngineMonitoring\modbus_comm_avat\common;C:\pjh\project\util\GasEngineMonitoring\gui\common;C:\pjh\project\util\HiMECS\Application\Utility\CommonFrame;C:\pjh\project\Common;C:\pjh\project\util\HiMECS\Application\Source\Common;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <Debugger_RunParams>/p&quot;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Bin\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2&quot;</Debugger_RunParams>
+        <Debugger_RunParams>/p&quot;E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Bin\WatchList\ME\MAN\ME-GI\MK2\MOP\MK2&quot; /OneForm</Debugger_RunParams>
         <Debugger_DebugSourcePath>E:\pjh\vcl\pjhComponent\xIOComp\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <DCC_Define>DEF_CRYPT_ALL;HIMECS_VER_2;MAX_SQLFIELDS_256;$(DCC_Define)</DCC_Define>
         <DCC_DcuOutput>Y:\pjh\Dcu\Win32\$(MSBuildProjectName)</DCC_DcuOutput>

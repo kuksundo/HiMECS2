@@ -1117,7 +1117,7 @@ begin
 
   if FConfigOption.WatchListFileName <> '' then
   begin
-    GetEngineParameterFromSavedWatchListFile(FConfigOption.WatchListFileName, True, False);
+    GetEngineParameterFromSavedWatchListFile(FConfigOption.WatchListFileName, True, FCommandLine.FIsOnlyOneForm);
     FProgramMode := pmWatchList;
   end;
 
@@ -1538,8 +1538,8 @@ var
   LPanel: TpjhPanel;
   LIsLoadFrom_dfc: boolean;
 begin
-  if FCommandLine.IsOnlyOneForm then
-    PageControl1.TabSettings.Height := PageControl1.TabSettings.Height - 1;
+//  if FCommandLine.IsOnlyOneForm then
+//    PageControl1.TabSettings.Height := PageControl1.TabSettings.Height - 1;
 
   LFileName := AFileName;
 
@@ -1671,13 +1671,13 @@ var
   LPanel: TpjhPanel;
 //  LDesignPanel: TELDesignPanel;
 begin
-  if FCommandLine.IsOnlyOneForm then
-  begin
-    FTempTabHeight := PageControl1.TabSettings.Height;
-//    PageControl1.Invalidate;
-//    PageControl1.ActivePage.Invalidate;
-    PageControl1.TabSettings.Height := FTempTabHeight - 1;
-  end;
+//  if FCommandLine.IsOnlyOneForm then
+//  begin
+//    FTempTabHeight := PageControl1.TabSettings.Height;
+////    PageControl1.Invalidate;
+////    PageControl1.ActivePage.Invalidate;
+//    PageControl1.TabSettings.Height := FTempTabHeight - 1;
+//  end;
 
 //  LOriginalFilePath := GetCurrentDir();
   LFilePath := ExtractFilePath(FWG.FCurrentWatchListFileName);
@@ -1881,7 +1881,8 @@ begin
     if jvOpenDialog1.FileName <> '' then
     begin
       WatchListFileName := ExtractFileName(jvOpenDialog1.FileName);
-      GetEngineParameterFromSavedWatchListFile(jvOpenDialog1.FileName, False, True);
+      FCommandLine.IsOnlyOneForm := True;
+      GetEngineParameterFromSavedWatchListFile(jvOpenDialog1.FileName, False, FCommandLine.IsOnlyOneForm);
     end;
   end;
 end;
@@ -2070,7 +2071,8 @@ begin
     if jvOpenDialog1.FileName <> '' then
     begin
       WatchListFileName := ExtractFileName(jvOpenDialog1.FileName);
-      GetEngineParameterFromSavedWatchListFile(jvOpenDialog1.FileName, False, False);
+      FCommandLine.IsOnlyOneForm := False;
+      GetEngineParameterFromSavedWatchListFile(jvOpenDialog1.FileName, False, FCommandLine.IsOnlyOneForm);
       //LoadDesignFormFromMenu(jvOpenDialog1.FileName+DESIGNFORM_FILENAME, True);
     end;
   end;
@@ -4723,6 +4725,7 @@ procedure TWatchF2.DestroyComponentOnPage(LPage: TAdvOfficePage);
 var
   j,k: integer;
   LPanel: TpjhPanel;
+  LELDesignPanel: TELDesignPanel;
 begin
   for j := 0 to LPage.ComponentCount - 1 do
   begin
@@ -4735,8 +4738,15 @@ begin
 //        ShowMessage(LPanel.Components[k].Name);
         LPanel.Components[k].Free;
       end;
+
+      LPanel.Free;
     end;
   end;
+
+  LELDesignPanel := GetDesignPanel(LPage);
+
+  if Assigned(LELDesignPanel) then
+    LELDesignPanel.Free;
 end;
 
 procedure TWatchF2.DestroyDynamicPanel;
@@ -8745,7 +8755,7 @@ begin
   begin
     Result.Header := 'Find Component';
     Result.Text := ACompName;
-    Result.CompName := ACompName;
+    Result.CompName := LControl.Name;
     Result.X := LControl.Left + LControl.Width div 2;
     Result.Y := LControl.Top;
   end;
@@ -9031,7 +9041,8 @@ begin
     end;
 
     //Form을 Refresh할때 필요함
-    FCommandLine.IsOnlyOneForm := AOnlyOneFormOpen;
+    //아래 루틴을 GetEngineParameterFromSavedWatchListFile 함수 call 위치로 옮김
+//      FCommandLine.IsOnlyOneForm := AOnlyOneFormOpen;
 
     LoadDesignForm(AFileName+DESIGNFORM_FILENAME, AOnlyOneFormOpen);
 

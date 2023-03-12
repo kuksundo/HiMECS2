@@ -3,7 +3,7 @@ unit ConfigOptionClass2;
 interface
 
 uses classes, JHP.BaseConfigCollect, HiMECSConst, GpCommandLineParser, Generics.Legacy;
-
+{Boolean Type은 CommandLine에 /OneForm 유무에 따라 True/False가 결정됨}
 type
   TWatchCommandLineOption = class
     FConfigFileName,
