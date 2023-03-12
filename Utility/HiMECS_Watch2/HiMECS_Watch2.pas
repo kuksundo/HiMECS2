@@ -1538,8 +1538,8 @@ var
   LPanel: TpjhPanel;
   LIsLoadFrom_dfc: boolean;
 begin
-//  if FCommandLine.IsOnlyOneForm then
-//    PageControl1.TabSettings.Height := PageControl1.TabSettings.Height - 1;
+  if FCommandLine.IsOnlyOneForm then
+    PageControl1.TabSettings.Height := PageControl1.TabSettings.Height - 1;
 
   LFileName := AFileName;
 
@@ -1671,13 +1671,13 @@ var
   LPanel: TpjhPanel;
 //  LDesignPanel: TELDesignPanel;
 begin
-//  if FCommandLine.IsOnlyOneForm then
-//  begin
-//    FTempTabHeight := PageControl1.TabSettings.Height;
-////    PageControl1.Invalidate;
-////    PageControl1.ActivePage.Invalidate;
-//    PageControl1.TabSettings.Height := FTempTabHeight - 1;
-//  end;
+  if FCommandLine.IsOnlyOneForm then
+  begin
+    FTempTabHeight := PageControl1.TabSettings.Height;
+//    PageControl1.Invalidate;
+//    PageControl1.ActivePage.Invalidate;
+    PageControl1.TabSettings.Height := FTempTabHeight - 1;
+  end;
 
 //  LOriginalFilePath := GetCurrentDir();
   LFilePath := ExtractFilePath(FWG.FCurrentWatchListFileName);

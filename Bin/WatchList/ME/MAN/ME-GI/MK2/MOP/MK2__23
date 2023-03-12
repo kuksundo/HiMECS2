@@ -3,7 +3,7 @@ object TpjhPanel
   Left = 0
   Top = 0
   Width = 1028
-  Height = 771
+  Height = 797
   Align = alClient
   DoubleBuffered = True
   ParentDoubleBuffered = False
@@ -14,7 +14,7 @@ object TpjhPanel
     Left = 1
     Top = 1
     Width = 1026
-    Height = 769
+    Height = 795
     Align = alClient
     Picture.Data = {
       0A544A504547496D616765CC480100FFD8FFE000104A46494600010101006000
@@ -2853,6 +2853,18 @@ object TpjhPanel
     Blink = True
     BlinkTimeInterval = 1000
     BevelShapeType = stRectangle
+  end
+  object pjhTJvTransparentButton216: TpjhTJvTransparentButton2
+    Left = 696
+    Top = 648
+    Width = 201
+    Height = 41
+    Caption = 'MoveScreenBtn for Simulate'
+    Visible = False
+    pjhTagInfo.ParamIndex = 0
+    pjhValue = ''
+    pjhBplFileName = 'pjhJvCompPkg.bpl'
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhiEdit1: TpjhiEdit
     Left = 12

@@ -2336,4 +2336,16 @@ object TpjhPanel
     BlinkTimeInterval = 1000
     BevelShapeType = stRectangle
   end
+  object pjhTJvTransparentButton29: TpjhTJvTransparentButton2
+    Left = 696
+    Top = 648
+    Width = 201
+    Height = 41
+    Caption = 'MoveScreenBtn for Simulate'
+    Visible = False
+    pjhTagInfo.ParamIndex = 0
+    pjhValue = ''
+    pjhBplFileName = 'pjhJvCompPkg.bpl'
+    pjhBtnActionKind = tbakLoadDFMFromFile
+  end
 end

@@ -3,7 +3,7 @@ object TpjhPanel
   Left = 0
   Top = 0
   Width = 1028
-  Height = 771
+  Height = 797
   Align = alClient
   DoubleBuffered = True
   ParentDoubleBuffered = False
@@ -14,7 +14,7 @@ object TpjhPanel
     Left = 1
     Top = 1
     Width = 1026
-    Height = 769
+    Height = 795
     Align = alClient
     Picture.Data = {
       0A544A504547496D616765B92D0100FFD8FFE000104A46494600010101006000
