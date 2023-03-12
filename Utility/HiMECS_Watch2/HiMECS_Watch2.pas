@@ -1726,7 +1726,7 @@ begin
   end;
 
   if FCommandLine.IsOnlyOneForm then
-    FPJHTimerPool.AddOneShot(OnRefreshTab,100);
+    FPJHTimerPool.AddOneShot(OnRefreshTab,10);
 //  SetCurrentDir(LOriginalFilePath);
 end;
 
@@ -1757,6 +1757,7 @@ begin
     LoadFromDFM(LDFName, TWinControl(LPanel), ReadComponentsProc);
 
     if FCommandLine.IsOnlyOneForm then
+      //Design Form의 모든 TransparentBtn2의 pjhBtnActionKind = tbakLoadDFMFromFile 로 변경함
       SetpjhBtnActionKind4TransparentBtn(tbakLoadDFMFromFile, FCommandLine.IsOnlyOneForm);
 
     LPage.Hint := LDFName;//dfm 파일 이름을 sheet의 hint에 저장 함
@@ -6598,11 +6599,15 @@ end;
 
 procedure TWatchF2.OnRefreshTab(Sender: TObject; Handle: Integer;
   Interval: Cardinal; ElapsedTime: Integer);
+//var
+//  LPanel: TpjhPanel;
 begin
   PageControl1.TabSettings.Height := FTempTabHeight;
 //  PageControl1.Invalidate;
 //  PageControl1.ActivePage.Invalidate;
 //    PageControl1.ActivePage.Repaint;
+//  LPanel := GetTpjhPanelOfCurrentPage;
+//  LPanel.Refresh;
 end;
 
 procedure TWatchF2.OnResetConnectClearMode(Sender: TObject; Handle: Integer;
