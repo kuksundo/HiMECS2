@@ -2336,7 +2336,7 @@ object TpjhPanel
     BlinkTimeInterval = 1000
     BevelShapeType = stRectangle
   end
-  object pjhTJvTransparentButton29: TpjhTJvTransparentButton2
+  object MoveSceenBtn: TpjhTJvTransparentButton2
     Left = 696
     Top = 648
     Width = 201

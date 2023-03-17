@@ -2325,8 +2325,10 @@ object TpjhPanel
       DBFF00725FC87F8D322136A1791DC32148233F2F3D4D4CA4A4AC80FFD9}
     pjhTagInfo.ParamIndex = 0
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
-    ExplicitLeft = -7
-    ExplicitTop = 9
+    ExplicitLeft = 112
+    ExplicitTop = 72
+    ExplicitWidth = 857
+    ExplicitHeight = 569
   end
   object pjhTJvTransparentButton210: TpjhTJvTransparentButton2
     Left = 8
@@ -2437,71 +2439,5 @@ object TpjhPanel
     pjhValue = '47'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
     pjhBtnActionKind = tbakLoadDFMFromFile
-  end
-  object pjhTJvTransparentButton212: TpjhTJvTransparentButton2
-    Left = 44
-    Top = 140
-    Width = 190
-    Height = 27
-    pjhTagInfo.ParamIndex = 0
-    pjhValue = ''
-    pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
-  end
-  object pjhiEdit6: TpjhiEdit
-    Left = 46
-    Top = 169
-    Width = 185
-    Height = 27
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 11371911
-    BorderStyle = ibsNone
-    TabOrder = 1
-    Value = 'Tier II'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-  end
-  object pjhiEdit1: TpjhiEdit
-    Left = 47
-    Top = 235
-    Width = 185
-    Height = 27
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 11371911
-    BorderStyle = ibsNone
-    TabOrder = 2
-    Value = '1'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
 end

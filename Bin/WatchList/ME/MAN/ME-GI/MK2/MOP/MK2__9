@@ -3121,6 +3121,18 @@ object TpjhPanel
     BlinkTimeInterval = 1000
     BevelShapeType = stRectangle
   end
+  object MoveSceenBtn: TpjhTJvTransparentButton2
+    Left = 696
+    Top = 648
+    Width = 201
+    Height = 41
+    Caption = 'MoveScreenBtn for Simulate'
+    Visible = False
+    pjhTagInfo.ParamIndex = 0
+    pjhValue = ''
+    pjhBplFileName = 'pjhJvCompPkg.bpl'
+    pjhBtnActionKind = tbakLoadDFMFromFile
+  end
   object pjhiEdit1: TpjhiEdit
     Left = 47
     Top = 237
@@ -3148,7 +3160,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'ENG_OP_ENG_MODE'
     pjhTagInfo.Description = 'Engine Mode'
-    pjhTagInfo.ParamIndex = 2
+    pjhTagInfo.ParamIndex = 48
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit2: TpjhiEdit
@@ -3178,7 +3190,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'ENG_OP_DualFuel'
     pjhTagInfo.Description = 'Dual Fual on the Operation'
-    pjhTagInfo.ParamIndex = 3
+    pjhTagInfo.ParamIndex = 37
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit3: TpjhiEdit
@@ -3207,8 +3219,8 @@ object TpjhPanel
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'ENG_OP_MainState1'
-    pjhTagInfo.Description = 'Main State 1'
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.Description = 'Main State 3'
+    pjhTagInfo.ParamIndex = 46
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit4: TpjhiEdit
@@ -3236,8 +3248,8 @@ object TpjhPanel
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'ENG_OP_MainState2'
-    pjhTagInfo.Description = 'Main State 2'
-    pjhTagInfo.ParamIndex = 1
+    pjhTagInfo.Description = 'MainState2'
+    pjhTagInfo.ParamIndex = 47
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit5: TpjhiEdit
@@ -3267,7 +3279,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'ENG_OP_MainState3'
     pjhTagInfo.Description = 'Main State 3'
-    pjhTagInfo.ParamIndex = 2
+    pjhTagInfo.ParamIndex = 55
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit6: TpjhiEdit
@@ -3325,7 +3337,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'ENG_OP_SpeedModifier'
     pjhTagInfo.Description = 'Speed Modifier'
-    pjhTagInfo.ParamIndex = 4
+    pjhTagInfo.ParamIndex = 49
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit8: TpjhiEdit
@@ -3355,7 +3367,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'ENG_OP_IndexLimiter'
     pjhTagInfo.Description = 'Index Limiter'
-    pjhTagInfo.ParamIndex = 5
+    pjhTagInfo.ParamIndex = 50
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
 end

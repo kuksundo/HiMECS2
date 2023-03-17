@@ -3146,11 +3146,12 @@ end;
 procedure TWatchF2.SetCreateItem4SelectedComponent(aControl: TControl;
   Job: TControlJob);
 var
-  LControl: TWinControl;
+  LControl: TControl;
   IpjhDI: IpjhDesignCompInterface;
 begin
-  if Assigned(aControl) and  (aControl.InheritsFrom(TWinControl)) then
-    LControl := aControl as TWinControl
+//  if Assigned(aControl) and  (aControl.InheritsFrom(TWinControl)) then
+  if Assigned(aControl) then
+    LControl := aControl as TControl
   else
     exit;
 

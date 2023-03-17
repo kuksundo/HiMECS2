@@ -14875,10 +14875,9 @@ object TpjhPanel
     Height = 65
     Visible = False
     Vesrion = '0.0.1'
-    Position = 1.000000000000000000
     PositionMax = 100.000000000000000000
     CurrentMax = 1.000000000000000000
-    Opened = True
+    Opened = False
     ClickToOpen = False
     DblClickToOpen = True
     InternalPressure = 0
@@ -14887,7 +14886,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'V_20190816105623'
     pjhTagInfo.Description = 'GRU Start'
     pjhTagInfo.ParamIndex = 8
-    pjhValue = '1'
+    pjhValue = '0'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
     PositionMax_2 = 100.000000000000000000
   end
@@ -14902,7 +14901,9 @@ object TpjhPanel
     PrevStep = pjhiTank_pjh1
     ArrowBodyLength = 3
     ArrowHeadSize = 28
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'V_20190816105623'
+    pjhTagInfo.Description = 'GRU Start'
+    pjhTagInfo.ParamIndex = 8
     pjhValue = '0'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
   end
@@ -15154,7 +15155,7 @@ object TpjhPanel
     ClosedColor = clRed
     ChangeBodyColor = True
     BackGroundColor = clWhite
-    pjhTagInfo.TagName = 'D_807'
+    pjhTagInfo.TagName = 'SV84-1'
     pjhTagInfo.Description = 'SV84-1 DO Main Gas shutoff valve 1'
     pjhTagInfo.ParamIndex = 11
     pjhValue = '0'
@@ -15246,7 +15247,7 @@ object TpjhPanel
     ClosedColor = clRed
     ChangeBodyColor = True
     BackGroundColor = clWhite
-    pjhTagInfo.TagName = 'D_805'
+    pjhTagInfo.TagName = 'SV84-2'
     pjhTagInfo.Description = 'SV84-2 DO Main Gas shutoff valve 2'
     pjhTagInfo.ParamIndex = 12
     pjhValue = '0'
@@ -15463,7 +15464,7 @@ object TpjhPanel
     ClosedColor = clRed
     ChangeBodyColor = True
     BackGroundColor = clWhite
-    pjhTagInfo.TagName = 'A_6_00C5'
+    pjhTagInfo.TagName = 'SV88-A'
     pjhTagInfo.Description = 'SV88-A DO Main Degasing valve A bank'
     pjhTagInfo.ParamIndex = 16
     pjhValue = '0'
@@ -15651,7 +15652,7 @@ object TpjhPanel
     ClosedColor = clRed
     ChangeBodyColor = True
     BackGroundColor = clWhite
-    pjhTagInfo.TagName = 'A_6_00B5'
+    pjhTagInfo.TagName = 'SV85-1'
     pjhTagInfo.Description = 'SV85-1 DO Main Gas venting valve 1'
     pjhTagInfo.ParamIndex = 13
     pjhValue = '0'
@@ -15741,15 +15742,15 @@ object TpjhPanel
     ValveKind = pvtManualPush
     NextStep = pjhiPipe_pjh21
     PrevStep = pjhiPipe_pjh20
-    Opened = False
+    Opened = True
     OpenedColor = clLime
     ClosedColor = clRed
     ChangeBodyColor = True
     BackGroundColor = clWhite
-    pjhTagInfo.TagName = 'A_6_00B9'
+    pjhTagInfo.TagName = 'SV85-2'
     pjhTagInfo.Description = 'SV85-2 DO Main Gas venting valve 2'
     pjhTagInfo.ParamIndex = 14
-    pjhValue = '0'
+    pjhValue = '1'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
     ValveKnobPosition = vdRight
     ValveWayKind = vwk2Way
@@ -16096,7 +16097,7 @@ object TpjhPanel
     ValveKind = pvtManualPush
     NextStep = pjhiPipe_pjh15
     PrevStep = pjhiPipe_pjh23
-    Opened = True
+    Opened = False
     OpenedColor = clLime
     ClosedColor = clRed
     ChangeBodyColor = True
@@ -16104,7 +16105,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'SV89-2'
     pjhTagInfo.Description = 'SV89-2 DO Inert gas valve 2'
     pjhTagInfo.ParamIndex = 20
-    pjhValue = '1'
+    pjhValue = '0'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
     ValveKnobPosition = vdLeft
     ValveWayKind = vwk2Way
@@ -16121,15 +16122,15 @@ object TpjhPanel
     ValveKind = pvtManualPush
     NextStep = pjhiPipe_pjh22
     PrevStep = pjhiPipe_pjh29
-    Opened = True
+    Opened = False
     OpenedColor = clLime
     ClosedColor = clRed
     ChangeBodyColor = True
     BackGroundColor = clWhite
-    pjhTagInfo.TagName = 'D_5037'
+    pjhTagInfo.TagName = 'SV89'
     pjhTagInfo.Description = 'SV89 DO Inert gas valve'
     pjhTagInfo.ParamIndex = 17
-    pjhValue = '1'
+    pjhValue = '0'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
     ValveKnobPosition = vdLeft
     ValveWayKind = vwk2Way
@@ -16151,7 +16152,7 @@ object TpjhPanel
     ClosedColor = clRed
     ChangeBodyColor = True
     BackGroundColor = clWhite
-    pjhTagInfo.TagName = 'A_6_00BD'
+    pjhTagInfo.TagName = 'SV85-3'
     pjhTagInfo.Description = 'SV85-3 DO Main Gas venting valve 3'
     pjhTagInfo.ParamIndex = 15
     pjhValue = '0'
@@ -16172,6 +16173,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 6.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -16180,10 +16182,10 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'D_3905'
+    pjhTagInfo.TagName = 'PT80'
     pjhTagInfo.Description = 'PT80 AI Gas supply pressure filter inlet'
     pjhTagInfo.ParamIndex = 0
-    pjhValue = '0'
+    pjhValue = '6'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay2: TpjhiAnalogDisplay
@@ -16205,7 +16207,7 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'D_1311'
+    pjhTagInfo.TagName = 'FT81'
     pjhTagInfo.Description = 'FT81 Gas flow (standard)'
     pjhTagInfo.ParamIndex = 1
     pjhValue = '0'
@@ -16222,6 +16224,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 6.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -16230,10 +16233,10 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'D_1310'
+    pjhTagInfo.TagName = 'PT81'
     pjhTagInfo.Description = 'PT81 AI Gas supply pressure filter outlet'
     pjhTagInfo.ParamIndex = 2
-    pjhValue = '0'
+    pjhValue = '6'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay5: TpjhiAnalogDisplay
@@ -16248,6 +16251,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 25.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -16256,10 +16260,10 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'A_3_0109'
+    pjhTagInfo.TagName = 'TE81'
     pjhTagInfo.Description = 'TE81 AI Gas temperature'
     pjhTagInfo.ParamIndex = 4
-    pjhValue = '0'
+    pjhValue = '25'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay6: TpjhiAnalogDisplay
@@ -16281,7 +16285,7 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'D_3849'
+    pjhTagInfo.TagName = 'PT82'
     pjhTagInfo.Description = 'PT82 AI Gas (MC) supply pressure regulator outlet'
     pjhTagInfo.ParamIndex = 3
     pjhValue = '0'
@@ -16298,6 +16302,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 7.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -16306,10 +16311,10 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'D_1309'
+    pjhTagInfo.TagName = 'PT83'
     pjhTagInfo.Description = 'PT83 AI GRU control air'
     pjhTagInfo.ParamIndex = 7
-    pjhValue = '0'
+    pjhValue = '7'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay8: TpjhiAnalogDisplay
@@ -16331,7 +16336,7 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'D_1314'
+    pjhTagInfo.TagName = 'PT87'
     pjhTagInfo.Description = 'PT87 AI Gas pressure engine inlet'
     pjhTagInfo.ParamIndex = 6
     pjhValue = '0'
@@ -16348,6 +16353,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 7.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -16356,10 +16362,10 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'D_5695'
+    pjhTagInfo.TagName = 'PT89'
     pjhTagInfo.Description = 'PT89 AI Inert gas pressure'
     pjhTagInfo.ParamIndex = 5
-    pjhValue = '0'
+    pjhValue = '7'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay9: TpjhiAnalogDisplay
@@ -16373,6 +16379,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = -3.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -16384,7 +16391,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'PT89-2'
     pjhTagInfo.Description = 'PT89-2 Inert gas pressure GRU inlet'
     pjhTagInfo.ParamIndex = 21
-    pjhValue = '0'
+    pjhValue = '-3'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay10: TpjhiAnalogDisplay
@@ -16398,6 +16405,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 38.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -16409,7 +16417,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'TE21'
     pjhTagInfo.Description = 'TE21 AI Charge air temperature engine inlet'
     pjhTagInfo.ParamIndex = 23
-    pjhValue = '0'
+    pjhValue = '38'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay11: TpjhiAnalogDisplay
@@ -16423,6 +16431,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 1.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -16433,8 +16442,8 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'PT21'
     pjhTagInfo.Description = 'PT21 AI Charge air pressure engine inlet'
-    pjhTagInfo.ParamIndex = 22
-    pjhValue = '0'
+    pjhTagInfo.ParamIndex = 24
+    pjhValue = '1'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay12: TpjhiAnalogDisplay
@@ -16458,8 +16467,104 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'PC82'
     pjhTagInfo.Description = 'PC82 AO Gas pressure control (MC)'
-    pjhTagInfo.ParamIndex = 24
+    pjhTagInfo.ParamIndex = 22
     pjhValue = '0'
+    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
+  end
+  object pjhiLabel1: TpjhiLabel
+    Left = 240
+    Top = 64
+    Width = 266
+    Height = 45
+    AutoSize = False
+    Alignment = iahCenter
+    Caption = 'Gas leak check state'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -27
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    WordWrap = False
+    pjhTagInfo.ParamIndex = 0
+    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
+  end
+  object pjhiEdit1: TpjhiEdit
+    Tag = 1
+    Left = 504
+    Top = 64
+    Width = 1105
+    Height = 41
+    Cursor = crIBeam
+    Alignment = taCenter
+    MaxLength = 0
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -27
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    Color = 12910591
+    TabOrder = 70
+    Value = '0'
+    ErrorActive = False
+    ErrorText = 'Error'
+    ErrorFont.Charset = DEFAULT_CHARSET
+    ErrorFont.Color = clRed
+    ErrorFont.Height = -11
+    ErrorFont.Name = 'Tahoma'
+    ErrorFont.Style = [fsBold]
+    ErrorBackGroundColor = clBlack
+    pjhTagInfo.TagName = '482'
+    pjhTagInfo.Description = 'Gas leak check state'
+    pjhTagInfo.ParamIndex = 18
+    pjhValue = '0'
+    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
+  end
+  object pjhiLabel2: TpjhiLabel
+    Left = 240
+    Top = 120
+    Width = 266
+    Height = 45
+    AutoSize = False
+    Alignment = iahCenter
+    Caption = 'Gas Leak check Result'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -27
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    WordWrap = False
+    pjhTagInfo.ParamIndex = 0
+    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
+  end
+  object pjhiEdit2: TpjhiEdit
+    Tag = 1
+    Left = 236
+    Top = 168
+    Width = 271
+    Height = 41
+    Cursor = crIBeam
+    Alignment = taCenter
+    MaxLength = 0
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -27
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    Color = 12910591
+    TabOrder = 72
+    Value = '2'
+    ErrorActive = False
+    ErrorText = 'Error'
+    ErrorFont.Charset = DEFAULT_CHARSET
+    ErrorFont.Color = clRed
+    ErrorFont.Height = -11
+    ErrorFont.Name = 'Tahoma'
+    ErrorFont.Style = [fsBold]
+    ErrorBackGroundColor = clBlack
+    pjhTagInfo.TagName = '483'
+    pjhTagInfo.Description = 'Gas leak check result'
+    pjhTagInfo.ParamIndex = 19
+    pjhValue = '2'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
 end

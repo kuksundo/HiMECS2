@@ -3,18 +3,19 @@ object TpjhPanel
   Left = 0
   Top = 0
   Width = 1028
-  Height = 797
+  Height = 771
   Align = alClient
   DoubleBuffered = True
   ParentDoubleBuffered = False
   TabOrder = 0
   NewPath = spAuto
   ShowScrollBar = False
+  ExplicitHeight = 772
   object pjhTImage1: TpjhTImage
     Left = 1
     Top = 1
     Width = 1026
-    Height = 795
+    Height = 769
     Align = alClient
     Picture.Data = {
       0A544A504547496D616765CC480100FFD8FFE000104A46494600010101006000
@@ -2854,7 +2855,7 @@ object TpjhPanel
     BlinkTimeInterval = 1000
     BevelShapeType = stRectangle
   end
-  object pjhTJvTransparentButton216: TpjhTJvTransparentButton2
+  object MoveScreenBtn: TpjhTJvTransparentButton2
     Left = 696
     Top = 648
     Width = 201
@@ -2892,7 +2893,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AUX_SF_PlantState'
     pjhTagInfo.Description = 'Plant State on Second Fuel'
-    pjhTagInfo.ParamIndex = 6
+    pjhTagInfo.ParamIndex = 38
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit2: TpjhiEdit
@@ -2921,7 +2922,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AUX_SF_SafetyMainState'
     pjhTagInfo.Description = 'Safety Main State'
-    pjhTagInfo.ParamIndex = 7
+    pjhTagInfo.ParamIndex = 51
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit3: TpjhiEdit
@@ -3231,7 +3232,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AUX_SF_SupplySystemState'
     pjhTagInfo.Description = 'Supply System State'
-    pjhTagInfo.ParamIndex = 8
+    pjhTagInfo.ParamIndex = 52
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay1: TpjhiAnalogDisplay
@@ -3431,7 +3432,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AUX_SF_ValveState'
     pjhTagInfo.Description = 'Valve State'
-    pjhTagInfo.ParamIndex = 9
+    pjhTagInfo.ParamIndex = 53
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
 end

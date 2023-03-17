@@ -1,5 +1,5 @@
 object TpjhPanel
-  Tag = 1
+  Tag = 2
   Left = 0
   Top = 0
   Width = 1719
@@ -3102,6 +3102,7 @@ object TpjhPanel
     NextStep = pjhiPipeJoint_pjh1
     PrevStep = pjhiLedArrow_pjh4
     FlowInterval = 50
+    FlowOn = True
     FlowReverse = False
     FlowIndicatorStyle = ipfisCircle
     FlowIndicatorSize = 6
@@ -3129,6 +3130,7 @@ object TpjhPanel
     NextStep = pjhiPipeJoint_pjh2
     PrevStep = pjhiPipeJoint_pjh1
     FlowInterval = 50
+    FlowOn = True
     FlowReverse = False
     FlowIndicatorStyle = ipfisCircle
     FlowIndicatorSize = 6
@@ -3155,6 +3157,7 @@ object TpjhPanel
     Vesrion = '0.0.2'
     PrevStep = pjhiPipeJoint_pjh2
     FlowInterval = 50
+    FlowOn = True
     FlowReverse = False
     FlowIndicatorStyle = ipfisCircle
     FlowIndicatorSize = 6
@@ -4148,12 +4151,14 @@ object TpjhPanel
     Width = 47
     Height = 28
     Vesrion = '0.0.1'
+    Active = True
     ClickToActive = False
     NextStep = pjhiPipe_pjh2
     PrevStep = pjhiTank_pjh1
     ArrowBodyLength = 19
     ArrowHeadSize = 28
     pjhTagInfo.ParamIndex = 0
+    pjhValue = '1'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
   end
   object pjhiLedArrow_pjh5: TpjhiLedArrow_pjh
@@ -4196,10 +4201,9 @@ object TpjhPanel
     Height = 65
     Visible = False
     Vesrion = '0.0.1'
-    Position = 1.000000000000000000
     PositionMax = 100.000000000000000000
     CurrentMax = 1.000000000000000000
-    Opened = True
+    Opened = False
     ClickToOpen = False
     DblClickToOpen = True
     InternalPressure = 0
@@ -4208,7 +4212,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'V_20190816105623'
     pjhTagInfo.Description = 'GRU Start'
     pjhTagInfo.ParamIndex = 8
-    pjhValue = '1'
+    pjhValue = '0'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
     PositionMax_2 = 100.000000000000000000
   end
@@ -4219,10 +4223,9 @@ object TpjhPanel
     Height = 49
     Visible = False
     Vesrion = '0.0.1'
-    Position = 1.000000000000000000
     PositionMax = 100.000000000000000000
     CurrentMax = 1.000000000000000000
-    Opened = True
+    Opened = False
     ClickToOpen = False
     DblClickToOpen = True
     InternalPressure = 0
@@ -4231,7 +4234,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'V_20190816105923'
     pjhTagInfo.Description = 'GRU Control Air OK'
     pjhTagInfo.ParamIndex = 9
-    pjhValue = '1'
+    pjhValue = '0'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
     PositionMax_2 = 100.000000000000000000
   end
@@ -4242,10 +4245,9 @@ object TpjhPanel
     Height = 49
     Visible = False
     Vesrion = '0.0.1'
-    Position = 1.000000000000000000
     PositionMax = 100.000000000000000000
     CurrentMax = 1.000000000000000000
-    Opened = True
+    Opened = False
     ClickToOpen = False
     DblClickToOpen = True
     InternalPressure = 0
@@ -4254,7 +4256,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'V_20190816110159'
     pjhTagInfo.Description = 'GRU Inert Gas OK'
     pjhTagInfo.ParamIndex = 10
-    pjhValue = '1'
+    pjhValue = '0'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
     PositionMax_2 = 100.000000000000000000
   end
@@ -4269,6 +4271,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 6.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -4280,7 +4283,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'D_3905'
     pjhTagInfo.Description = 'PT80 AI Gas supply pressure filter inlet'
     pjhTagInfo.ParamIndex = 0
-    pjhValue = '0'
+    pjhValue = '6'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay2: TpjhiAnalogDisplay
@@ -4309,7 +4312,7 @@ object TpjhPanel
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay3: TpjhiAnalogDisplay
-    Left = 317
+    Left = 349
     Top = 683
     Width = 49
     Height = 25
@@ -4319,6 +4322,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 6.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -4330,7 +4334,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'D_1310'
     pjhTagInfo.Description = 'PT81 AI Gas supply pressure filter outlet'
     pjhTagInfo.ParamIndex = 2
-    pjhValue = '0'
+    pjhValue = '6'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay4: TpjhiAnalogDisplay
@@ -4344,6 +4348,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 7.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -4355,7 +4360,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'D_1309'
     pjhTagInfo.Description = 'PT83 AI GRU control air'
     pjhTagInfo.ParamIndex = 7
-    pjhValue = '0'
+    pjhValue = '7'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay5: TpjhiAnalogDisplay
@@ -4370,6 +4375,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 25.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -4381,7 +4387,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'A_3_0109'
     pjhTagInfo.Description = 'TE81 AI Gas temperature'
     pjhTagInfo.ParamIndex = 4
-    pjhValue = '0'
+    pjhValue = '25'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay6: TpjhiAnalogDisplay
@@ -4420,6 +4426,7 @@ object TpjhPanel
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    Value = 7.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -4431,7 +4438,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'D_5695'
     pjhTagInfo.Description = 'PT89 AI Inert gas pressure'
     pjhTagInfo.ParamIndex = 5
-    pjhValue = '0'
+    pjhValue = '7'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogDisplay8: TpjhiAnalogDisplay
@@ -4492,7 +4499,7 @@ object TpjhPanel
     Font.Style = [fsBold]
     Color = 12910591
     TabOrder = 62
-    Value = 'Inactive'
+    Value = '0'
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -4504,7 +4511,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'D_6739'
     pjhTagInfo.Description = 'Gas leak check state'
     pjhTagInfo.ParamIndex = 18
-    pjhValue = 'Inactive'
+    pjhValue = '0'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiLabel2: TpjhiLabel
@@ -4737,7 +4744,7 @@ object TpjhPanel
     ValveKind = pvtManualPush
     NextStep = pjhiPipe_pjh25
     PrevStep = pjhiPipe_pjh24
-    Opened = True
+    Opened = False
     OpenedColor = clLime
     ClosedColor = clRed
     ChangeBodyColor = True
@@ -4745,7 +4752,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'A_6_00C5'
     pjhTagInfo.Description = 'SV88-A DO Main Degasing valve A bank'
     pjhTagInfo.ParamIndex = 16
-    pjhValue = '1'
+    pjhValue = '0'
     pjhBplFileName = 'pjhxIOCompPkg.bpl'
     ValveKnobPosition = vdLeft
     ValveWayKind = vwk2Way

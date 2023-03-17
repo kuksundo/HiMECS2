@@ -268,7 +268,7 @@
 		<TDesignFormConfigItem>
 			<BplFileList>pjhDelphiStandardPkg.bpl</BplFileList>
 			<DesignFormFileName>..\..\HiMECS\WatchList\ME\MAN\ME-GI\MK2\MK2__49</DesignFormFileName>
-			<DesignFormCaption>Operation-DualFuel</DesignFormCaption>
+			<DesignFormCaption>AdvOfficePage49</DesignFormCaption>
 			<DesignFormIndex>49</DesignFormIndex>
 		</TDesignFormConfigItem>
 		<TDesignFormConfigItem>
@@ -283,9 +283,8 @@
 			<DesignFormCaption>AdvOfficePage51</DesignFormCaption>
 			<DesignFormIndex>51</DesignFormIndex>
 		</TDesignFormConfigItem>
-		</TDesignFormConfigItem>
 	</DesignFormConfigCollect>
-	<MainFormCaption>ME-GI LOP(MK2)</MainFormCaption>
+	<MainFormCaption>Multi-Watch</MainFormCaption>
 	<BorderStyle>2</BorderStyle>
 	<TabHeight>26</TabHeight>
 </TDesignFormConfig>

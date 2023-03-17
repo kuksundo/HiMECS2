@@ -3,7 +3,7 @@ object TpjhPanel
   Left = 0
   Top = 0
   Width = 1028
-  Height = 797
+  Height = 771
   Align = alClient
   DoubleBuffered = True
   ParentDoubleBuffered = False
@@ -14,7 +14,7 @@ object TpjhPanel
     Left = 1
     Top = 1
     Width = 1026
-    Height = 795
+    Height = 769
     Align = alClient
     Picture.Data = {
       0A544A504547496D61676582190100FFD8FFE000104A46494600010101006000
@@ -2481,7 +2481,7 @@ object TpjhPanel
     BlinkTimeInterval = 1000
     BevelShapeType = stRectangle
   end
-  object pjhTJvTransparentButton214: TpjhTJvTransparentButton2
+  object MoveScreenBtn: TpjhTJvTransparentButton2
     Left = 704
     Top = 672
     Width = 201
@@ -2520,7 +2520,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'ENG_OP_DualFuel'
     pjhTagInfo.Description = 'Dual Fual on the Operation'
-    pjhTagInfo.ParamIndex = 3
+    pjhTagInfo.ParamIndex = 37
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit1: TpjhiEdit
@@ -2550,7 +2550,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AUX_SF_PlantState'
     pjhTagInfo.Description = 'Plant State on Second Fuel'
-    pjhTagInfo.ParamIndex = 6
+    pjhTagInfo.ParamIndex = 38
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhTPanelWithBalloon1: TpjhTPanelWithBalloon

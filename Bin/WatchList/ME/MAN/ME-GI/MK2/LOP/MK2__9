@@ -10,10 +10,6 @@ object TpjhPanel
   TabOrder = 0
   NewPath = spAuto
   ShowScrollBar = False
-  ExplicitHeight = 770
-  DesignSize = (
-    1027
-    769)
   object pjhTImage1: TpjhTImage
     Left = 1
     Top = 1
@@ -2960,8 +2956,10 @@ object TpjhPanel
       E7A9A9949495901FFFD9}
     pjhTagInfo.ParamIndex = 0
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
-    ExplicitLeft = -7
-    ExplicitTop = -55
+    ExplicitLeft = 112
+    ExplicitTop = 72
+    ExplicitWidth = 857
+    ExplicitHeight = 569
   end
   object pjhTJvTransparentButton21: TpjhTJvTransparentButton2
     Left = 904
@@ -2971,7 +2969,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '9'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
+    pjhBtnActionKind = tbakChangePage
   end
   object pjhTJvTransparentButton22: TpjhTJvTransparentButton2
     Left = 904
@@ -2981,7 +2979,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '10'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
+    pjhBtnActionKind = tbakChangePage
   end
   object pjhTJvTransparentButton23: TpjhTJvTransparentButton2
     Left = 904
@@ -2991,7 +2989,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '12'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
+    pjhBtnActionKind = tbakChangePage
   end
   object pjhTJvTransparentButton24: TpjhTJvTransparentButton2
     Left = 904
@@ -3001,7 +2999,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '14'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
+    pjhBtnActionKind = tbakChangePage
   end
   object pjhTJvTransparentButton25: TpjhTJvTransparentButton2
     Left = 904
@@ -3011,7 +3009,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '17'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
+    pjhBtnActionKind = tbakChangePage
   end
   object pjhTJvTransparentButton26: TpjhTJvTransparentButton2
     Left = 904
@@ -3021,7 +3019,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '5'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
+    pjhBtnActionKind = tbakChangePage
   end
   object pjhTJvTransparentButton27: TpjhTJvTransparentButton2
     Left = 905
@@ -3031,7 +3029,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '18'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
+    pjhBtnActionKind = tbakChangePage
   end
   object pjhTJvTransparentButton28: TpjhTJvTransparentButton2
     Left = 905
@@ -3041,7 +3039,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '28'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
+    pjhBtnActionKind = tbakChangePage
   end
   object pjhTJvTransparentButton29: TpjhTJvTransparentButton2
     Left = 906
@@ -3051,263 +3049,6 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '47'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
-  end
-  object pjhTJvTransparentButton210: TpjhTJvTransparentButton2
-    Left = 46
-    Top = 208
-    Width = 89
-    Height = 28
-    pjhTagInfo.ParamIndex = 0
-    pjhValue = ''
-    pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
-  end
-  object pjhTJvTransparentButton211: TpjhTJvTransparentButton2
-    Left = 343
-    Top = 208
-    Width = 89
-    Height = 25
-    pjhTagInfo.ParamIndex = 0
-    pjhValue = '49'
-    pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakLoadDFMFromFile
-  end
-  object pjhiEdit1: TpjhiEdit
-    Left = 47
-    Top = 237
-    Width = 87
-    Height = 24
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 11371911
-    BorderStyle = ibsNone
-    TabOrder = 1
-    Value = 'Tier II'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'ENG_OP_ENG_MODE'
-    pjhTagInfo.Description = 'Engine Mode'
-    pjhTagInfo.ParamIndex = 3
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-  end
-  object pjhiEdit2: TpjhiEdit
-    Left = 344
-    Top = 235
-    Width = 86
-    Height = 28
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clNavy
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 6146813
-    BorderStyle = ibsNone
-    TabOrder = 0
-    Value = 'Not Ready'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'ENG_OP_DualFuel'
-    pjhTagInfo.Description = 'Dual Fuel'
-    pjhTagInfo.ParamIndex = 4
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-  end
-  object pjhiEdit3: TpjhiEdit
-    Left = 47
-    Top = 105
-    Width = 185
-    Height = 27
-    Cursor = crIBeam
-    Alignment = taLeftJustify
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 11371911
-    BorderStyle = ibsNone
-    TabOrder = 2
-    Value = 'Standby'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'ENG_OP_MainState1'
-    pjhTagInfo.Description = 'Main State 1'
-    pjhTagInfo.ParamIndex = 0
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-  end
-  object pjhiEdit4: TpjhiEdit
-    Left = 48
-    Top = 134
-    Width = 185
-    Height = 28
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clNavy
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 15392992
-    BorderStyle = ibsNone
-    TabOrder = 3
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'ENG_OP_MainState2'
-    pjhTagInfo.Description = 'Main State 2'
-    pjhTagInfo.ParamIndex = 1
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-  end
-  object pjhiEdit5: TpjhiEdit
-    Left = 48
-    Top = 164
-    Width = 185
-    Height = 28
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clNavy
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 6146813
-    BorderStyle = ibsNone
-    TabOrder = 4
-    Value = 'Not Ready'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'ENG_OP_MainState3'
-    pjhTagInfo.Description = 'Main State 3'
-    pjhTagInfo.ParamIndex = 2
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-  end
-  object pjhiEdit6: TpjhiEdit
-    Left = 48
-    Top = 731
-    Width = 189
-    Height = 27
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 11371911
-    BorderStyle = ibsNone
-    TabOrder = 5
-    Value = 'Running'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-  end
-  object pjhiEdit7: TpjhiEdit
-    Left = 476
-    Top = 137
-    Width = 186
-    Height = 27
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 11371911
-    BorderStyle = ibsNone
-    TabOrder = 7
-    Value = 'RPM Fine Adjust'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'ENG_OP_SpeedModifier'
-    pjhTagInfo.Description = 'Speed Modifier'
-    pjhTagInfo.ParamIndex = 5
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-  end
-  object pjhiEdit8: TpjhiEdit
-    Left = 704
-    Top = 137
-    Width = 157
-    Height = 27
-    Cursor = crIBeam
-    Alignment = taCenter
-    MaxLength = 0
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clGray
-    Font.Height = -16
-    Font.Name = 'Arial Narrow'
-    Font.Style = [fsBold]
-    Color = 15392992
-    BorderStyle = ibsNone
-    TabOrder = 6
-    Value = 'Lambda'
-    ErrorActive = False
-    ErrorText = 'Error'
-    ErrorFont.Charset = DEFAULT_CHARSET
-    ErrorFont.Color = clRed
-    ErrorFont.Height = -11
-    ErrorFont.Name = 'Tahoma'
-    ErrorFont.Style = [fsBold]
-    ErrorBackGroundColor = clBlack
-    pjhTagInfo.TagName = 'ENG_OP_IndexLimiter'
-    pjhTagInfo.Description = 'Index Limiter'
-    pjhTagInfo.ParamIndex = 6
-    pjhBplFileName = 'pjhIOCompStdPkg.bpl'
+    pjhBtnActionKind = tbakChangePage
   end
 end
