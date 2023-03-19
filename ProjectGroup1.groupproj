@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{540B1E8C-EE2C-435D-9FC3-5B080E09E574}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\GSManage\CertManage2\CertManageR2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Source\HiMECS2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\NoGitHub\RegCodeManager2\RegCodeServer2.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CertManageR2">
+        <MSBuild Projects="..\GSManage\CertManage2\CertManageR2.dproj"/>
+    </Target>
+    <Target Name="CertManageR2:Clean">
+        <MSBuild Projects="..\GSManage\CertManage2\CertManageR2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CertManageR2:Make">
+        <MSBuild Projects="..\GSManage\CertManage2\CertManageR2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="HiMECS2">
+        <MSBuild Projects="Source\HiMECS2.dproj"/>
+    </Target>
+    <Target Name="HiMECS2:Clean">
+        <MSBuild Projects="Source\HiMECS2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="HiMECS2:Make">
+        <MSBuild Projects="Source\HiMECS2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RegCodeServer2">
+        <MSBuild Projects="..\..\NoGitHub\RegCodeManager2\RegCodeServer2.dproj"/>
+    </Target>
+    <Target Name="RegCodeServer2:Clean">
+        <MSBuild Projects="..\..\NoGitHub\RegCodeManager2\RegCodeServer2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RegCodeServer2:Make">
+        <MSBuild Projects="..\..\NoGitHub\RegCodeManager2\RegCodeServer2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CertManageR2;HiMECS2;RegCodeServer2"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CertManageR2:Clean;HiMECS2:Clean;RegCodeServer2:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CertManageR2:Make;HiMECS2:Make;RegCodeServer2:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

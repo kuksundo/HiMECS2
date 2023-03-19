@@ -5,6 +5,7 @@ program HiMECSWatch2;
 uses
   mormot.db.raw.sqlite3.static,
   Forms,
+  UnitHiMECSWatch2 in '..\..\..\..\NoGitHub\RecordUnit2\HIMECS\UnitHiMECSWatch2.pas',
   WatchConfig2 in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\WatchConfig2.pas' {WatchConfigF},
   HiMECSConst in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECSConst.pas',
   UnitAxisSelect in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\UnitAxisSelect.pas' {AxisSelectF},
@@ -52,7 +53,8 @@ uses
   FrmInputEdit in '..\..\..\..\..\..\..\project\common\Forms\FrmInputEdit.pas',
   UnitBalloonConst2 in 'UnitBalloonConst2.pas',
   pjhBalloonCompIntf in '..\..\..\..\..\..\..\project\util\VisualComm\Component\pjhDelphiStandardComp\pjhBalloonCompIntf.pas',
-  Delphi.Mocks.Helpers in '..\..\..\..\OpenSrc\lib\Delphi-Mocks-master\Source\Delphi.Mocks.Helpers.pas';
+  Delphi.Mocks.Helpers in '..\..\..\..\OpenSrc\lib\Delphi-Mocks-master\Source\Delphi.Mocks.Helpers.pas' {$R *.res},
+  JHP.BaseCommandLineOption in '..\..\..\..\Common\JHP.BaseCommandLineOption.pas';
 
 {$R *.res}
 
