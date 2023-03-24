@@ -2,8 +2,8 @@ object TpjhPanel
   Tag = 2
   Left = 0
   Top = 0
-  Width = 1287
-  Height = 807
+  Width = 1542
+  Height = 804
   Align = alClient
   DoubleBuffered = True
   ParentDoubleBuffered = False
@@ -13,8 +13,8 @@ object TpjhPanel
   object pjhTImage1: TpjhTImage
     Left = 1
     Top = 1
-    Width = 1285
-    Height = 805
+    Width = 1540
+    Height = 802
     Align = alClient
     Picture.Data = {
       0954506E67496D61676589504E470D0A1A0A0000000D49484452000005040000
@@ -5686,6 +5686,8 @@ object TpjhPanel
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
     ExplicitLeft = 113
     ExplicitTop = -15
+    ExplicitWidth = 1285
+    ExplicitHeight = 805
   end
   object pjhTJvTransparentButton25: TpjhTJvTransparentButton2
     Left = 0
@@ -5695,7 +5697,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '7'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton26: TpjhTJvTransparentButton2
     Left = 194
@@ -5705,7 +5707,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '8'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton27: TpjhTJvTransparentButton2
     Left = 387
@@ -5715,7 +5717,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '10'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton28: TpjhTJvTransparentButton2
     Left = 588
@@ -5725,7 +5727,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '16'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton211: TpjhTJvTransparentButton2
     Left = 782
@@ -5735,7 +5737,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '24'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton212: TpjhTJvTransparentButton2
     Left = 976
@@ -5745,7 +5747,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '30'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton21: TpjhTJvTransparentButton2
     Left = 7
@@ -5755,7 +5757,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '16'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton22: TpjhTJvTransparentButton2
     Left = 162
@@ -5765,7 +5767,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '17'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton23: TpjhTJvTransparentButton2
     Left = 318
@@ -5775,7 +5777,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '18'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton24: TpjhTJvTransparentButton2
     Left = 474
@@ -5785,7 +5787,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '19'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton29: TpjhTJvTransparentButton2
     Left = 639
@@ -5795,7 +5797,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '20'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton210: TpjhTJvTransparentButton2
     Left = 810
@@ -5805,7 +5807,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '21'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton213: TpjhTJvTransparentButton2
     Left = 964
@@ -5815,7 +5817,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '22'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhTJvTransparentButton214: TpjhTJvTransparentButton2
     Left = 1129
@@ -5825,7 +5827,7 @@ object TpjhPanel
     pjhTagInfo.ParamIndex = 0
     pjhValue = '23'
     pjhBplFileName = 'pjhJvCompPkg.bpl'
-    pjhBtnActionKind = tbakChangePage
+    pjhBtnActionKind = tbakLoadDFMFromFile
   end
   object pjhiEdit1: TpjhiEdit
     Left = 932
@@ -6323,14 +6325,14 @@ object TpjhPanel
     Top = 480
     Width = 28
     Height = 195
-    PositionMax = 100.000000000000000000
+    PositionMax = 30.000000000000000000
     SectionEnd1 = 50.000000000000000000
     SectionEnd2 = 75.000000000000000000
     pjhTagInfo.TagName = 'P910_2'
     pjhTagInfo.Description = 'P910.2 IMEP mean value'
     pjhTagInfo.ParamIndex = 283
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
-    PositionMax_2 = 100.000000000000000000
+    PositionMax_2 = 30.000000000000000000
     SectionEnd1_2 = 50.000000000000000000
     SectionEnd2_2 = 75.000000000000000000
     SectionEnd3_2 = 0.000000000000000000
@@ -6874,7 +6876,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P170_2'
+    pjhTagInfo.Description = 'P170.2 IMEP A1'
+    pjhTagInfo.ParamIndex = 263
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit13: TpjhiEdit
@@ -6901,7 +6905,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P171_2'
+    pjhTagInfo.Description = 'P171.2 IMEP A2'
+    pjhTagInfo.ParamIndex = 264
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit14: TpjhiEdit
@@ -6928,7 +6934,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P172_2'
+    pjhTagInfo.Description = 'P172.2 IMEP A3'
+    pjhTagInfo.ParamIndex = 265
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit15: TpjhiEdit
@@ -6955,7 +6963,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P173_2'
+    pjhTagInfo.Description = 'P173.2 IMEP A4'
+    pjhTagInfo.ParamIndex = 266
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit16: TpjhiEdit
@@ -6982,7 +6992,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P174_2'
+    pjhTagInfo.Description = 'P174.2 IMEP A5'
+    pjhTagInfo.ParamIndex = 267
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit17: TpjhiEdit
@@ -7009,7 +7021,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P175_2'
+    pjhTagInfo.Description = 'P175.2 IMEP A6'
+    pjhTagInfo.ParamIndex = 268
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit18: TpjhiEdit
@@ -7036,7 +7050,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P176_2'
+    pjhTagInfo.Description = 'P176.2 IMEP A7'
+    pjhTagInfo.ParamIndex = 269
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit19: TpjhiEdit
@@ -7063,7 +7079,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P177_2'
+    pjhTagInfo.Description = 'P177.2 IMEP A8'
+    pjhTagInfo.ParamIndex = 270
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiEdit20: TpjhiEdit
@@ -7072,6 +7090,7 @@ object TpjhPanel
     Width = 67
     Height = 35
     Cursor = crIBeam
+    Visible = False
     Alignment = taCenter
     AutoSize = False
     MaxLength = 0
@@ -7090,7 +7109,9 @@ object TpjhPanel
     ErrorFont.Name = 'Tahoma'
     ErrorFont.Style = [fsBold]
     ErrorBackGroundColor = clBlack
-    pjhTagInfo.ParamIndex = 0
+    pjhTagInfo.TagName = 'P178_2'
+    pjhTagInfo.Description = 'P178.2 IMEP A9'
+    pjhTagInfo.ParamIndex = 271
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
 end
