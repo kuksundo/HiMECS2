@@ -186,6 +186,8 @@ type
     TBNameCombo: TComboBox;
     Label52: TLabel;
     DisplayFormatEdit: TEdit;
+
+    procedure FormCreate(Sender: TObject);
     procedure LowAlarmEnableCBClick(Sender: TObject);
     procedure MaxAlarmEnableCBClick(Sender: TObject);
     procedure LowFaultEnableCBClick(Sender: TObject);
@@ -312,6 +314,11 @@ begin
       MaxFaultGroup.Enabled := False;
     end;
   end;
+end;
+
+procedure TEngParamItemConfigForm2.FormCreate(Sender: TObject);
+begin//Invalid Propety Value Error가 발생할 때 FormCreate 함수를 생성해서 해결함
+;
 end;
 
 procedure TEngParamItemConfigForm2.InitCombo;

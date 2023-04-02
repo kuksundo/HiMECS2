@@ -4834,9 +4834,18 @@ end;
 
 procedure TMainForm.LoadSearchTreeFromEngParamSensorType(ASearchTypes: TSensorTypes;
   ASortMethod: TParamSortMethod; ATV: TJvCheckTreeView; AEPKind: TEngParamListItemKind);
+var
+  LSearchText: string;
 begin
   ClearHideItemsOfEngParamFromProj(AEPKind);
-  LoadSearchTreeFromEngParam2(ASearchTypes,ParameterSrchEdit.Text,ASortMethod, ATV, AEPKind);
+
+  if AEPKind = eplikModbus then
+    LSearchText := SrchTextEdit.Text
+  else
+  if AEPKind = eplikParameter then
+    LSearchText := ParameterSrchEdit.Text;
+
+  LoadSearchTreeFromEngParam2(ASearchTypes, LSearchText, ASortMethod, ATV, AEPKind);
 end;
 
 procedure TMainForm.LoadSearchTreeFromManualInfo(ASearchText: string;

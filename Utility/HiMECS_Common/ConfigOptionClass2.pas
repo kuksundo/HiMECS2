@@ -59,7 +59,7 @@ type
     property UserLevel: integer read FUserLevel write FUserLevel;
     [CLPLongName('SkipReg'), CLPDescription('Skip Reginfo check')]
     property SkipRegCheck: Boolean read FSkipRegCheck write FSkipRegCheck;
-    [CLPLongName('rip'), CLPDescription('/rip:"xx.xx.xx.xx"'), CLPDefault('127.0.0.1')]
+    [CLPLongName('rip'), CLPDescription('/rip:"xx.xx.xx.xx"'), CLPDefault('')]
     property RCSIPAddress: string read FRCSIPAddress write FRCSIPAddress;
     [CLPLongName('rport'), CLPDescription('Reg Code Server Port No'), CLPDefault('')]
     property RCSPort: string read FRCSPort write FRCSPort;

@@ -12,6 +12,7 @@ object EngParamItemConfigForm2: TEngParamItemConfigForm2
   Font.Style = [fsBold]
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel

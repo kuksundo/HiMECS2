@@ -37,7 +37,7 @@ uses
   UnitHiMECSManualClass2 in 'Common\UnitHiMECSManualClass2.pas',
   FrmPdfViewMDIChild2 in '..\Form\FrmPdfViewMDIChild2.pas' {PDFViewMDIChildF},
   UnitEngineParamConst in '..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\UnitEngineParamConst.pas',
-  UnitHiMECSCommandLine in '..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\UnitHiMECSCommandLine.pas',
+  UnitHiMECSCommandLine2 in 'Common\UnitHiMECSCommandLine2.pas',
   UnitEngineMasterData in '..\..\..\..\..\..\project\util\GSManage\VesselList\UnitEngineMasterData.pas',
   UnitModbusComConst in '..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModbusComConst.pas',
   UnitHiMECSManualRecord2 in 'Common\UnitHiMECSManualRecord2.pas',
