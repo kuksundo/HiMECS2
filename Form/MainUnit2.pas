@@ -2701,8 +2701,11 @@ begin
   if epfkSensor in LEngParamFilterKinds then
     Result := [stmA, stRTD, stTC, stPickup, stDI, stDO];
 
-  if epfkParam in LEngParamFilterKinds then
-    Result := Result + [stParam];
+//  if epfkParam in LEngParamFilterKinds then
+//    Result := Result + [stParam];
+
+  if epfkModbus in LEngParamFilterKinds then
+    Result := Result + [stmA, stRTD, stTC, stPickup, stDI, stDO, stConfig, stCalculated, stVoltage, stCommand, stSolValve, stControlValve, stPump, stFan, stRelay, stAlarm, stActuator, stVoltage];
 
   if epfkAlarm in LEngParamFilterKinds then
     Result := Result + [stAlarm];
@@ -4442,7 +4445,7 @@ var
 
 //      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig;
 //      LStr := LHiMECSConfig.ParamFileName;
-      LoadParameter2TreeView(ASortMethod,LRootNode, AIdx, ATV, AEPKind);
+      LoadParameter2TreeView(ASortMethod, LRootNode, AIdx, ATV, AEPKind);
     end;
   end;
 begin

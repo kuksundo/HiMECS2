@@ -5480,7 +5480,7 @@ object TpjhPanel
     Width = 112
     Height = 21
     Margins.Right = 10
-    Caption = '2022-10-22'
+    Caption = '2023-04-05'
     Color = 8404992
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -5502,7 +5502,7 @@ object TpjhPanel
     Height = 21
     Margins.Right = 10
     AutoSize = False
-    Caption = #50724#51204' 9:26'
+    Caption = #50724#51204' 8:14'
     Color = 8404992
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -5597,9 +5597,9 @@ object TpjhPanel
     Width = 27
     Height = 27
     BackGroundColor = 15790320
-    pjhTagInfo.TagName = 'ACP_L2'
-    pjhTagInfo.Description = 'ACP L2 DO Remote Control'
-    pjhTagInfo.ParamIndex = 24
+    pjhTagInfo.TagName = 'LOP_S5'
+    pjhTagInfo.Description = 'LOP S5 DI Local/remote operation'
+    pjhTagInfo.ParamIndex = 20
     pjhValue = '0'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end

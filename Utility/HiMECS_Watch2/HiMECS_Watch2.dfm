@@ -494,9 +494,9 @@ object WatchF2: TWatchF2
       end
       inline FWG: TFrameWatchGrid2
         Left = 2
-        Top = 20
+        Top = 58
         Width = 572
-        Height = 334
+        Height = 296
         Align = alClient
         TabOrder = 1
         ExplicitLeft = 2
@@ -505,13 +505,13 @@ object WatchF2: TWatchF2
         ExplicitHeight = 334
         inherited NextGrid1: TNextGrid
           Width = 572
-          Height = 334
+          Height = 296
           ExplicitWidth = 572
           ExplicitHeight = 334
         end
         inherited ImageList1: TImageList
           Bitmap = {
-            494C010106000900FC0310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+            494C010106000900000410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
             0000000000003600000028000000400000002000000001002000000000000020
             0000000000000000000000000000000000000000000000000000000000000000
             000040B0C00040C0C00030B0C00030B0C00030B0C00030B0B00030A8B00030A8
@@ -787,7 +787,7 @@ object WatchF2: TWatchF2
         Left = 2
         Top = 2
         Width = 572
-        Height = 18
+        Height = 56
         Align = alTop
         Caption = ''
         CollapseGlyph.Data = {
@@ -803,7 +803,6 @@ object WatchF2: TWatchF2
           FFFFFFF8FFFFFFF0F0FFFFF0E0FFE0D0C0FF604830FFC0B0A0FFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFF8FFFFFFF0F0FFF0F0E0FF604830FFC0B0A040C0B0
           A0FFC0B0A0FFC0A8A0FFC0A8A0FFC0A8A0FFC0A890FFC0A090FF60483040}
-        Expanded = False
         ExpandGlyph.Data = {
           7A010000424D7A01000000000000360000002800000009000000090000000100
           2000000000004401000000000000000000000000000000000000604830406048

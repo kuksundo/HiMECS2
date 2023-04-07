@@ -3721,7 +3721,7 @@ end;
 
 procedure TWatchF2.TagRBClick(Sender: TObject);
 begin
-  DescRB.Checked := TagRB.Checked;
+  DescRB.Checked := not TagRB.Checked;
 end;
 
 procedure TWatchF2.Timer1Timer(Sender: TObject);
@@ -4720,7 +4720,7 @@ end;
 
 procedure TWatchF2.DescRBClick(Sender: TObject);
 begin
-  TagRB.Checked := DescRB.Checked;
+  TagRB.Checked := not DescRB.Checked;
 end;
 
 procedure TWatchF2.DestroyComponentOnPage(LPage: TAdvOfficePage);

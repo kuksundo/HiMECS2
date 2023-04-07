@@ -6,6 +6,7 @@ uses classes, SysUtils, JHP.BaseConfigCollect, HiMECSConst, GpCommandLineParser,
   Generics.Legacy, JHP.BaseCommandLineOption;
 {Boolean Type은 CommandLine에 /OneForm 유무에 따라 True/False가 결정됨}
 {/p"E:\temp\MK2" /OneForm /DelRegistry /SkipReg /rip:"10.1.1.1"}
+{/SkipReg DecKind=123 /Masterpw="7beAJ75XB5nPZWDD714cJQ==" }
 type
   TWatchCommandLineOption = class//TJHPBaseCommandLineOption
     FRCSIPAddress, //Reg Code Server IP Address

@@ -997,7 +997,8 @@ var
   LDynArr: TDynArray;
 begin
   LDynArr.Init(TypeInfo(TRawUTF8DynArray), Result);
-  LEngineParamRecord := GetEngParamRecFromAddress('',AEngineParamDB);
+//  LEngineParamRecord := GetEngParamRecFromAddress('',AEngineParamDB);
+  LEngineParamRecord := GetEngParamRecFromNotParamNo(AEngineParamDB);
 
   try
     LEngineParamRecord.FillRewind;

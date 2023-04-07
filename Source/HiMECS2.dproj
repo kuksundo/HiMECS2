@@ -94,7 +94,7 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <Debugger_DebugSourcePath>E:\pjh\Dev\Lang\Delphi\OpenSrc\lib\mORMot2-master\src\core\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <DCC_DcuOutput>Y:\pjh\Dcu\Win32\$(MSBuildProjectName)</DCC_DcuOutput>
-        <Debugger_RunParams>/UF:.\HiMECS.ID /PF:.\Projects\8H35DF_HiLS.himecs /rip=&quot;172.30.0.1&quot;</Debugger_RunParams>
+        <Debugger_RunParams>/UF:.\HiMECS.ID /PF:.\Projects\8H35DF_HiLS.himecs /rip=&quot;10.0.2.15&quot;</Debugger_RunParams>
         <DCC_UsePackage>NxCollectionDsgn_dxe5 ; NxCollectionRun_dxe5 ; NxCommonDsgn_dxe5 ; NxCommonRun_dxe5 ; NxDBGridDsgn_dxe5 ; NxDBGridRun_dxe5 ; NxGridDsgn_dxe5 ; NxGridRun_dxe5 ; NxInspectorDsgn_dxe5 ; NxInspectorRun_dxe5 ; NxSheetRun_dxe5 ; </DCC_UsePackage>
         <Manifest_File>HiMECS.manifest</Manifest_File>
         <DCC_Define>HiMECS;MAX_SQLFIELDS_256;DEF_CRYPT_ALL;USE_REGCODE;$(DCC_Define)</DCC_Define>
