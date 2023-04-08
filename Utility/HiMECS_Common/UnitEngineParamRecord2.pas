@@ -351,6 +351,10 @@ procedure AddOrUpdatedEngParamRec(AEngineParamRecord: TEngineParamRecord; AEngin
 procedure LoadEngParamRecFromVariant(AEngineParamRecord: TEngineParamRecord; ADoc: variant);
 function AddOrUpdateEngParamRecFromVariant(ADoc: variant; AIsOnlyAdd: Boolean = False; AEngineParamDB: TRestClientDB = nil): integer;
 procedure AddSensorData2SqliteFromSensorDB(ASrcDBFileName, ADestDBFileName: string);
+//TParamDescBase4AVAT2에서 Category 및 SubCategory를 읽어서
+//EngineParameterDB(HiMECS_DF_A2_Sensor_r6.sqlite)의 ParameterCategory4AVAT2 필드와
+//ParameterSubCategory4AVAT2 필드를 Update함
+procedure UpdateEngParamRec2CategoryEnumFromParamDescBase(AEngineParamDB, AParamDescBaseDB: TRestClientDB);
 
 //For TPLCInfoRec4Avat2
 function GetPLCInfoRecFromSqlite(AEngineParamDB: TRestClientDB = nil): TPLCInfoRec4Avat2;
@@ -1100,6 +1104,50 @@ begin
   finally
     DestroyEngineParamClient(LDestDB, LDestModel);
     DestroyEngineParamClient(LSrcDB, LSrcModel);
+  end;
+end;
+
+procedure UpdateEngParamRec2CategoryEnumFromParamDescBase(AEngineParamDB, AParamDescBaseDB: TRestClientDB);
+var
+  LEngineParamRecord: TEngineParamRecord;
+  LParamDescBase4AVAT2: TParamDescBase4AVAT2;
+  LParamNo: string;
+begin
+  if not Assigned(AEngineParamDB) then
+  begin
+    if not Assigned(g_EngineParamDB) then
+      InitEngineParamClient(ENG_SENSOR_DB_NAME);
+
+    AEngineParamDB := g_EngineParamDB;
+  end;
+
+  if not Assigned(AParamDescBaseDB) then
+  begin
+    if not Assigned(g_ParamBaseDB) then
+      InitParamBaseClient(DF_AVAT2_PARAM_BASE_DB_NAME);
+
+    AParamDescBaseDB := g_ParamBaseDB;
+  end;
+
+  LEngineParamRecord := GetEngParamRecFromParamNo('', AEngineParamDB);
+  try
+    if LEngineParamRecord.IsUpdate then
+      LEngineParamRecord.FillRewind;
+
+    while LEngineParamRecord.FillOne do
+    begin
+      LParamNo := LEngineParamRecord.ParamNo;
+      LParamDescBase4AVAT2 := GetParamDescBaseRecFromParamNo(LParamNo, AParamDescBaseDB);
+
+      if LParamDescBase4AVAT2.IsUpdate then
+      begin
+        LEngineParamRecord.ParameterCatetory4AVAT2 := LParamDescBase4AVAT2.CategoryEnum;
+        LEngineParamRecord.ParameterSubCatetory4AVAT2 := LParamDescBase4AVAT2.SubCategoryEnum;
+        AEngineParamDB.Update(LEngineParamRecord);
+      end;
+    end;
+  finally
+    LEngineParamRecord.Free;
   end;
 end;
 

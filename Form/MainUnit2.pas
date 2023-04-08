@@ -214,9 +214,7 @@ type
     AdvSmartMessageBox1: TAdvSmartMessageBox;
     MDITabSet: TAdvOfficeMDITabSet;
     AdvOfficeTabSet1: TAdvOfficeTabSet;
-    ShowParameterList1: TMenuItem;
     N12: TMenuItem;
-    ShowParamListToNewForm1: TMenuItem;
     N13: TMenuItem;
     ShowNodeIndex1: TMenuItem;
     N14: TMenuItem;
@@ -269,6 +267,9 @@ type
     EngModbusSource: TDropTextSource;
     ParamDropTarget: TDropTextTarget;
     Property2: TMenuItem;
+    ShowSelectedParameterList1: TMenuItem;
+    N15: TMenuItem;
+    ShowParameterListToNewForm1: TMenuItem;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EngineInfoInspectorMouseMove(Sender: TObject; Shift: TShiftState; X,
@@ -347,8 +348,6 @@ type
       Size: Integer);
     procedure CopyParameterToMonitor1Click(Sender: TObject);
     procedure ManualSearchEditChange(Sender: TObject);
-    procedure ShowParameterList1Click(Sender: TObject);
-    procedure ShowParamListToNewForm1Click(Sender: TObject);
     procedure ShowNodeIndex1Click(Sender: TObject);
     procedure ShowMultiState1Click(Sender: TObject);
     procedure SortbySensorSystem1Click(Sender: TObject);
@@ -407,6 +406,8 @@ type
       APoint: TPoint; var Effect: Integer);
     procedure Property1Click(Sender: TObject);
     procedure Property2Click(Sender: TObject);
+    procedure ShowSelectedParameterList1Click(Sender: TObject);
+    procedure ShowParameterListToNewForm1Click(Sender: TObject);
   private
     FEgg: TEasternEgg;
     FOldPanelProc: TWndMethod;
@@ -424,8 +425,11 @@ type
 
     FApplicationPath: string;
 
-    FMouseClickParaTV_X,
-    FMouseClickParaTV_Y: Integer;
+    FMouseClickModbusTV_X,
+    FMouseClickModbusTV_Y,
+    FMouseClickParamTV_X,
+    FMouseClickParamTV_Y
+    : Integer;
     FMouseClickManualTV_X,
     FMouseClickManualTV_Y: Integer;
 
@@ -588,7 +592,7 @@ type
     procedure ClearHideItemsOfEngParamFromProj(AEPKind: TEngParamListItemKind=eplikModbus);
     //검색 결과를 JSON으로 반환함
     function GetSearchTree2JsonFromSearchParamList(ASearchTypes: TSensorTypes; ASearchText: string; ASearchFieldName: integer=0): RawUTF8;
-    procedure ShowPropertyForm(ATV: TJvCheckTreeView);
+    procedure ShowPropertyForm(ATV: TJvCheckTreeView; AIsParamTV: Bool = False);
 
     //Project Info
     procedure LoadProjectInfo(AFileName:string; AIsEncrypt: Boolean=False; AIs2Inspector: Boolean = False);
@@ -2821,6 +2825,7 @@ end;
 procedure TMainForm.InitEnum;
 begin
   g_ParameterCategory4AVAT2.InitArrayRecord(R_ParameterCategory4AVAT2);
+  g_ParameterSubCategory4AVAT2.InitArrayRecord(R_ParameterSubCategory4AVAT2);
   g_ManualSearchSrc.InitArrayRecord(R_ManualSearchSrc);
 end;
 
@@ -3094,7 +3099,7 @@ var
   LForm: TForm;
   i,j: integer;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if FControlPressed then
   begin
@@ -3159,10 +3164,10 @@ var
   LEngineParameterItem: TEngineParameterItem;
   LEPD: TEngineParameter_DragDrop;
 begin
-  FMouseClickParaTV_X := X;
-  FMouseClickParaTV_Y := Y;
+  FMouseClickModbusTV_X := X;
+  FMouseClickModbusTV_Y := Y;
 
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
   if Assigned(LNode) then
   begin
     LRootNode := GetRootNode(LNode);
@@ -5564,7 +5569,7 @@ var
   LForm: TForm;
   i,j: integer;
 begin
-  LNode := ParameterTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := ParameterTV.GetNodeAt( FMouseClickParamTV_X, FMouseClickParamTV_Y );
 
   if FControlPressed then
   begin
@@ -5593,7 +5598,7 @@ begin
     FControlPressed := False;
   end
   else
-    ShowPropertyForm(ParameterTV);
+    ShowPropertyForm(ParameterTV, True);
 end;
 
 procedure TMainForm.ParameterTVKeyDown(Sender: TObject; var Key: Word;
@@ -5629,10 +5634,10 @@ var
   LEngineParameterItem: TEngineParameterItem;
   LEPD: TEngineParameter_DragDrop;
 begin
-  FMouseClickParaTV_X := X;
-  FMouseClickParaTV_Y := Y;
+  FMouseClickParamTV_X := X;
+  FMouseClickParamTV_Y := Y;
 
-  LNode := ParameterTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := ParameterTV.GetNodeAt( FMouseClickParamTV_Y, FMouseClickParamTV_Y );
 
   if Assigned(LNode) then
   begin
@@ -7438,7 +7443,7 @@ var
   LEngineParameterItem: TEngineParameterItem;
   LFullFilePath, LDummy: string;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if Assigned(LNode) then
   begin
@@ -7478,7 +7483,7 @@ var
   LEngineParameterItem: TEngineParameterItem;
   LFullFilePath, LDummy: string;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if Assigned(LNode) then
   begin
@@ -7558,7 +7563,7 @@ var
   LEngineParameterItem: TEngineParameterItem;
   LStr: string;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if Assigned(LNode) then
   begin
@@ -7593,31 +7598,7 @@ begin
   end;
 end;
 
-procedure TMainForm.ShowParameterList1Click(Sender: TObject);
-var
-  LNode: TTreeNode;
-begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
-
-  if Assigned(LNode) then
-  begin
-    ShowParamList(LNode, False);
-  end;
-end;
-
-procedure TMainForm.ShowParamListToNewForm1Click(Sender: TObject);
-var
-  LNode: TTreeNode;
-begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
-
-  if Assigned(LNode) then
-  begin
-    ShowParamList(LNode, True);
-  end;
-end;
-
-procedure TMainForm.ShowPropertyForm(ATV: TJvCheckTreeView);
+procedure TMainForm.ShowPropertyForm(ATV: TJvCheckTreeView; AIsParamTV: Bool);
 var
   LNode: TTreeNode;
   LEngineParameterItem: TEngineParameterItem;
@@ -7625,7 +7606,10 @@ var
 begin
   if ATV.SelectionCount = 1 then
   begin
-    LNode := ATV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+    if AIsParamTV then
+      LNode := ATV.GetNodeAt( FMouseClickParamTV_X, FMouseClickParamTV_Y )
+    else
+      LNode := ATV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
     if Assigned(LNode) then
     begin
@@ -7657,6 +7641,18 @@ begin
   if ATV.SelectionCount > 1 then
   begin
 
+  end;
+end;
+
+procedure TMainForm.ShowSelectedParameterList1Click(Sender: TObject);
+var
+  LNode: TTreeNode;
+begin
+  LNode := ParameterTV.GetNodeAt( FMouseClickParamTV_X, FMouseClickParamTV_Y );
+
+  if Assigned(LNode) then
+  begin
+    ShowParamList(LNode, False);
   end;
 end;
 
@@ -7734,7 +7730,7 @@ var
   LNode: TTreeNode;
   LEngineParameterItem: TEngineParameterItem;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if Assigned(LNode) then
   begin
@@ -7758,7 +7754,7 @@ var
   LEngineParameterItem: TEngineParameterItem;
   LParam: string;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if Assigned(LNode) then
   begin
@@ -8083,6 +8079,18 @@ end;
 procedure TMainForm.Vertical1Click(Sender: TObject);
 begin
   DoTile(tbVertical);
+end;
+
+procedure TMainForm.ShowParameterListToNewForm1Click(Sender: TObject);
+var
+  LNode: TTreeNode;
+begin
+  LNode := ParameterTV.GetNodeAt( FMouseClickParamTV_X, FMouseClickParamTV_Y );
+
+  if Assigned(LNode) then
+  begin
+    ShowParamList(LNode, True);
+  end;
 end;
 
 procedure TMainForm.ShowParamList(ANode: TTreeNode; AIsCreateNewForm: Boolean);
@@ -8488,7 +8496,7 @@ procedure TMainForm.AddtoAlarmList1Click(Sender: TObject);
 var
   LNode: TTreeNode;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if Assigned(LNode) then
   begin
@@ -8504,7 +8512,7 @@ var
   LHandle,LProcessID: THandle;
   LEngineParameterItem: TEngineParameterItem;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if Assigned(LNode) then
   begin
@@ -8537,7 +8545,7 @@ var
   LNode: TTreeNode;
   i: integer;
 begin
-//  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+//  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   SetCurrentDir(FApplicationPath);
 
@@ -8570,7 +8578,7 @@ procedure TMainForm.AddtoSaveList1Click(Sender: TObject);
 var
   LNode: TTreeNode;
 begin
-  LNode := EngModbusTV.GetNodeAt( FMouseClickParaTV_X, FMouseClickParaTV_Y );
+  LNode := EngModbusTV.GetNodeAt( FMouseClickModbusTV_X, FMouseClickModbusTV_Y );
 
   if Assigned(LNode) then
   begin

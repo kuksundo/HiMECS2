@@ -164,7 +164,7 @@ object MainForm: TMainForm
     ActiveColorTo = 7257087
     ActiveMirrorColor = 4370174
     ActiveMirrorColorTo = 8053246
-    ActiveTabIndex = 2
+    ActiveTabIndex = 7
     AllowCollaps = True
     BorderColor = 16765615
     CaptionColor = 16773091
@@ -214,18 +214,6 @@ object MainForm: TMainForm
     Style = esOffice2007Luna
     Version = '2.0.2.6'
     OnSplitterMove = AdvNavBar1SplitterMove
-    object EngMaintenancePanel: TAdvNavBarPanel
-      Left = 1
-      Top = 27
-      Width = 279
-      Height = 195
-      Caption = 'Engine Maintenance'
-      CaptionStyle = [fsBold]
-      Color = clWhite
-      ImageIndex = 1
-      PanelIndex = 7
-      Sections = <>
-    end
     object ProjectInfoPanel: TAdvNavBarPanel
       Left = 1
       Top = 27
@@ -481,105 +469,6 @@ object MainForm: TMainForm
         end
       end
     end
-    object EngineModbusPanel: TAdvNavBarPanel
-      Left = 1
-      Top = 27
-      Width = 279
-      Height = 195
-      Caption = 'Modbus List'
-      CaptionStyle = [fsBold]
-      Color = clWhite
-      ImageIndex = 3
-      PanelIndex = 1
-      Sections = <>
-      object Panel4: TPanel
-        Left = 0
-        Top = 0
-        Width = 279
-        Height = 27
-        Hint = 'ParentBackground'#47484' False'#47196' '#54616#47732' '#44160#51221#49353#51060' '#49324#46972#51664
-        Align = alTop
-        DoubleBuffered = True
-        ParentBackground = False
-        ParentDoubleBuffered = False
-        TabOrder = 0
-        object EngModbusFilterCheck: TCheckBox
-          Left = 1
-          Top = 1
-          Width = 44
-          Height = 25
-          Align = alLeft
-          Alignment = taLeftJustify
-          Caption = 'Filter'
-          TabOrder = 0
-          OnClick = EngModbusFilterCheckClick
-        end
-        object ModbusFilterCheckcb: TCheckComboBox
-          Left = 45
-          Top = 1
-          Width = 192
-          Height = 22
-          Align = alClient
-          AutoComplete = False
-          Enabled = False
-          TabOrder = 1
-          OnCloseUp = ModbusFilterCheckcbCloseUp
-          Items.Strings = (
-            'Sensor'
-            'Modbus'
-            'Alarm'
-            'Actuator'
-            'Command')
-          Caption = ''
-        end
-        object ModbusFilterClearBtn: TButton
-          Left = 237
-          Top = 1
-          Width = 41
-          Height = 25
-          Align = alRight
-          Caption = 'Clear'
-          Enabled = False
-          TabOrder = 2
-          OnClick = ModbusFilterClearBtnClick
-        end
-      end
-      object Panel1: TPanel
-        Left = 0
-        Top = 27
-        Width = 279
-        Height = 27
-        Align = alTop
-        TabOrder = 1
-        object SrchTextEdit: TEdit
-          Left = 1
-          Top = 1
-          Width = 277
-          Height = 25
-          Align = alClient
-          ImeName = 'Microsoft IME 2010'
-          TabOrder = 0
-          OnChange = SrchTextEditChange
-          ExplicitHeight = 21
-        end
-      end
-      object EngModbusTV: TJvCheckTreeView
-        Left = 0
-        Top = 54
-        Width = 279
-        Height = 141
-        Align = alClient
-        Indent = 19
-        PopupMenu = ModbusPopUp
-        TabOrder = 2
-        OnCustomDrawItem = EngModbusTVCustomDrawItem
-        OnDblClick = EngModbusTVDblClick
-        OnKeyDown = EngModbusTVKeyDown
-        OnKeyUp = EngModbusTVKeyUp
-        OnMouseDown = EngModbusTVMouseDown
-        CheckBoxOptions.Style = cbsNone
-      end
-    end
     object ParameterPanel: TAdvNavBarPanel
       Left = 1
       Top = 27
@@ -605,6 +494,8 @@ object MainForm: TMainForm
         OnKeyUp = ParameterTVKeyUp
         OnMouseDown = ParameterTVMouseDown
         CheckBoxOptions.Style = cbsNone
+        ExplicitLeft = -5
+        ExplicitTop = 51
       end
       object Panel5: TPanel
         Left = 0
@@ -678,6 +569,123 @@ object MainForm: TMainForm
           OnClick = ParameterFilterClearBtnClick
         end
       end
+    end
+    object EngineModbusPanel: TAdvNavBarPanel
+      Left = 1
+      Top = 27
+      Width = 279
+      Height = 195
+      Caption = 'Sensor List'
+      CaptionStyle = [fsBold]
+      Color = clWhite
+      ImageIndex = 3
+      PanelIndex = 1
+      Sections = <>
+      object Panel4: TPanel
+        Left = 0
+        Top = 0
+        Width = 279
+        Height = 27
+        Hint = 'ParentBackground'#47484' False'#47196' '#54616#47732' '#44160#51221#49353#51060' '#49324#46972#51664
+        Align = alTop
+        DoubleBuffered = True
+        ParentBackground = False
+        ParentDoubleBuffered = False
+        TabOrder = 0
+        object EngModbusFilterCheck: TCheckBox
+          Left = 1
+          Top = 1
+          Width = 44
+          Height = 25
+          Align = alLeft
+          Alignment = taLeftJustify
+          Caption = 'Filter'
+          TabOrder = 0
+          OnClick = EngModbusFilterCheckClick
+        end
+        object ModbusFilterCheckcb: TCheckComboBox
+          Left = 45
+          Top = 1
+          Width = 193
+          Height = 22
+          Align = alClient
+          AutoComplete = False
+          Enabled = False
+          TabOrder = 1
+          OnCloseUp = ModbusFilterCheckcbCloseUp
+          Items.Strings = (
+            'Sensor'
+            'Modbus'
+            'Alarm'
+            'Actuator'
+            'Command')
+          Caption = ''
+          ExplicitLeft = 39
+          ExplicitTop = 0
+          ExplicitWidth = 192
+        end
+        object ModbusFilterClearBtn: TButton
+          Left = 238
+          Top = 1
+          Width = 41
+          Height = 25
+          Align = alRight
+          Caption = 'Clear'
+          Enabled = False
+          TabOrder = 2
+          OnClick = ModbusFilterClearBtnClick
+          ExplicitLeft = 237
+        end
+      end
+      object Panel1: TPanel
+        Left = 0
+        Top = 27
+        Width = 279
+        Height = 27
+        Align = alTop
+        TabOrder = 1
+        object SrchTextEdit: TEdit
+          Left = 1
+          Top = 1
+          Width = 278
+          Height = 25
+          Align = alClient
+          ImeName = 'Microsoft IME 2010'
+          TabOrder = 0
+          OnChange = SrchTextEditChange
+          ExplicitWidth = 277
+          ExplicitHeight = 21
+        end
+      end
+      object EngModbusTV: TJvCheckTreeView
+        Left = 0
+        Top = 54
+        Width = 279
+        Height = 141
+        Align = alClient
+        Indent = 19
+        PopupMenu = ModbusPopUp
+        TabOrder = 2
+        OnCustomDrawItem = EngModbusTVCustomDrawItem
+        OnDblClick = EngModbusTVDblClick
+        OnKeyDown = EngModbusTVKeyDown
+        OnKeyUp = EngModbusTVKeyUp
+        OnMouseDown = EngModbusTVMouseDown
+        CheckBoxOptions.Style = cbsNone
+        ExplicitWidth = 280
+      end
+    end
+    object EngMaintenancePanel: TAdvNavBarPanel
+      Left = 1
+      Top = 27
+      Width = 279
+      Height = 195
+      Caption = 'Maintenance'
+      CaptionStyle = [fsBold]
+      Color = clWhite
+      ImageIndex = 1
+      PanelIndex = 7
+      Sections = <>
     end
   end
   object MDITabSet: TAdvOfficeMDITabSet
@@ -1530,7 +1538,7 @@ object MainForm: TMainForm
     Left = 340
     Top = 88
     Bitmap = {
-      494C01010800F007280410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010800F007300410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1939,7 +1947,7 @@ object MainForm: TMainForm
     Left = 372
     Top = 92
     Bitmap = {
-      494C01010A008002400418001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010A008002480418001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2965,7 +2973,7 @@ object MainForm: TMainForm
     Left = 408
     Top = 88
     Bitmap = {
-      494C0101120014001C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010112001400240410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3672,7 +3680,7 @@ object MainForm: TMainForm
     Left = 392
     Top = 135
     Bitmap = {
-      494C01011900E804340410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900E8043C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       000000000000000000000000000000000000FAF3EE00FAF3EE00FAF3EE00FAF3
       EE00FAF3EE00FAF3EE00FAF3EE00FAF3EE00EFE9E400FAF3EE00FAF3EE00FAF3
@@ -4622,14 +4630,6 @@ object MainForm: TMainForm
       Caption = 'Show Manual'
       OnClick = ShowManual1Click
     end
-    object ShowParameterList1: TMenuItem
-      Caption = 'Show Selected Parameter List'
-      OnClick = ShowParameterList1Click
-    end
-    object ShowParamListToNewForm1: TMenuItem
-      Caption = 'Show Parameter List To NewForm'
-      OnClick = ShowParamListToNewForm1Click
-    end
     object ShowMultiState1: TMenuItem
       Caption = 'Show Multi State Value'
       OnClick = ShowMultiState1Click
@@ -5132,7 +5132,7 @@ object MainForm: TMainForm
     Left = 356
     Top = 136
     Bitmap = {
-      494C01010D0013001C0420002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D001300240420002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000008000000001002000000000000000
       0100000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -10387,6 +10387,17 @@ object MainForm: TMainForm
     object Property2: TMenuItem
       Caption = 'Property'
       OnClick = Property2Click
+    end
+    object N15: TMenuItem
+      Caption = '-'
+    end
+    object ShowSelectedParameterList1: TMenuItem
+      Caption = 'Show Selected Parameter List'
+      OnClick = ShowSelectedParameterList1Click
+    end
+    object ShowParameterListToNewForm1: TMenuItem
+      Caption = 'Show Parameter List To NewForm'
+      OnClick = ShowParameterListToNewForm1Click
     end
   end
   object EngModbusSource: TDropTextSource

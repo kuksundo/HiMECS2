@@ -114,6 +114,8 @@ type
     New1: TMenuItem;
     Measurand4AVAT21: TMenuItem;
     Command4AVAT21: TMenuItem;
+    UpdateCategoryFromDB1: TMenuItem;
+    N6: TMenuItem;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -162,6 +164,7 @@ type
     procedure NewDBonlyParameter1Click(Sender: TObject);
     procedure Measurand4AVAT21Click(Sender: TObject);
     procedure Command4AVAT21Click(Sender: TObject);
+    procedure UpdateCategoryFromDB1Click(Sender: TObject);
   private
     FPJHTimerPool: TPJHTimerPool;
     FEngineParameter4E2S: TSnapShot4E2S;
@@ -1296,8 +1299,47 @@ begin
 end;
 
 procedure TAvatParamViewF.UpdateCategoryEnumFromCategory1Click(Sender: TObject);
+var
+  LParamDescBaseDBFN: string;
 begin
-  UpdatedParamDescBaseRec2CategoryEnum();
+  if OpenDialog1.Execute() then
+  begin
+    LParamDescBaseDBFN := OpenDialog1.FileName;
+    InitParamBaseClient(LParamDescBaseDBFN);
+    try
+      UpdatedParamDescBaseRec2CategoryEnum();
+    finally
+      DestroyParamBaseClient();
+    end;
+  end;
+end;
+
+procedure TAvatParamViewF.UpdateCategoryFromDB1Click(Sender: TObject);
+var
+  LEngParamDBFileName,
+  LParamDescBaseDBFN: string;
+  LEngParamDB: TRestClientDB;
+  LEngParamModel: TOrmModel;
+begin
+  if OpenDialog1.Execute() then
+  begin
+    LEngParamDBFileName := OpenDialog1.FileName;
+
+    if OpenDialog1.Execute() then
+    begin
+      LParamDescBaseDBFN := OpenDialog1.FileName;
+
+      LEngParamDB := InitEngineParamClient2(LEngParamDBFileName, LEngParamModel);
+      InitParamBaseClient(LParamDescBaseDBFN);
+      try
+        UpdateEngParamRec2CategoryEnumFromParamDescBase(LEngParamDB, nil);
+      finally
+        DestroyParamBaseClient();
+        DestroyEngineParamClient(LEngParamDB, LEngParamModel);
+      end;
+    end;
+
+  end;
 end;
 
 procedure TAvatParamViewF.UpdateSqlite4TagName1Click(Sender: TObject);

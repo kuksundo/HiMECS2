@@ -701,7 +701,7 @@ object AvatParamViewF: TAvatParamViewF
     Left = 240
     Top = 110
     Bitmap = {
-      494C01010900A000680110001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01010900A000700110001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       000000000000000000000000000000000000F5F5F50033333300333333003333
       3300F5F5F500F5F5F500F5F5F500F5F5F500F5F5F500F5F5F500F5F5F500F5F5
@@ -1260,16 +1260,26 @@ object AvatParamViewF: TAvatParamViewF
         OnClick = UpdateSqlite4TagName1Click
       end
       object UpdateSqlite4ValueFromParamno1: TMenuItem
-        Caption = 'Update Sqlite 4 Value From Paramno'
+        Caption = 'Update Sqlite 4 Value From Param no'
         Hint = 'Sqlite'#50640' ParamNo'#50640' '#54644#45817#54616#45716' Value '#48320#44221#54632
         OnClick = UpdateSqlite4ValueFromParamno1Click
+      end
+      object UpdateCategoryFromDB1: TMenuItem
+        Caption = 'Update EngParam.Category From ParamDescBase DB'
+        Hint = 
+          'UnitEngineParamRecord2.UpdateEngParamRec2CategoryEnumFromParamDe' +
+          'scBase '#49440#50616#48512' '#49444#47749' '#52280#51312#54624' '#44163
+        OnClick = UpdateCategoryFromDB1Click
+      end
+      object N6: TMenuItem
+        Caption = '-'
       end
       object UpdateCategoryEnumFromCategory1: TMenuItem
         Caption = 'Update CategoryEnum From Category'
         Hint = 
           'R_ParameterCategory4AVAT2'#51032' '#53581#49828#53944#50752' Avat2ParamBase.sqlite DB'#51032' Catego' +
-          'ry'#47484' '#48708#44368#54616#50668' '#44057#51004#47732' CategoryEnum '#48320#44221#54632'(Category '#54637#47785#51060' '#52628#44032'/'#49325#51228' '#46104#50632#51012#46412' '#49892#54665#54632')-SubCa' +
-          'tegory'#46020' Update'#54632
+          'ry'#47484' '#48708#44368#54616#50668' '#44057#51004#47732' Avat2ParamBase'#51032' CategoryEnum '#48320#44221#54632'(Category '#54637#47785#51060' '#52628#44032'/'#49325#51228 +
+          ' '#46104#50632#51012#46412' '#49892#54665#54632')-SubCategory'#46020' Update'#54632
         OnClick = UpdateCategoryEnumFromCategory1Click
       end
     end
