@@ -30,11 +30,12 @@ type
 
   TRestAPIResponseDocContent = packed record
     Id: integer;
-    Desc: RawUTF8;
+    Desc: RawUTF8; //FlatList Item 상단 표시
+    Msg: RawUTF8;  //FlatList Item 하단 표시
     DocName: RawUTF8;
-    System: RawUTF8;
-    Part: RawUTF8;
-    SectionNo: RawUTF8;
+//    System: RawUTF8;
+//    Part: RawUTF8;
+//    SectionNo: RawUTF8;
   end;
 
   TRestAPIResponseDynArr = array of TRestAPIResponse;

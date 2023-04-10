@@ -494,8 +494,6 @@ object MainForm: TMainForm
         OnKeyUp = ParameterTVKeyUp
         OnMouseDown = ParameterTVMouseDown
         CheckBoxOptions.Style = cbsNone
-        ExplicitLeft = -5
-        ExplicitTop = 51
       end
       object Panel5: TPanel
         Left = 0
@@ -606,7 +604,7 @@ object MainForm: TMainForm
         object ModbusFilterCheckcb: TCheckComboBox
           Left = 45
           Top = 1
-          Width = 193
+          Width = 192
           Height = 22
           Align = alClient
           AutoComplete = False
@@ -620,12 +618,9 @@ object MainForm: TMainForm
             'Actuator'
             'Command')
           Caption = ''
-          ExplicitLeft = 39
-          ExplicitTop = 0
-          ExplicitWidth = 192
         end
         object ModbusFilterClearBtn: TButton
-          Left = 238
+          Left = 237
           Top = 1
           Width = 41
           Height = 25
@@ -634,7 +629,6 @@ object MainForm: TMainForm
           Enabled = False
           TabOrder = 2
           OnClick = ModbusFilterClearBtnClick
-          ExplicitLeft = 237
         end
       end
       object Panel1: TPanel
@@ -647,13 +641,12 @@ object MainForm: TMainForm
         object SrchTextEdit: TEdit
           Left = 1
           Top = 1
-          Width = 278
+          Width = 277
           Height = 25
           Align = alClient
           ImeName = 'Microsoft IME 2010'
           TabOrder = 0
           OnChange = SrchTextEditChange
-          ExplicitWidth = 277
           ExplicitHeight = 21
         end
       end
@@ -672,7 +665,6 @@ object MainForm: TMainForm
         OnKeyUp = EngModbusTVKeyUp
         OnMouseDown = EngModbusTVMouseDown
         CheckBoxOptions.Style = cbsNone
-        ExplicitWidth = 280
       end
     end
     object EngMaintenancePanel: TAdvNavBarPanel
@@ -1538,7 +1530,7 @@ object MainForm: TMainForm
     Left = 340
     Top = 88
     Bitmap = {
-      494C01010800F007300410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010800F007380410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1947,7 +1939,7 @@ object MainForm: TMainForm
     Left = 372
     Top = 92
     Bitmap = {
-      494C01010A008002480418001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010A008002500418001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2973,7 +2965,7 @@ object MainForm: TMainForm
     Left = 408
     Top = 88
     Bitmap = {
-      494C010112001400240410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101120014002C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3680,7 +3672,7 @@ object MainForm: TMainForm
     Left = 392
     Top = 135
     Bitmap = {
-      494C01011900E8043C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900E804440410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       000000000000000000000000000000000000FAF3EE00FAF3EE00FAF3EE00FAF3
       EE00FAF3EE00FAF3EE00FAF3EE00FAF3EE00EFE9E400FAF3EE00FAF3EE00FAF3
@@ -5132,7 +5124,7 @@ object MainForm: TMainForm
     Left = 356
     Top = 136
     Bitmap = {
-      494C01010D001300240420002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D0013002C0420002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000008000000001002000000000000000
       0100000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -43,6 +43,7 @@ type
     FModel: TOrmModel;
     FRestServer: THiMECSRestServer;
     FHttpServer: TRestHttpServer;
+
     function Process(var Call: TRestUriParams): boolean;
   public
     constructor Create(ADBFileName: TFileName='');
@@ -191,8 +192,8 @@ constructor THiMECSRestServer.Create(aModel: TOrmModel;
 begin
   inherited Create(AModel, ADBFileName);
 
-//  ServicesRouting := TRestServerRoutingJsonRpc;
-  ServiceDefine(THiMECS_Rest_Service, [IHiMECSRestAPI], sicClientDriven); //sicShared
+  //sicClientDriven으로 설정할 경우 Invalid Uri Error 발생 함 : 2023.4.10
+  ServiceDefine(THiMECS_Rest_Service, [IHiMECSRestAPI], sicShared); //sicShared, sicClientDriven
 end;
 
 { THiMECSHTTPAPIServer }
@@ -212,9 +213,9 @@ begin
   FRestServer.Server.CreateMissingTables;
 
   FHttpServer := TRestHttpServer.Create(HttpPort, [FRestServer], '+', HTTP_DEFAULT_MODE);
-  FHttpServer.OnCustomRequest := Process;
+//  FHttpServer.OnCustomRequest := Process;
   FHttpServer.AccessControlAllowOrigin := '*';
-end;
+end;
 
 destructor THiMECSHTTPAPIServer.Destroy;
 begin
@@ -248,6 +249,8 @@ begin
         exit;
       end;
     end;
+//    else
+//      FHiMECSService.GetListByParam(LMethodName, LParams.Values['AParamJson']);
 
     Result := False;
   finally

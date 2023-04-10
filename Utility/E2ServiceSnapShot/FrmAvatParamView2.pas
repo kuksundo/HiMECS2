@@ -1321,9 +1321,13 @@ var
   LEngParamDB: TRestClientDB;
   LEngParamModel: TOrmModel;
 begin
+  ShowMessage('Select Engine Parameter DB');
+
   if OpenDialog1.Execute() then
   begin
     LEngParamDBFileName := OpenDialog1.FileName;
+
+    ShowMessage('Select Parameter Desc Base DB');
 
     if OpenDialog1.Execute() then
     begin

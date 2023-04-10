@@ -508,7 +508,6 @@ type
     FFilterText4Parameter: string;
     //HiMECS Diagram(Chromium)에서 axios로 Model Json data 요청할 때 응답하기 위함
     FHiMECSHTTPAPIServer: THiMECSHTTPAPIServer;
-//    FHiMECSHttpApiServer: THiMECSHttpApiServer;
 
     //FIsProjectClosed: Boolean; //True = Project Close 상태
 
@@ -1775,9 +1774,6 @@ begin
   //if Assigned(FHiMECSOptions) then
     //FreeAndNil(FHiMECSOptions);
 
-//  if Assigned(FHiMECSHttpApiServer) then
-//    FHiMECSHttpApiServer.Free;
-
   if Assigned(FHiMECSHTTPAPIServer) then
     FHiMECSHTTPAPIServer.Free;
 end;
@@ -2533,22 +2529,14 @@ begin
 
             case ASearchSrc of
               mssSystem,
-              mssSection: LRec.Desc := LStr;
-//              mssSection: LVar.AddValue('Desc', LStr);
-//              mssSection: LVar.Desc := LStr;
+              mssSection,
               mssPart: begin
-//                LRec.System := LStr2;
-//                LRec.Part := LStr;
-//                LVar.AddValue('System', LStr2);
-//                LVar.AddValue('Part', LStr);
-//                LVar.System := LStr2;
-//                LVar.Part := LStr;
+                LRec.Desc := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
+                LRec.Msg := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng;
+//                LRec.SectionNo := LHiMECSManualInfo.OpManual.Items[j].SectionNo;
               end;
             else
               begin
-                LRec.System := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
-                LRec.Part := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng;
-                LRec.SectionNo := LHiMECSManualInfo.OpManual.Items[j].SectionNo;
               end;
             end;//case
 
