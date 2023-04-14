@@ -37,15 +37,18 @@ object SensorCableRouteF2: TSensorCableRouteF2
     Height = 479
     Align = alClient
     TabOrder = 2
-    ExplicitLeft = 48
-    ExplicitTop = 56
+    ExplicitTop = 41
+    ExplicitWidth = 749
+    ExplicitHeight = 479
     inherited decTreeView1: TdecTreeView
       Width = 749
       Height = 479
+      ExplicitWidth = 749
+      ExplicitHeight = 479
     end
     inherited ImageList2: TImageList
       Bitmap = {
-        494C0101150018004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C010115001800500110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000006000000001002000000000000060
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
@@ -846,7 +849,7 @@ object SensorCableRouteF2: TSensorCableRouteF2
     end
     inherited imTreeView: TImageList
       Bitmap = {
-        494C0101130018007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C010113001800800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000005000000001002000000000000050
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
@@ -1512,6 +1515,20 @@ object SensorCableRouteF2: TSensorCableRouteF2
         E001C003C0038003F000C003C003C003FF01C007C007E003FE0BC00FC00FFFFF
         FF1FC01FC01FFFFFFFBFFFFFFFFFFFFF00000000000000000000000000000000
         000000000000}
+    end
+    inherited PopupMenu2: TPopupMenu
+      object ShowPLCChannel1: TMenuItem
+        Caption = 'Show PLC Channel'
+        OnClick = ShowPLCChannel1Click
+      end
+      object ShowPanelLayout1: TMenuItem
+        Caption = 'Show Panel Layout'
+        OnClick = ShowPanelLayout1Click
+      end
+      object ShowPanelInside1: TMenuItem
+        Caption = 'Show Panel Inside'
+        OnClick = ShowPanelInside1Click
+      end
     end
   end
 end

@@ -24,7 +24,8 @@ type
     FSensorRouteFileName,//값이 '' 이면 DomSensorTypes2.DefaultSensorRouteDBFileName이 사용됨
     FProjectInfoFileName,
     FUserFileName,
-    FManualInfoFileName
+    FManualInfoFileName,
+    FDrawingInfoFileName
     : string;
     FHiMECSFormPath, //Form 관련 bpl이 저장된 경로
     FConfigPath,     //Config 관련 file(.option,menu,form)이 저장된 경로
@@ -77,6 +78,7 @@ type
     property ProjectInfoFileName: string read FProjectInfoFileName write FProjectInfoFileName;
     property UserFileName: string read FUserFileName write FUserFileName;
     property ManualInfoFileName: string read FManualInfoFileName write FManualInfoFileName;
+    property DrawingInfoFileName: string read FDrawingInfoFileName write FDrawingInfoFileName;
 
     property HiMECSFormPath: string read FHiMECSFormPath write FHiMECSFormPath;
     property ConfigPath: string read FConfigPath write FConfigPath;

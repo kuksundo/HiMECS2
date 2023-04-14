@@ -1414,14 +1414,14 @@ begin
   try
     if AItemIndex <> -1 then
     begin
-      LEngineParamRecord := GetEngParamRecFromTagNo(EngineParameterCollect.Items[AItemIndex].TagName);
+      LEngineParamRecord := GetEngParamRecFromTagNo(EngineParameterCollect.Items[AItemIndex].TagName, LEngineParamDB);
 
       LTempUpdate := LEngineParamRecord.IsUpdate;
 
       //아래 함수 결과로 LEngineParamRecord.IsUpdate는 무조건 False가 됨
       AssignEngParamRecFromEngParamItem(EngineParameterCollect.Items[AItemIndex], LEngineParamRecord);
       LEngineParamRecord.IsUpdate := LTempUpdate;
-      AddOrUpdatedEngParamRec(LEngineParamRecord);
+      AddOrUpdatedEngParamRec(LEngineParamRecord, LEngineParamDB);
     end;
   finally
     DestroyEngineParamClient(LEngineParamDB, LEngineParamModel);

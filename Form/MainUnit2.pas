@@ -592,6 +592,8 @@ type
     //검색 결과를 JSON으로 반환함
     function GetSearchTree2JsonFromSearchParamList(ASearchTypes: TSensorTypes; ASearchText: string; ASearchFieldName: integer=0): RawUTF8;
     procedure ShowPropertyForm(ATV: TJvCheckTreeView; AIsParamTV: Bool = False);
+    function GetEngParamFromHiMECSConfigByEPKind(AEPKind: TEngParamListItemKind; AIndex: integer): TEngineParameter;
+    function GetEngParamFromItem(AEPItem: TEngineParameterItem; AIndex: integer=-1): TEngineParameter;
 
     //Project Info
     procedure LoadProjectInfo(AFileName:string; AIsEncrypt: Boolean=False; AIs2Inspector: Boolean = False);
@@ -924,13 +926,15 @@ var
 begin
 //  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
 //  begin
-    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+    LEngineParameter := GetEngParamFromHiMECSConfigByEPKind(AEPKind, FCOI);
 
-    if AEPKind = eplikModbus then
-      LEngineParameter := LHiMECSConfig.ModbusList
-    else
-    if AEPKind = eplikParameter then
-      LEngineParameter := LHiMECSConfig.EngineParameter;
+//    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+//
+//    if AEPKind = eplikModbus then
+//      LEngineParameter := LHiMECSConfig.ModbusList
+//    else
+//    if AEPKind = eplikParameter then
+//      LEngineParameter := LHiMECSConfig.EngineParameter;
 
     for j := LEngineParameter.EngineParameterCollect.Count - 1 downto 0 do
     begin
@@ -1033,15 +1037,16 @@ function TMainForm.CopyItem2EngineParamCollect(Node: TTreeNode): integer;
 var
   AEPItemRecord: TEngineParameterItem;
   LEngineParameterItem: TEngineParameterItem;
-  LHiMECSConfig: THiMECSConfig;
+  LEngineParameter: TEngineParameter;
+//  LHiMECSConfig: THiMECSConfig;
 begin
   Result := -1;
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+//  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
   AEPItemRecord := TEngineParameterItem(Node.Data);
-
-  //FEngineParameter.EngineParameterCollect.AddEngineParameterItem(AEPItemRecord);
-  LEngineParameterItem :=
-    LHiMECSConfig.EngineParameter.EngineParameterCollect.AddEngineParameterItem(AEPItemRecord);
+  LEngineParameter := GetEngParamFromItem(AEPItemRecord);
+  LEngineParameterItem := LEngineParameter.EngineParameterCollect.AddEngineParameterItem(AEPItemRecord);
+//  LEngineParameterItem :=
+//    LHiMECSConfig.EngineParameter.EngineParameterCollect.AddEngineParameterItem(AEPItemRecord);
   Result := LEngineParameterItem.Index;
 end;
 
@@ -1418,7 +1423,7 @@ begin
           break;
         Li := StrToInt(LStr);
         TreeNode2 := EngModbusTV.Items.AddChild(TreeNode,
-          LHiMECSConfig.EngineParameter.EngineParameterCollect.Items[Li].Description);
+          LHiMECSConfig.ModbusList.EngineParameterCollect.Items[Li].Description);
                 //FEngineParameter.EngineParameterCollect.Items[Li].Description);
       end;
       //ShowMessage(DFP.FCollectIndex);
@@ -1662,6 +1667,9 @@ begin
 
     if Assigned(LHiMECSConfig.EngineParameter) then
       LHiMECSConfig.EngineParameter.Free;
+
+    if Assigned(LHiMECSConfig.ModbusList) then
+      LHiMECSConfig.ModbusList.Free;
 
     if Assigned(LHiMECSConfig.ProjectInfo) then
       LHiMECSConfig.ProjectInfo.Free;
@@ -2156,6 +2164,31 @@ begin
   Result := LHiMECSConfig.EngineInfo.GetEngineType;
 end;
 
+function TMainForm.GetEngParamFromHiMECSConfigByEPKind(
+  AEPKind: TEngParamListItemKind; AIndex: integer): TEngineParameter;
+begin
+  Result := nil;
+
+  if AEPKind = eplikModbus then
+    Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
+  else
+    Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
+end;
+
+function TMainForm.GetEngParamFromItem(
+  AEPItem: TEngineParameterItem; AIndex: integer): TEngineParameter;
+begin
+  Result := nil;
+
+  if AIndex = -1 then
+    AIndex := FCOI;
+
+  if AEPItem.ParamNo = '' then
+    Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
+  else
+    Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
+end;
+
 function TMainForm.GetFullFilePathFromManualInfo(var ADrawingPath,
   AManualPath: string): Boolean;
 var
@@ -2403,9 +2436,9 @@ begin
 
     while LCount <= AEngParamItem.MultiStateItemCount do
     begin
-      if IntToStr(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineParameter.MultiStateCollect.Items[LIdx].StateValue) = AEngParamItem.Value then
+      if IntToStr(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ModbusList.MultiStateCollect.Items[LIdx].StateValue) = AEngParamItem.Value then
       begin
-        Result := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineParameter.MultiStateCollect.Items[LIdx].StateMeaning;
+        Result := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ModbusList.MultiStateCollect.Items[LIdx].StateMeaning;
         break;
       end
       else
@@ -4365,10 +4398,12 @@ begin
     ARootNode := ATV.Items.AddChild(nil, LStr);
   end;
 
-  if AEPKind = eplikModbus then
-    LEngineParameter := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
-  else
-    LEngineParameter := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
+  LEngineParameter := GetEngParamFromHiMECSConfigByEPKind(AEPKind, AIndex);
+
+//  if AEPKind = eplikModbus then
+//    LEngineParameter := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
+//  else
+//    LEngineParameter := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
 
   if not Assigned(LEngineParameter) or (LEngineParameter.EngineParameterCollect.Count <= 0) then
   begin
@@ -4709,7 +4744,7 @@ var
   CurrStr, LStr: string;
   Keep, KeepParent, KeepAncestors: Boolean;
   LevelRem: Integer;
-  LHiMECSConfig: THiMECSConfig;
+//  LHiMECSConfig: THiMECSConfig;
   LEngParamItem: TEngineParameterItem;
 begin
   if ATV = nil then
@@ -4727,14 +4762,15 @@ begin
 //        for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
 //        begin
           i := FCOI;
-          LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+          LEngineParameter := GetEngParamFromHiMECSConfigByEPKind(AEPKind, i);
 
-//          LEngineParameter := LHiMECSConfig.EngineParameter;
-          if AEPKind = eplikModbus then
-            LEngineParameter := LHiMECSConfig.ModbusList
-          else
-          if AEPKind = eplikParameter then
-            LEngineParameter := LHiMECSConfig.EngineParameter;
+//          LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+//
+//          if AEPKind = eplikModbus then
+//            LEngineParameter := LHiMECSConfig.ModbusList
+//          else
+//          if AEPKind = eplikParameter then
+//            LEngineParameter := LHiMECSConfig.EngineParameter;
 
           LevelRem:= 0;
           KeepParent:= false;
@@ -4819,10 +4855,19 @@ begin
 //    for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
 //    begin
       i := FCOI;
-      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+      LEngineParameter := GetEngParamFromHiMECSConfigByEPKind(AEPKind, i);
+
+//      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+
+//      if AEPKind = eplikModbus then
+//        LEngineParameter := LHiMECSConfig.ModbusList
+//      else
+//      if AEPKind = eplikParameter then
+//        LEngineParameter := LHiMECSConfig.EngineParameter;
+
       ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
-      LoadParameter2TVBySortMtehod(ANode, LHiMECSConfig.EngineParameter, FCurrentEngParamSortMethod, ATV);
+      LoadParameter2TVBySortMtehod(ANode, LEngineParameter, FCurrentEngParamSortMethod, ATV);
 //    end;//
     //ATV.FullExpand;
   end;
@@ -7044,6 +7089,7 @@ function TMainForm.SetConfigEngParamItemData(AEPItem:TEngineParameterItem; AIdx:
 var
   ConfigData: TEngParamItemConfigForm2;
   LStr: string;
+  LEngineParameter: TEngineParameter;
 begin
   Result := False;
   ConfigData := nil;
@@ -7067,20 +7113,34 @@ begin
       begin
         SetCurrentDir(FApplicationPath);
         LoadConfigForm2EngParamItem(AEPItem);//FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter
+
         if Dialogs.MessageDlg('Do you save a changed parameter to the '''+
                           FCurrentModbusFileName+'''?' +#13#10,
           mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
         begin
+          LEngineParameter := GetEngParamFromItem(AEPItem, AIdx);
+
           if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 0 then //XML format
-            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToFile(FCurrentModbusFileName,
+            LEngineParameter.SaveToFile(FCurrentModbusFileName,
                   ExtractFileName(FCurrentModbusFileName),False)
           else
           if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 1 then //JSON format
-            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToJSONFile(FCurrentModbusFileName,
+            LEngineParameter.SaveToJSONFile(FCurrentModbusFileName,
                   ExtractFileName(FCurrentModbusFileName),False)
           else
           if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 2 then //Sqlite format
-            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToSqliteFile(FCurrentModbusFileName, AEPItem.Index);
+            LEngineParameter.SaveToSqliteFile(FCurrentModbusFileName, AEPItem.Index);
+
+//          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 0 then //XML format
+//            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToFile(FCurrentModbusFileName,
+//                  ExtractFileName(FCurrentModbusFileName),False)
+//          else
+//          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 1 then //JSON format
+//            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToJSONFile(FCurrentModbusFileName,
+//                  ExtractFileName(FCurrentModbusFileName),False)
+//          else
+//          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 2 then //Sqlite format
+//            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToSqliteFile(FCurrentModbusFileName, AEPItem.Index);
         end;
 
         Result := True;

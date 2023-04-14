@@ -71,14 +71,14 @@ type
     ManualInfoFilenameEdit: TJvFilenameEdit;
     Panel2: TPanel;
     RelativeCB: TCheckBox;
+    Label23: TLabel;
+    DrawingInfoFilenameEdit: TJvFilenameEdit;
     procedure FormCreate(Sender: TObject);
     procedure SelProtocolRGClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure EngInfoFilenameEditAfterDialog(Sender: TObject; var AName: string;
       var AAction: Boolean);
     procedure MenuFilenameEditAfterDialog(Sender: TObject; var AName: string;
-      var AAction: Boolean);
-    procedure UserFilenameEditAfterDialog(Sender: TObject; var AName: string;
       var AAction: Boolean);
     procedure ParamFilenameEditAfterDialog(Sender: TObject; var AName: string;
       var AAction: Boolean);
@@ -100,9 +100,12 @@ type
       var AAction: Boolean);
     procedure LogPathEditAfterDialog(Sender: TObject; var AName: string;
       var AAction: Boolean);
+    procedure UserFilenameEditAfterDialog(Sender: TObject; var AName: string;
+      var AAction: Boolean);
   private
     procedure SetConfigData(Sender: TObject);
     procedure SetDefault2Config(AForm: TConfigF);
+    procedure SetRelativePath4FileName(var AName: string);
   public
     FHiMECSConfig: THiMECSConfig;
 
@@ -156,21 +159,13 @@ end;
 procedure TConfigF.EngInfoFilenameEditAfterDialog(Sender: TObject;
   var AName: string; var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.ExePathEditAfterDialog(Sender: TObject; var AName: string;
   var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.FormCreate(Sender: TObject);
@@ -187,21 +182,13 @@ end;
 procedure TConfigF.FormPathEditAfterDialog(Sender: TObject; var AName: string;
   var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.KillProcFilenameEditAfterDialog(Sender: TObject;
   var AName: string; var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.LoadConfigCollect2Form(AForm: TConfigF);
@@ -212,6 +199,7 @@ begin
   AForm.ProjInfoFilenameEdit.Text := FHiMECSConfig.ProjectInfoFileName;
   AForm.UserFilenameEdit.Text := FHiMECSConfig.UserFileName;
   AForm.ManualInfoFilenameEdit.Text := FHiMECSConfig.ManualInfoFileName;
+  AForm.DrawingInfoFilenameEdit.Text := FHiMECSConfig.DrawingInfoFileName;
   AForm.KillProcFilenameEdit.Text := FHiMECSConfig.KillProcListFileName;
 
   AForm.FormPathEdit.Text :=   FHiMECSConfig.HiMECSFormPath;
@@ -279,6 +267,9 @@ begin
     ManualInfoFileName := IncludeTrailingBackslash(ExtractRelativePath(
                               LPath, ExtractFilePath(ManualInfoFilenameEdit.Text)))
                               + ExtractFileName(ManualInfoFilenameEdit.Text);
+    DrawingInfoFileName := IncludeTrailingBackslash(ExtractRelativePath(
+                              LPath, ExtractFilePath(DrawingInfoFilenameEdit.Text)))
+                              + ExtractFileName(DrawingInfoFilenameEdit.Text);
     KillProcListFileName := IncludeTrailingBackslash(ExtractRelativePath(
                               LPath, ExtractFilePath(KillProcFilenameEdit.Text)))
                               + ExtractFileName(KillProcFilenameEdit.Text);
@@ -321,52 +312,31 @@ end;
 procedure TConfigF.LogPathEditAfterDialog(Sender: TObject; var AName: string;
   var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.ManualInfoFilenameEditAfterDialog(Sender: TObject;
   var AName: string; var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.MenuFilenameEditAfterDialog(Sender: TObject;
   var AName: string; var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.ParamFilenameEditAfterDialog(Sender: TObject;
   var AName: string; var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-//    AName := AbsToRel(AName, GetCurrentDir);
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.ProjInfoFilenameEditAfterDialog(Sender: TObject;
   var AName: string; var AAction: Boolean);
 begin
-  if RelativeCB.Checked then
-  begin
-    SetCurrentDir(ExtractFilePath(Application.ExeName));
-    AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
-  end;
+  SetRelativePath4FileName(AName);
 end;
 
 procedure TConfigF.SaveConfig(AFileName: string; AIsEncrypt: Boolean);
@@ -416,14 +386,19 @@ begin
     AForm.LogPathEdit.Text := '.\Log\';
 end;
 
-procedure TConfigF.UserFilenameEditAfterDialog(Sender: TObject;
-  var AName: string; var AAction: Boolean);
+procedure TConfigF.SetRelativePath4FileName(var AName: string);
 begin
   if RelativeCB.Checked then
   begin
     SetCurrentDir(ExtractFilePath(Application.ExeName));
     AName := ExtractRelativePathBaseApplication(GetCurrentDir, AName);
   end;
+end;
+
+procedure TConfigF.UserFilenameEditAfterDialog(Sender: TObject;
+  var AName: string; var AAction: Boolean);
+begin
+  SetRelativePath4FileName(AName);
 end;
 
 end.

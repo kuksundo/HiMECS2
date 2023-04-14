@@ -2,7 +2,7 @@ object ConfigF: TConfigF
   Left = 339
   Top = 152
   Caption = 'Options Configuration'
-  ClientHeight = 351
+  ClientHeight = 381
   ClientWidth = 396
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -20,7 +20,7 @@ object ConfigF: TConfigF
     Left = 0
     Top = 27
     Width = 396
-    Height = 283
+    Height = 313
     ActivePage = Tabsheet2
     Align = alClient
     Font.Charset = ANSI_CHARSET
@@ -30,6 +30,7 @@ object ConfigF: TConfigF
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    ExplicitHeight = 283
     object Tabsheet2: TTabSheet
       Caption = 'File Name'
       Font.Charset = DEFAULT_CHARSET
@@ -38,10 +39,7 @@ object ConfigF: TConfigF
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitHeight = 252
       object Label1: TLabel
         Left = 47
         Top = 35
@@ -120,7 +118,7 @@ object ConfigF: TConfigF
       end
       object Label12: TLabel
         Left = 15
-        Top = 211
+        Top = 241
         Width = 130
         Height = 16
         Caption = 'Kill Process File Name:'
@@ -139,6 +137,23 @@ object ConfigF: TConfigF
         Width = 133
         Height = 16
         Caption = 'Manual Info File Name:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = False
+      end
+      object Label23: TLabel
+        Left = 6
+        Top = 211
+        Width = 139
+        Height = 16
+        Hint = 'Manual Info'#50640' DrawingCollect'#47196' '#54252#54632#46104#50612' '#51080#51020
+        Caption = 'Drawing Info File Name:'
+        Enabled = False
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -203,7 +218,7 @@ object ConfigF: TConfigF
       end
       object KillProcFilenameEdit: TJvFilenameEdit
         Left = 149
-        Top = 211
+        Top = 241
         Width = 204
         Height = 24
         OnAfterDialog = KillProcFilenameEditAfterDialog
@@ -221,14 +236,23 @@ object ConfigF: TConfigF
         TabOrder = 6
         Text = ''
       end
+      object DrawingInfoFilenameEdit: TJvFilenameEdit
+        Left = 149
+        Top = 211
+        Width = 204
+        Height = 24
+        Hint = 'Manual Info'#50640' DrawingCollect'#47196' '#54252#54632#46104#50612' '#51080#51020
+        OnAfterDialog = ManualInfoFilenameEditAfterDialog
+        ImeName = 'Microsoft Office IME 2007'
+        Enabled = False
+        TabOrder = 7
+        Text = ''
+      end
     end
     object TabSheet1: TTabSheet
       Caption = 'Directories'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitHeight = 317
       object Label6: TLabel
         Left = 18
         Top = 30
@@ -362,10 +386,7 @@ object ConfigF: TConfigF
     object TabSheet3: TTabSheet
       Caption = 'Etc.'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitHeight = 317
       object CBExtAppInMDI: TCheckBox
         Left = 40
         Top = 32
@@ -416,10 +437,7 @@ object ConfigF: TConfigF
     object TabSheet4: TTabSheet
       Caption = 'TCP'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitHeight = 317
       object Label14: TLabel
         Left = 49
         Top = 31
@@ -460,10 +478,7 @@ object ConfigF: TConfigF
     object TabSheet5: TTabSheet
       Caption = 'Update'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitHeight = 317
       object Label21: TLabel
         Left = 3
         Top = 166
@@ -602,7 +617,7 @@ object ConfigF: TConfigF
   end
   object Panel1: TPanel
     Left = 0
-    Top = 310
+    Top = 340
     Width = 396
     Height = 41
     Align = alBottom
@@ -613,6 +628,7 @@ object ConfigF: TConfigF
     Font.Style = []
     ParentFont = False
     TabOrder = 1
+    ExplicitTop = 310
     object BitBtn1: TBitBtn
       Left = 40
       Top = 6

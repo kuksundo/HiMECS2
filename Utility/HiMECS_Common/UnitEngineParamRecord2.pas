@@ -335,7 +335,7 @@ function GetEngParamRecFromSensorType(AEngineParamDB: TRestClientDB = nil;
   const ASensorType: TSensorType = stNull; AIncludeDummy: Boolean = False): TEngineParamRecord;
 function GetEngParamRecFromParamNoNCategory(const AParamNo: string;
   const ACategory: integer; AEngineParamDB: TRestClientDB = nil): TEngineParamRecord;
-function GetEngParamRecFromTagNo(const ATagName: string): TEngineParamRecord;
+function GetEngParamRecFromTagNo(const ATagName: string; AEngineParamDB: TRestClientDB = nil): TEngineParamRecord;
 function GetVariantFromEngParamRecord(AEngineParamRecord:TEngineParamRecord): variant;
 function GetEngParamList2JSONArrayFromSensorType(AEngineParamDB: TRestClientDB = nil;
   const ASensorType: TSensorType = stNull; AIncludeDummy: Boolean=False): RawUTF8;
@@ -847,7 +847,8 @@ begin
   end;
 end;
 
-function GetEngParamRecFromTagNo(const ATagName: string): TEngineParamRecord;
+function GetEngParamRecFromTagNo(const ATagName: string;
+  AEngineParamDB: TRestClientDB): TEngineParamRecord;
 begin
   if ATagName = '' then
   begin
@@ -856,7 +857,10 @@ begin
   end
   else
   begin
-    Result := TEngineParamRecord.CreateAndFillPrepare(g_EngineParamDB.Orm,
+    if AEngineParamDB = nil then
+      AEngineParamDB := g_EngineParamDB;
+
+    Result := TEngineParamRecord.CreateAndFillPrepare(AEngineParamDB.Orm,
       'TagName = ?', [ATagName]);
 
     if Result.FillOne then

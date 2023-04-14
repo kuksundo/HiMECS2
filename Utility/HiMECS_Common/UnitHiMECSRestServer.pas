@@ -213,9 +213,9 @@ begin
   FRestServer.Server.CreateMissingTables;
 
   FHttpServer := TRestHttpServer.Create(HttpPort, [FRestServer], '+', HTTP_DEFAULT_MODE);
-//  FHttpServer.OnCustomRequest := Process;
+  FHttpServer.OnCustomRequest := Process;
   FHttpServer.AccessControlAllowOrigin := '*';
-end;
+end;
 
 destructor THiMECSHTTPAPIServer.Destroy;
 begin

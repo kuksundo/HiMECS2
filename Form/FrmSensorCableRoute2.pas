@@ -16,13 +16,17 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     FrameDecTV1: TFrameDecTreeView2;
+    ShowPLCChannel1: TMenuItem;
+    ShowPanelLayout1: TMenuItem;
+    ShowPanelInside1: TMenuItem;
+    N1: TMenuItem;
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EditItems1Click(Sender: TObject);
     procedure FrameDecTV1NewSubItem1Click(Sender: TObject);
-    procedure ShowMCPPLC1Click(Sender: TObject);
     procedure ShowPanelLayout1Click(Sender: TObject);
     procedure ShowPanelInside1Click(Sender: TObject);
+    procedure ShowPLCChannel1Click(Sender: TObject);
   private
     procedure EditItems;
   public
@@ -102,12 +106,6 @@ begin
 //  EditItems;
 end;
 
-procedure TSensorCableRouteF2.ShowMCPPLC1Click(Sender: TObject);
-begin
-//  CreateOrShowMCPPLCForm;
-  ShowPLCChnnel;
-end;
-
 procedure TSensorCableRouteF2.ShowPanelInside;
 var
   LPLCChannelInfoRec: TPLCChannelInfoRec;
@@ -142,6 +140,12 @@ end;
 procedure TSensorCableRouteF2.ShowPanelLayout1Click(Sender: TObject);
 begin
   ShowPanelLayout;
+end;
+
+procedure TSensorCableRouteF2.ShowPLCChannel1Click(Sender: TObject);
+begin
+//  CreateOrShowMCPPLCForm;
+  ShowPLCChnnel;
 end;
 
 procedure TSensorCableRouteF2.ShowPLCChnnel;
