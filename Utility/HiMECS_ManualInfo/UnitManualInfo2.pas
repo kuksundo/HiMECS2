@@ -41,6 +41,9 @@ type
     Button10: TButton;
     Label3: TLabel;
     Button11: TButton;
+    GetDrawNofrompdffile1: TMenuItem;
+    Label4: TLabel;
+    PrefixDrawNoEdit: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -57,6 +60,7 @@ type
     procedure Button9Click(Sender: TObject);
     procedure Button10Click(Sender: TObject);
     procedure Button11Click(Sender: TObject);
+    procedure GetDrawNofrompdffile1Click(Sender: TObject);
   private
     FHiMECSManualInfo: THiMECSManualInfo;
     FGetManualInfoFuture: IOmniFuture<Boolean>;
@@ -77,6 +81,8 @@ type
     function GetManualInfoFromFileName(AFileName: string; out ASecNo, ARevNo: string): string;
     function GetControlSystemInfoFromFileName(AFileName: string; AIgnorePrefix: Boolean;
       out ASystem, APart: string): string;
+    function GetControlSystemInfoFromFileName2(AFileName: string; AIgnorePrefix: Boolean;
+      out ASystem, APart: string): string;
     procedure GetCategory(ADir: string);
     procedure GetManualInfo(const task: IOmniTask);
     procedure OnGetManualInfoCompleted(const task: IOmniTaskControl);
@@ -84,10 +90,10 @@ type
     procedure GetControlSystemInfoFromFolder(AFolderName: string; AIgnorePrefix: Boolean=True);
     procedure GetControlSystemInfoFromFolder2(AFolderName: string; AIgnorePrefix: Boolean=True);
     procedure GetDrawingsInfoFromFolder(AFolderName: string);
+    function GetDrawNumberFromPdfFile(APdfFileName, APrefixDrawNo: string): string;
     procedure InitPDFCtrl;
     procedure FinalizePDFCtrl;
     procedure SplitPDfFileFromContents(APdfFileName: string);
-    procedure SavePDFFileFromPageRange(APdfFileName: string; ABeginPage, AEndPage: integer);
   public
     procedure ManualNDrawingInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure ManualInfo2ListView(AManualInfo: THiMECSManualInfo);
@@ -100,7 +106,7 @@ var
 
 implementation
 
-uses UnitFolderSelect, RegExpr, UnitStringUtil;
+uses UnitFolderSelect, RegExpr, UnitStringUtil, UnitPdfiumUtil;
 
 {$R *.dfm}
 
@@ -119,7 +125,16 @@ end;
 
 procedure TForm1.Button11Click(Sender: TObject);
 begin
-//  GetControlSystemInfoFromFolder2();
+  if JvDirectoryEdit1.Directory = '' then
+  begin
+    ShowMessage('Select folder first.');
+    JvDirectoryEdit1.SetFocus;
+    exit;
+  end;
+
+  GetControlSystemInfoFromFolder2(JvDirectoryEdit1.Directory, True);
+  ListView1.Clear;
+  ManualNDrawingInfo2ListView(FHiMECSManualInfo);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -424,6 +439,33 @@ begin
   Result := ASystem + '_' + APart;
 end;
 
+function TForm1.GetControlSystemInfoFromFileName2(AFileName: string;
+  AIgnorePrefix: Boolean; out ASystem, APart: string): string;
+var
+  LStr: string;
+begin
+  Result := '';
+  LStr := ExtractFileName(AFileName);
+
+  if (Pos('ControlSystem', LStr) = 0) then
+    exit;
+
+  if (not AIgnorePrefix) then
+  begin
+    ASystem := 'ControlSystem';
+
+    if (Pos('ControlSystem', LStr) = 0) then
+      exit;
+  end
+  else
+    ASystem := strToken(LStr, '_');
+
+  APart := strToken(LStr, '.');
+  APart := APart.Replace('_', ' ');
+
+  Result := ASystem + '_' + APart;
+end;
+
 procedure TForm1.GetControlSystemInfoFromFolder(AFolderName: string; AIgnorePrefix: Boolean);
 var
   LHiMECSDrawingItem: THiMECSDrawingItem;
@@ -463,14 +505,14 @@ begin
 
   for i := 0 to LManualFileList.Count - 1 do
   begin
-    LStr := GetControlSystemInfoFromFileName(LManualFileList.Strings[i], AIgnorePrefix, LSystem, LPart);
+    LStr := GetControlSystemInfoFromFileName2(LManualFileList.Strings[i], AIgnorePrefix, LSystem, LPart);
 
     if LStr <> '' then
     begin
       LHiMECSDrawingItem := FHiMECSManualInfo.Drawings.Add;
       LHiMECSDrawingItem.FileName := ExtractFileName(LManualFileList.Strings[i]);
       LHiMECSDrawingItem.FilePath := ExtractFilePath(LManualFileList.Strings[i]);
-
+      LHiMECSDrawingItem.DrawNumber := GetDrawNumberFromPdfFile(LManualFileList.Strings[i], PrefixDrawNoEdit.Text);
       LHiMECSDrawingItem.Category_No := 'DR';//Drawing
       LSystem := LSystem.Insert(7, ' ');
       LHiMECSDrawingItem.SystemDesc_Eng := LSystem;
@@ -482,6 +524,42 @@ end;
 procedure TForm1.GetDrawingsInfoFromFolder(AFolderName: string);
 begin
 
+end;
+
+procedure TForm1.GetDrawNofrompdffile1Click(Sender: TObject);
+var
+  LStr: string;
+begin
+  if JvDirectoryEdit1.Directory = '' then
+  begin
+    ShowMessage('Select folder first.');
+    JvDirectoryEdit1.SetFocus;
+    exit;
+  end;
+
+  GetControlSystemInfoFromFolder2(JvDirectoryEdit1.Directory, True);
+  ListView1.Clear;
+  ManualNDrawingInfo2ListView(FHiMECSManualInfo);
+
+//  OpenDialog1.Filter := 'PDF|*.pdf|All Files|*.*';
+//  if OpenDialog1.Execute() then
+//  begin
+//    LStr := 'B94-';
+//    FindTextFromPdfFile(OpenDialog1.FileName, LStr, 14);
+//    ShowMessage(LStr);
+//  end;
+end;
+
+function TForm1.GetDrawNumberFromPdfFile(APdfFileName, APrefixDrawNo: string): string;
+var
+  LRect: TRect;
+  LStr: string;
+begin
+  Result := '';
+  LStr := APrefixDrawNo;//'B94-';
+  LRect := FindTextFromPdfFile(APdfFileName, LStr, 14);
+
+  Result := LStr;
 end;
 
 procedure TForm1.GetManualInfo(const task: IOmniTask);
@@ -819,26 +897,6 @@ begin
 
 end;
 
-procedure TForm1.SavePDFFileFromPageRange(APdfFileName: string; ABeginPage, AEndPage: integer);
-var
-  LPdfDocument: TPdfDocument;
-begin
-  LPdfDocument := TPdfDocument.Create;
-  try
-    if ABeginPage > 0  then
-    begin
-      if AEndPage = 0 then
-        AEndPage := ABeginPage;
-
-      LPdfDocument.NewDocument;
-      LPdfDocument.ImportPages(FCtrl.Document, IntToStr(ABeginPage) + '-' + IntToStr(AEndPage));
-      LPdfDocument.SaveToFile(APdfFileName);
-    end;
-  finally
-    LPdfDocument.Free;
-  end;
-end;
-
 procedure TForm1.SplitPDfFileFromContents(APdfFileName: string);
 var
   LPage, LPage2: TPdfPage;
@@ -870,10 +928,10 @@ begin
       FCtrl.PageIndex := 0;
 
       Repeat
-        LPage2 := FCtrl.CurrentPage;
-
         if (FCtrl.PageCount-1) = FCtrl.PageIndex then
           System.Break;
+
+        LPage2 := FCtrl.CurrentPage;
 
         try
           if LPage2.BeginFind(LSearchStr, False, False, False) then
@@ -915,7 +973,7 @@ begin
       LPath := IncludeTrailingPathDelimiter(LContentsFileName);
       EnsureDirectoryExists(LPath);
 
-      SavePDFFileFromPageRange(LPath + LSearchStr + '.pdf', LBeginPage, LEndPage);
+      SavePDFFileFromPageRange(FCtrl, LPath + LSearchStr + '.pdf', LBeginPage, LEndPage);
 
       LStrList.Add(LSearchStr + ': ' + IntToStr(LBeginPage) + ' ~ ' + IntToStr(LEndPage));
     end;//for

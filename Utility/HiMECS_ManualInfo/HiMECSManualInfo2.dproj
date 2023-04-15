@@ -97,6 +97,7 @@
         </DCCReference>
         <DCCReference Include="..\..\..\..\..\..\..\project\OpenSrc\lib\mORMot\SQLite3\Samples\ThirdPartyDemos\Migajek\synopse-sqlite-generator\RegExpr.pas"/>
         <DCCReference Include="..\..\..\..\..\..\..\project\Common\UnitStringUtil.pas"/>
+        <DCCReference Include="..\..\..\..\Common\UnitPdfiumUtil.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

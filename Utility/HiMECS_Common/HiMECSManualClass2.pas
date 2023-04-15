@@ -21,7 +21,7 @@ type
     property ManualLanguage: TManualLanguage read FManualLanguage write FManualLanguage;
   end;
 
-  THiMECSMaintenanceManualItem = class(TCollectionItem)
+  THiMECSMaintenanceManualItem = class(THiMECSOpManualItem)
   private
   public
   published
@@ -35,10 +35,10 @@ type
     property ManualLanguage: TManualLanguage read FManualLanguage write FManualLanguage;
   end;
 
-  THiMECSDrawingItem = class(TCollectionItem)
+  THiMECSDrawingItem = class(THiMECSOpManualItem)
   public
     procedure Assign(Source: TPersistent); override;
-{$I HiMECSManual.inc}
+//{$I HiMECSManual.inc}
   end;
 
   TDrawingCollect<T: THiMECSDrawingItem> = class(Generics.Legacy.TCollection<T>)
@@ -112,6 +112,7 @@ begin
     LListItem.SubItems.Add(ADrawItem.PartDesc_Kor);
     LListItem.SubItems.Add(ADrawItem.FilePath);
     LListItem.SubItems.Add(ADrawItem.RelFilePath);
+    LListItem.SubItems.Add(ADrawItem.DrawNumber);
     LListItem.MakeVisible(False);
   finally
     AListView.Items.EndUpdate;
@@ -255,6 +256,12 @@ var
 begin
   for i := 0 to OpManual.Count - 1 do
     AddManualItem2ListView(OpManual.Items[i], AListView);
+//
+//  for i := 0 to ServiceManual.Count - 1 do
+//    AddManualItem2ListView(ServiceManual.Items[i], AListView);
+//
+//  for i := 0 to Drawings.Count - 1 do
+//    AddManualItem2ListView(Drawings.Items[i], AListView);
 end;
 
 function THiMECSManualInfo.SaveToSqliteFile(ADBFileName: string; AItemIndex: integer): integer;
@@ -274,6 +281,18 @@ begin
     for i := 0 to OpManual.Count - 1 do
     begin
       LoadRecordPropertyToVariant(OpManual.Items[i], LDoc);
+      AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
+    end;
+
+    for i := 0 to ServiceManual.Count - 1 do
+    begin
+      LoadRecordPropertyToVariant(ServiceManual.Items[i], LDoc);
+      AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
+    end;
+
+    for i := 0 to Drawings.Count - 1 do
+    begin
+      LoadRecordPropertyToVariant(Drawings.Items[i], LDoc);
       AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
     end;
   finally

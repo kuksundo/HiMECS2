@@ -22,6 +22,7 @@ object Form1: TForm1
     Height = 145
     Align = alTop
     TabOrder = 0
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 64
       Top = 16
@@ -38,11 +39,18 @@ object Form1: TForm1
       Enabled = False
     end
     object Label3: TLabel
-      Left = 0
+      Left = -4
       Top = 123
       Width = 62
       Height = 16
       Caption = 'EngType : '
+    end
+    object Label4: TLabel
+      Left = 407
+      Top = 119
+      Width = 94
+      Height = 16
+      Caption = 'Prefix DrawNo : '
     end
     object JvDirectoryEdit1: TJvDirectoryEdit
       Left = 152
@@ -139,7 +147,7 @@ object Form1: TForm1
       OnClick = Button8Click
     end
     object Button9: TButton
-      Left = 688
+      Left = 687
       Top = 93
       Width = 394
       Height = 25
@@ -165,14 +173,22 @@ object Form1: TForm1
       OnClick = Button10Click
     end
     object Button11: TButton
-      Left = 687
-      Top = 119
+      Left = 688
+      Top = 118
       Width = 394
       Height = 25
       Hint = #54028#51068#51060#47492'.txt'#50640#49436' '#47785#52264#47484' '#51069#50612#49436' '#47785#52264#51060#47492'.pdf '#54028#51068#51012' '#49373#49457#54632
-      Caption = #54260#45908#51032' '#54028#51068#51060#47492#51004#47196' Control System ManualItem '#52292#50864#44592
+      Caption = #54260#45908#51032' '#54028#51068#51060#47492#51004#47196' Control System '#47564' ManualItem'#50640' '#52292#50864#44592
       TabOrder = 13
       OnClick = Button11Click
+    end
+    object PrefixDrawNoEdit: TEdit
+      Left = 498
+      Top = 115
+      Width = 146
+      Height = 24
+      TabOrder = 14
+      Text = 'B94-'
     end
   end
   object ListView1: TListView
@@ -218,6 +234,9 @@ object Form1: TForm1
       end
       item
         Caption = 'Rel File Path'
+      end
+      item
+        Caption = 'DrawNo'
       end>
     MultiSelect = True
     PopupMenu = PopupMenu1
@@ -242,8 +261,8 @@ object Form1: TForm1
     Top = 8
   end
   object PopupMenu1: TPopupMenu
-    Left = 32
-    Top = 24
+    Left = 16
+    Top = 16
     object ChangeManualFilePath1: TMenuItem
       Caption = 'Change Manual File Path'
       OnClick = ChangeManualFilePath1Click
@@ -251,6 +270,10 @@ object Form1: TForm1
     object FileText1: TMenuItem
       Caption = 'File Test'
       OnClick = FileText1Click
+    end
+    object GetDrawNofrompdffile1: TMenuItem
+      Caption = 'Get DrawNo from pdf file'
+      OnClick = GetDrawNofrompdffile1Click
     end
   end
 end
