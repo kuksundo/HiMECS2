@@ -617,6 +617,7 @@ type
     function GetFullFilePathFromManualInfo(var ADrawingPath, AManualPath: string): Boolean;
     procedure CreateMDI4PDF(AFileName, ASystemDesc: string; APageB: integer; ADocType: THiMECSDocType);
     procedure ClearHideItemsOfManualInfoFromProj;
+    procedure SetHideItemsOfManualInfoBySearchTxt(AManual: THiMECSManualInfo; AKind: TManualItemKind; ASearchSrc: TManualSearchSrc; ASearchText: string);
     function GetSearchTree2JsonFromManualInfo(ADeviceName: string; ASortMethod: TManualSortMethod; ASearchText: string; ASearchSrc: TManualSearchSrc=mssNull): RawUTF8;
     function GetManualSearchSrcFromForm: TManualSearchSrc;
 
@@ -961,6 +962,22 @@ begin
     for j := LHiMECSManualInfo.OpManual.Count - 1 downto 0 do
     begin
       LManualItem := LHiMECSManualInfo.OpManual.Items[j];
+
+      if LManualItem.FIsHideItem then
+        LManualItem.FIsHideItem := False;
+    end;
+
+    for j := LHiMECSManualInfo.ServiceManual.Count - 1 downto 0 do
+    begin
+      LManualItem := LHiMECSManualInfo.ServiceManual.Items[j];
+
+      if LManualItem.FIsHideItem then
+        LManualItem.FIsHideItem := False;
+    end;
+
+    for j := LHiMECSManualInfo.Drawings.Count - 1 downto 0 do
+    begin
+      LManualItem := LHiMECSManualInfo.Drawings.Items[j];
 
       if LManualItem.FIsHideItem then
         LManualItem.FIsHideItem := False;
@@ -3752,7 +3769,7 @@ begin
     begin
       LStr := 'Drawing';
 
-      with AManualInfo.OpManual.Items[i] do
+      with AManualInfo.Drawings.Items[i] do
       begin
         if not FIsHideItem then
           AddItem2TV(LStr, SystemDesc_Eng, PartDesc_Eng, TObject(AManualInfo.Drawings.Items[i]));
@@ -5023,15 +5040,11 @@ end;
 procedure TMainForm.LoadSearchTreeFromManualInfo2(ASearchText: string;
   ASortMethod: TManualSortMethod; ASearchSrc: TManualSearchSrc; ATV: TJvCheckTreeView);
 var
+  i: integer;
+  LSearchMode: Boolean;
+  LHiMECSConfig: THiMECSConfig;
   LHiMECSManualInfo: THiMECSManualInfo;
   ANode, NextNode: TTreeNode;
-  ALevel, i, j, LParentRem: Integer;
-  CurrStr, LStr: string;
-  Keep, KeepParent, KeepAncestors: Boolean;
-  LevelRem: Integer;
-  LHiMECSConfig: THiMECSConfig;
-  LSearchMode: Boolean;
-  LHiMECSOpManualItem: THiMECSOpManualItem;
 begin
   if ATV = nil then
     ATV := ManualCheckTV;
@@ -5050,61 +5063,9 @@ begin
           i := FCOI;
           LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
           LHiMECSManualInfo := LHiMECSConfig.ManualInfo;
-          LevelRem:= 0;
-          KeepParent:= false;
 
-          for j := LHiMECSManualInfo.OpManual.Count - 1 downto 0 do // List is scanned from bottom to top
-          begin
-            LHiMECSOpManualItem := LHiMECSManualInfo.OpManual.Items[j];
-            Caption := IntToStr(j);
-
-            case ASearchSrc of
-              mssSystem: LStr := LHiMECSOpManualItem.SystemDesc_Eng;
-              mssPart: LStr := LHiMECSOpManualItem.PartDesc_Eng;
-              mssSection: LStr := LHiMECSOpManualItem.SectionNo;
-            end;//case
-
-            if LStr = '' then
-            begin
-              CurrStr:= '';
-            end
-            else
-            begin
-              CurrStr := GetBufStart(LStr, ALevel);
-              CurrStr:= Lowercase(CurrStr); // insures a case insensitive search
-            end;
-
-            if ALevel >= LevelRem then // node is a leaf
-            begin
-              Keep:= pos(ASearchText, CurrStr) > 0; // Search string found if true
-
-              if Keep then
-              begin
-                KeepParent:= true; // parent branch must be kept
-                KeepAncestors:= true;
-                LParentRem:= ALevel - 1;
-              end
-              else
-                LHiMECSOpManualItem.FIsHideItem := True;
-            end; // if ALevel = LevelRem
-
-            if ALevel = LevelRem - 1 then // node is a branch
-            begin
-              KeepParent:= false;
-              if KeepAncestors and (ALevel = LParentRem) then
-              begin
-                KeepParent:= true;
-                LParentRem:= LParentRem - 1;
-              end;
-
-              if not KeepParent then
-                LHiMECSOpManualItem.FIsHideItem := True
-              else if ALevel = 0 then
-                KeepAncestors:= False;
-            end;
-
-            LevelRem:= ALevel;
-          end;//for j
+          SetHideItemsOfManualInfoBySearchTxt(LHiMECSManualInfo, mikOpManual, ASearchSrc, ASearchText);
+          SetHideItemsOfManualInfoBySearchTxt(LHiMECSManualInfo, mikDrawings, ASearchSrc, ASearchText);
 
           ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
@@ -7332,6 +7293,97 @@ begin
   Result := Result + FuelType2DispName(FEngineInfoCollect.FuelType);
   Result := Result + DispName2CylinderConfiguration(FEngineInfoCollect.CylinderConfiguration);
 }end;
+
+procedure TMainForm.SetHideItemsOfManualInfoBySearchTxt(AManual: THiMECSManualInfo;
+  AKind: TManualItemKind; ASearchSrc: TManualSearchSrc; ASearchText: string);
+var
+  ALevel, j, LParentRem: Integer;
+  CurrStr, LStr: string;
+  Keep, KeepParent, KeepAncestors: Boolean;
+  LevelRem: Integer;
+  LHiMECSOpManualItem: THiMECSOpManualItem;
+
+  procedure _SetHideItem(AHiMECSOpManualItem: THiMECSOpManualItem);
+  begin
+    case ASearchSrc of
+      mssSystem: LStr := AHiMECSOpManualItem.SystemDesc_Eng;
+      mssPart: LStr := AHiMECSOpManualItem.PartDesc_Eng;
+      mssSection: LStr := AHiMECSOpManualItem.SectionNo;
+    end;//case
+
+    if LStr = '' then
+    begin
+      CurrStr:= '';
+    end
+    else
+    begin
+      CurrStr := GetBufStart(LStr, ALevel);
+      CurrStr:= Lowercase(CurrStr); // insures a case insensitive search
+    end;
+
+    if ALevel >= LevelRem then // node is a leaf
+    begin
+      Keep:= pos(ASearchText, CurrStr) > 0; // Search string found if true
+
+      if Keep then
+      begin
+        KeepParent:= true; // parent branch must be kept
+        KeepAncestors:= true;
+        LParentRem:= ALevel - 1;
+      end
+      else
+        AHiMECSOpManualItem.FIsHideItem := True;
+    end; // if ALevel = LevelRem
+
+    if ALevel = LevelRem - 1 then // node is a branch
+    begin
+      KeepParent:= false;
+      if KeepAncestors and (ALevel = LParentRem) then
+      begin
+        KeepParent:= true;
+        LParentRem:= LParentRem - 1;
+      end;
+
+      if not KeepParent then
+        AHiMECSOpManualItem.FIsHideItem := True
+      else if ALevel = 0 then
+        KeepAncestors:= False;
+    end;
+
+    LevelRem:= ALevel;
+  end;//procedure
+begin
+  LevelRem:= 0;
+  KeepParent:= false;
+
+  if AKind = mikOpManual then
+  begin
+    for j := AManual.OpManual.Count - 1 downto 0 do // List is scanned from bottom to top
+    begin
+//      Caption := IntToStr(j);
+      LHiMECSOpManualItem := AManual.OpManual.Items[j];
+      _SetHideItem(LHiMECSOpManualItem);
+    end;//for j
+  end
+  else
+  if AKind = mikMaintenance then
+  begin
+    for j := AManual.ServiceManual.Count - 1 downto 0 do // List is scanned from bottom to top
+    begin
+      LHiMECSOpManualItem := AManual.ServiceManual.Items[j];
+      _SetHideItem(LHiMECSOpManualItem);
+    end;//for j
+  end
+  else
+  if AKind = mikDrawings then
+  begin
+    for j := AManual.Drawings.Count - 1 downto 0 do // List is scanned from bottom to top
+    begin
+      LHiMECSOpManualItem := AManual.Drawings.Items[j];
+      _SetHideItem(LHiMECSOpManualItem);
+    end;//for j
+  end;
+end;
 
 procedure TMainForm.SetHiMECSMainMenu(AMenuBase: TMenuBase);
 var

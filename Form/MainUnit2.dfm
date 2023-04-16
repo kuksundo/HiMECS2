@@ -164,7 +164,7 @@ object MainForm: TMainForm
     ActiveColorTo = 7257087
     ActiveMirrorColor = 4370174
     ActiveMirrorColorTo = 8053246
-    ActiveTabIndex = 7
+    ActiveTabIndex = 3
     AllowCollaps = True
     BorderColor = 16765615
     CaptionColor = 16773091
@@ -302,97 +302,6 @@ object MainForm: TMainForm
           ExplicitWidth = 279
           ExplicitHeight = 195
         end
-      end
-    end
-    object ManualPanel: TAdvNavBarPanel
-      Left = 1
-      Top = 27
-      Width = 279
-      Height = 195
-      Caption = 'Manual'
-      CaptionStyle = [fsBold]
-      Color = clWhite
-      ColorTo = clWhite
-      ImageIndex = 7
-      PanelIndex = 3
-      Sections = <>
-      object Panel2: TPanel
-        Left = 0
-        Top = 0
-        Width = 279
-        Height = 45
-        Align = alTop
-        Color = clWhite
-        TabOrder = 0
-        object ManualSearchEdit: TEdit
-          Left = 1
-          Top = 21
-          Width = 277
-          Height = 23
-          Align = alClient
-          ImeName = 'Microsoft IME 2010'
-          TabOrder = 0
-          OnChange = ManualSearchEditChange
-          OnKeyDown = ManualSearchEditKeyDown
-          ExplicitHeight = 21
-        end
-        object Panel3: TPanel
-          Left = 1
-          Top = 1
-          Width = 277
-          Height = 20
-          Align = alTop
-          Color = clWhite
-          ParentBackground = False
-          TabOrder = 1
-          object SystemRB: TRadioButton
-            Left = 1
-            Top = 1
-            Width = 70
-            Height = 18
-            Align = alLeft
-            Caption = 'System'
-            Checked = True
-            TabOrder = 0
-            TabStop = True
-            OnClick = SystemRBClick
-          end
-          object PartRB: TRadioButton
-            Left = 71
-            Top = 1
-            Width = 50
-            Height = 18
-            Align = alLeft
-            Caption = 'Part'
-            TabOrder = 1
-            OnClick = PartRBClick
-          end
-          object SectionRB: TRadioButton
-            Left = 121
-            Top = 1
-            Width = 80
-            Height = 18
-            Align = alLeft
-            Caption = 'Section No'
-            TabOrder = 2
-            OnClick = SectionRBClick
-          end
-        end
-      end
-      object ManualCheckTV: TJvCheckTreeView
-        Left = 0
-        Top = 45
-        Width = 279
-        Height = 150
-        Align = alClient
-        Indent = 19
-        PopupMenu = ManualPopup
-        TabOrder = 1
-        OnDblClick = ManualCheckTVDblClick
-        OnKeyDown = ManualCheckTVKeyDown
-        OnKeyUp = ManualCheckTVKeyUp
-        OnMouseDown = ManualCheckTVMouseDown
-        CheckBoxOptions.Style = cbsNone
       end
     end
     object EngineInfoPanel: TAdvNavBarPanel
@@ -678,6 +587,98 @@ object MainForm: TMainForm
       ImageIndex = 1
       PanelIndex = 7
       Sections = <>
+    end
+    object ManualPanel: TAdvNavBarPanel
+      Left = 1
+      Top = 27
+      Width = 279
+      Height = 195
+      Caption = 'Manual'
+      CaptionStyle = [fsBold]
+      Color = clWhite
+      ColorTo = clWhite
+      ImageIndex = 7
+      PanelIndex = 3
+      Sections = <>
+      object Panel2: TPanel
+        Left = 0
+        Top = 0
+        Width = 279
+        Height = 45
+        Align = alTop
+        Color = clWhite
+        TabOrder = 0
+        object ManualSearchEdit: TEdit
+          Left = 1
+          Top = 21
+          Width = 277
+          Height = 23
+          Align = alClient
+          ImeName = 'Microsoft IME 2010'
+          TabOrder = 0
+          OnChange = ManualSearchEditChange
+          OnKeyDown = ManualSearchEditKeyDown
+          ExplicitLeft = -3
+          ExplicitTop = 25
+        end
+        object Panel3: TPanel
+          Left = 1
+          Top = 1
+          Width = 277
+          Height = 20
+          Align = alTop
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 1
+          object SystemRB: TRadioButton
+            Left = 1
+            Top = 1
+            Width = 70
+            Height = 18
+            Align = alLeft
+            Caption = 'System'
+            Checked = True
+            TabOrder = 0
+            TabStop = True
+            OnClick = SystemRBClick
+          end
+          object PartRB: TRadioButton
+            Left = 71
+            Top = 1
+            Width = 50
+            Height = 18
+            Align = alLeft
+            Caption = 'Part'
+            TabOrder = 1
+            OnClick = PartRBClick
+          end
+          object SectionRB: TRadioButton
+            Left = 121
+            Top = 1
+            Width = 80
+            Height = 18
+            Align = alLeft
+            Caption = 'Section No'
+            TabOrder = 2
+            OnClick = SectionRBClick
+          end
+        end
+      end
+      object ManualCheckTV: TJvCheckTreeView
+        Left = 0
+        Top = 45
+        Width = 279
+        Height = 150
+        Align = alClient
+        Indent = 19
+        PopupMenu = ManualPopup
+        TabOrder = 1
+        OnDblClick = ManualCheckTVDblClick
+        OnKeyDown = ManualCheckTVKeyDown
+        OnKeyUp = ManualCheckTVKeyUp
+        OnMouseDown = ManualCheckTVMouseDown
+        CheckBoxOptions.Style = cbsNone
+      end
     end
   end
   object MDITabSet: TAdvOfficeMDITabSet
@@ -1530,7 +1531,7 @@ object MainForm: TMainForm
     Left = 340
     Top = 88
     Bitmap = {
-      494C01010800F007380410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010800F007400410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1939,7 +1940,7 @@ object MainForm: TMainForm
     Left = 372
     Top = 92
     Bitmap = {
-      494C01010A008002500418001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010A008002580418001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2965,7 +2966,7 @@ object MainForm: TMainForm
     Left = 408
     Top = 88
     Bitmap = {
-      494C0101120014002C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010112001400340410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3672,7 +3673,7 @@ object MainForm: TMainForm
     Left = 392
     Top = 135
     Bitmap = {
-      494C01011900E804440410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900E8044C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       000000000000000000000000000000000000FAF3EE00FAF3EE00FAF3EE00FAF3
       EE00FAF3EE00FAF3EE00FAF3EE00FAF3EE00EFE9E400FAF3EE00FAF3EE00FAF3
@@ -5124,7 +5125,7 @@ object MainForm: TMainForm
     Left = 356
     Top = 136
     Bitmap = {
-      494C01010D0013002C0420002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D001300340420002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000008000000001002000000000000000
       0100000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -5,6 +5,7 @@ interface
 uses Classes,
   mormot.orm.core, mormot.rest.client, mormot.core.base, mormot.core.os,
   mormot.rest.sqlite3, mormot.core.variants, mormot.core.data, mormot.orm.base,
+  mormot.core.text,
   HiMECSConst, UnitEngineParameterClass2,
   UnitEngineParamConst, UnitEngineMasterData;
 
@@ -300,7 +301,8 @@ begin
 
     while LHiMECSManualRecord.FillOne do
     begin
-      LUtf8 := LHiMECSManualRecord.GetJSONValues(true, true, soSelect);
+//      LUtf8 := LHiMECSManualRecord.GetJSONValues(true, true, soSelect);
+      LUtf8 := ObjectToJson(LHiMECSManualRecord);//.GetJSONValues(true, true, soSelect);
       LDynArr.Add(LUtf8);
     end;
 

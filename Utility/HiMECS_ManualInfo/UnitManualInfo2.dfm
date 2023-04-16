@@ -22,7 +22,6 @@ object Form1: TForm1
     Height = 145
     Align = alTop
     TabOrder = 0
-    ExplicitTop = -6
     object Label1: TLabel
       Left = 64
       Top = 16
@@ -120,7 +119,7 @@ object Form1: TForm1
     end
     object Button6: TButton
       Left = 328
-      Top = 88
+      Top = 87
       Width = 161
       Height = 25
       Caption = 'From File .sqlite'

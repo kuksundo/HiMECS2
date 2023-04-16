@@ -243,11 +243,18 @@ end;
 
 function THiMECSManualInfo.LoadFromSqliteFile(ADBFileName: string): integer;
 var
+  LSQLRestClientURI: TSQLRestClientURI;
+  LHiMECSManualModel: TSQLModel;
   LUtf8: RawUtf8;
 begin
-  InitHiMECSManualClient(ADBFileName);
-  LUtf8 := GetHiMECSManualList2JSONArrayFromProductModel;//(stParam)
-  LoadFromJSONArray(LUtf8);
+  LSQLRestClientURI := InitHiMECSManualClient2(ADBFileName, LHiMECSManualModel);
+  try
+    LUtf8 := GetHiMECSManualList2JSONArrayFromProductModel(LSQLRestClientURI);//(stParam)
+    LoadFromJSONArray(LUtf8);
+  finally
+    LHiMECSManualModel.Free;
+    LSQLRestClientURI.Free;
+  end;
 end;
 
 procedure THiMECSManualInfo.ManualInfo2ListView(AListView: TListView);

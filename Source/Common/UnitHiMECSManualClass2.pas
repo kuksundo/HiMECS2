@@ -7,7 +7,7 @@ uses System.SysUtils, Classes, Vcl.ComCtrls, Generics.Legacy, JHP.BaseConfigColl
   HiMECSConst, UnitHiMECSManualRecord2, UnitEngineMasterData;
 
 type
-//  TEngParamListItemKind = (eplikNull, eplikModbus, eplikSensorType, eplikFinal);
+  TManualItemKind = (mikNull, mikOpManual, mikMaintenance, mikDrawings, mikFinal);
 
   THiMECSOpManualItem = class(TCollectionItem)
   public
@@ -23,7 +23,7 @@ type
     property ManualLanguage: TManualLanguage read FManualLanguage write FManualLanguage;
   end;
 
-  THiMECSMaintenanceManualItem = class(TCollectionItem)
+  THiMECSMaintenanceManualItem = class(THiMECSOpManualItem)
   private
   public
   published
@@ -37,10 +37,10 @@ type
     property ManualLanguage: TManualLanguage read FManualLanguage write FManualLanguage;
   end;
 
-  THiMECSDrawingItem = class(TCollectionItem)
+  THiMECSDrawingItem = class(THiMECSOpManualItem)
   public
     procedure Assign(Source: TPersistent); override;
-{$I HiMECSManual.inc}
+//{$I HiMECSManual.inc}
   end;
 
   TDrawingCollect<T: THiMECSDrawingItem> = class(Generics.Legacy.TCollection<T>)
