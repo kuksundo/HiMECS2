@@ -167,6 +167,7 @@ object Form1: TForm1
       Top = 117
       Width = 211
       Height = 25
+      Hint = '+'
       Caption = 'Set RelFilePath From EngType'
       TabOrder = 12
       OnClick = Button10Click

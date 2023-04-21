@@ -2416,12 +2416,14 @@ var
   LUtf8: RawUTF8;
   LRec: TRestAPIResponseDoc;
 begin
-  if FileExists(ARec.DocName) then
+  LUtf8 := RelToAbs(ARec.DocName, ExtractFilePath(Application.ExeName));
+
+  if FileExists(LUtf8) then
   begin
     LDynArr.Init(TypeInfo(TRestAPIResponse2DynArr), LDynArrResponse);
     LRec.MethodName := 'GetDocPdf';
 //    LRec.ProjName := ARec.ProjName;
-    LRec.Response := FileToBase64(ARec.DocName);
+    LRec.Response := FileToBase64(LUtf8);
     LRec.Id := 1;
     LDynArr.Add(LRec);
 
@@ -2475,19 +2477,15 @@ var
   Keep, KeepParent, KeepAncestors: Boolean;
   LevelRem: Integer;
   LSearchManualList: TStringList;
-//  LVar: TDocVariantData;//variant;
   LRec: TRestAPIResponseDocContent;
   LUtf8: RawUTF8;
   LDynUtf8: TTRestAPIResponseDocContent2DynArr;//TRawUTF8DynArray;
   LDynArr: TDynArray;
 begin
   Result := '';
-//  TDocVariant.New(LVar);
-//  LDynArr.Init(TypeInfo(TRawUTF8DynArray), LDynUtf8);
   LDynArr.Init(TypeInfo(TTRestAPIResponseDocContent2DynArr), LDynUtf8);
 
   ASearchText:= Lowercase(ASearchText); // insures a case insensitive search
-//  LSearchMode:= Length(ASearchText) <> 0; // true searcxh box not empty
 
   try
     try
@@ -2502,102 +2500,126 @@ begin
       begin
         LHiMECSManualInfo := THiMECSManualInfo(LSearchManualList.Objects[i]);
 
-        for j := LHiMECSManualInfo.OpManual.Count - 1 downto 0 do // List is scanned from bottom to top
+        SetHideItemsOfManualInfoBySearchTxt(LHiMECSManualInfo, mikOpManual, ASearchSrc, ASearchText);
+        SetHideItemsOfManualInfoBySearchTxt(LHiMECSManualInfo, mikDrawings, ASearchSrc, ASearchText);
+
+        for j := LHiMECSManualInfo.OpManual.Count - 1 downto 0 do
         begin
-          case ASearchSrc of
-            mssSystem: LStr := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
-            mssPart: begin
-              LStr := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng;
-              LStr2 := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
-            end;
-            mssSection: LStr := LHiMECSManualInfo.OpManual.Items[j].SectionNo;
-          else
-            begin
-              LStr := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng + ';' +
-                LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng + ';' +
-                LHiMECSManualInfo.OpManual.Items[j].SectionNo;
-            end;
-          end;//case
-
-          if Length(ASearchText) = 0 then
+          if not LHiMECSManualInfo.OpManual.Items[j].FIsHideItem then
           begin
-            Keep := True;
-          end
-          else
-          begin
-            if LStr = '' then
-            begin
-              CurrStr:= '';
-            end
-            else
-            begin
-              CurrStr := GetBufStart(LStr, ALevel);
-              CurrStr:= Lowercase(CurrStr); // insures a case insensitive search
-            end;
-
-            if ALevel >= LevelRem then // node is a leaf
-            begin
-              Keep:= pos(ASearchText, CurrStr) > 0; // Search string found if true
-
-              if Keep then
-              begin
-                KeepParent:= true; // parent branch must be kept
-                KeepAncestors:= true;
-                LParentRem:= ALevel - 1;
-              end
-              else
-                LHiMECSManualInfo.OpManual.Delete(j);
-            end; // if ALevel = LevelRem
-
-            if ALevel = LevelRem - 1 then // node is a branch
-            begin
-              KeepParent:= false;
-              if KeepAncestors and (ALevel = LParentRem) then
-              begin
-                KeepParent:= true;
-                LParentRem:= LParentRem - 1;
-              end;
-
-              if not KeepParent then
-                LHiMECSManualInfo.OpManual.Delete(j)
-              else if ALevel = 0 then
-                KeepAncestors:= False;
-            end;
-
-            LevelRem:= ALevel;
-          end;//else
-
-          if Keep then
-          begin
-//            if Idx > 54 then
-//              break;
-//            LVar.Init;
-            Inc(Idx);
-//            LVar.Id := Idx;
-//            LVar.AddValue('Id', Idx);
-            LRec.Id := Idx;
-
-            case ASearchSrc of
-              mssSystem,
-              mssSection,
-              mssPart: begin
-                LRec.Desc := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
-                LRec.Msg := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng;
-//                LRec.SectionNo := LHiMECSManualInfo.OpManual.Items[j].SectionNo;
-              end;
-            else
-              begin
-              end;
-            end;//case
-
+            LRec.Desc := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
+            LRec.Msg := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng;
+    //                LRec.SectionNo := LHiMECSManualInfo.OpManual.Items[j].SectionNo;
             LRec.DocName :=  LHiMECSManualInfo.OpManual.Items[j].RelFilePath+
               LHiMECSManualInfo.OpManual.Items[j].FileName;
 
-//            LUtf8 := LVar.ToJson;
-//            LDynArr.Add(LUtf8);
             LDynArr.Add(LRec);
           end;
-        end;//for j
+        end;
+
+        for j := LHiMECSManualInfo.Drawings.Count - 1 downto 0 do
+        begin
+          if not LHiMECSManualInfo.Drawings.Items[j].FIsHideItem then
+          begin
+            LRec.Desc := LHiMECSManualInfo.Drawings.Items[j].SystemDesc_Eng;
+            LRec.Msg := LHiMECSManualInfo.Drawings.Items[j].PartDesc_Eng;
+    //                LRec.SectionNo := LHiMECSManualInfo.Drawings.Items[j].SectionNo;
+            LRec.DocName :=  LHiMECSManualInfo.Drawings.Items[j].RelFilePath+
+              LHiMECSManualInfo.Drawings.Items[j].FileName;
+
+            LDynArr.Add(LRec);
+          end;
+        end;
+
+//        for j := LHiMECSManualInfo.OpManual.Count - 1 downto 0 do // List is scanned from bottom to top
+//        begin
+//          case ASearchSrc of
+//            mssSystem: LStr := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
+//            mssPart: begin
+//              LStr := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng;
+//              LStr2 := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
+//            end;
+//            mssSection: LStr := LHiMECSManualInfo.OpManual.Items[j].SectionNo;
+//          else
+//            begin
+//              LStr := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng + ';' +
+//                LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng + ';' +
+//                LHiMECSManualInfo.OpManual.Items[j].SectionNo;
+//            end;
+//          end;//case
+//
+//          if Length(ASearchText) = 0 then
+//          begin
+//            Keep := True;
+//          end
+//          else
+//          begin
+//            if LStr = '' then
+//            begin
+//              CurrStr:= '';
+//            end
+//            else
+//            begin
+//              CurrStr := GetBufStart(LStr, ALevel);
+//              CurrStr:= Lowercase(CurrStr); // insures a case insensitive search
+//            end;
+//
+//            if ALevel >= LevelRem then // node is a leaf
+//            begin
+//              Keep:= pos(ASearchText, CurrStr) > 0; // Search string found if true
+//
+//              if Keep then
+//              begin
+//                KeepParent:= true; // parent branch must be kept
+//                KeepAncestors:= true;
+//                LParentRem:= ALevel - 1;
+//              end
+//              else
+//                LHiMECSManualInfo.OpManual.Delete(j);
+//            end; // if ALevel = LevelRem
+//
+//            if ALevel = LevelRem - 1 then // node is a branch
+//            begin
+//              KeepParent:= false;
+//              if KeepAncestors and (ALevel = LParentRem) then
+//              begin
+//                KeepParent:= true;
+//                LParentRem:= LParentRem - 1;
+//              end;
+//
+//              if not KeepParent then
+//                LHiMECSManualInfo.OpManual.Delete(j)
+//              else if ALevel = 0 then
+//                KeepAncestors:= False;
+//            end;
+//
+//            LevelRem:= ALevel;
+//          end;//else
+//
+//          if Keep then
+//          begin
+//            Inc(Idx);
+//            LRec.Id := Idx;
+//
+//            case ASearchSrc of
+//              mssSystem,
+//              mssSection,
+//              mssPart: begin
+//                LRec.Desc := LHiMECSManualInfo.OpManual.Items[j].SystemDesc_Eng;
+//                LRec.Msg := LHiMECSManualInfo.OpManual.Items[j].PartDesc_Eng;
+////                LRec.SectionNo := LHiMECSManualInfo.OpManual.Items[j].SectionNo;
+//              end;
+//            else
+//              begin
+//              end;
+//            end;//case
+//
+//            LRec.DocName :=  LHiMECSManualInfo.OpManual.Items[j].RelFilePath+
+//              LHiMECSManualInfo.OpManual.Items[j].FileName;
+//
+//            LDynArr.Add(LRec);
+//          end;//keep
+//        end;//for j
       end;//for i
 
       Result := LDynArr.SaveToJSON;
@@ -4520,6 +4542,9 @@ var
   LHiMECSConfig: THiMECSConfig;
   LParamObj: TEngineParameter;
 begin
+  if AFileName = '' then
+    exit;
+
   SetCurrentDir(FApplicationPath);
 
   if not FileExists(AFileName) then
@@ -7332,7 +7357,9 @@ var
         LParentRem:= ALevel - 1;
       end
       else
+      begin
         AHiMECSOpManualItem.FIsHideItem := True;
+      end;
     end; // if ALevel = LevelRem
 
     if ALevel = LevelRem - 1 then // node is a branch
@@ -7353,6 +7380,9 @@ var
     LevelRem:= ALevel;
   end;//procedure
 begin
+  if ASearchText = '' then
+    exit;
+
   LevelRem:= 0;
   KeepParent:= false;
 

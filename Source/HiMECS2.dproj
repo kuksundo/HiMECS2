@@ -162,7 +162,6 @@
         <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\UnitSelectUser.pas">
             <Form>SelectUserF</Form>
         </DCCReference>
-        <DCCReference Include="Common\UnitHiMECSManualClass2.pas"/>
         <DCCReference Include="..\Form\FrmPdfViewMDIChild2.pas">
             <Form>PDFViewMDIChildF</Form>
         </DCCReference>
@@ -170,7 +169,6 @@
         <DCCReference Include="Common\UnitHiMECSCommandLine2.pas"/>
         <DCCReference Include="..\..\..\..\..\..\project\util\GSManage\VesselList\UnitEngineMasterData.pas"/>
         <DCCReference Include="..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModbusComConst.pas"/>
-        <DCCReference Include="Common\UnitHiMECSManualRecord2.pas"/>
         <DCCReference Include="..\Utility\E2ServiceSnapShot\UnitE2SRecord2.pas"/>
         <DCCReference Include="..\Utility\E2ServiceSnapShot\FrmAvatParamView2.pas">
             <Form>AvatParamViewF</Form>

@@ -3,7 +3,7 @@ unit UnitHiMECSManualClass2;
 interface
 
 uses System.SysUtils, Classes, Vcl.ComCtrls, Generics.Legacy, JHP.BaseConfigCollect,
-  mormot.core.base, mormot.core.variants, mormot.rest.sqlite3, mormot.orm.core,
+  mormot.core.base, mormot.core.variants, mormot.rest.sqlite3, mormot.orm.core, mormot.rest.Client,
   HiMECSConst, UnitHiMECSManualRecord2, UnitEngineMasterData;
 
 type
@@ -64,11 +64,18 @@ type
     procedure Clear;
     procedure Assign(ASource: THiMECSManualInfo);
 
-    function LoadFromSqliteFile(ADBFileName: string; AEngParamKind: TEngParamListItemKind): integer;
+    function LoadFromSqliteFile(ADBFileName: string): integer;//; AEngParamKind: TEngParamListItemKind
     function SaveToSqliteFile(ADBFileName: string; AItemIndex: integer=-1): integer;
     function LoadFromJSONArray(AJsonArray: RawUTF8; AIsAdd: Boolean=False): integer;
     procedure SetDescFromSecNo(const AFileName, ASecNo: string;
       AHiMECSOpManualItem: THiMECSOpManualItem);
+    procedure SetDescFromDrawNo(const AFileName, ADrawNo: string;
+      AHiMECSOpManualItem: THiMECSOpManualItem);
+    procedure SetDescFromFileName(const ADBFileName, ADrawFileName: string;
+      AHiMECSOpManualItem: THiMECSOpManualItem);
+    procedure SetRelFilePathBothOpmanualNDrawings(const AEngType: string);
+    procedure AssignDesc2ManualItemFromRecord(AHiMECSOpManualItem: THiMECSOpManualItem;
+      AHiMECSManualRecord: THiMECSManualRecord);
 
     procedure ManualInfo2ListView(AListView: TListView);
     procedure AddManualItem2ListView(AManualItem: THiMECSOpManualItem; AListView: TListView);
@@ -106,6 +113,8 @@ begin
     LListItem.SubItems.Add(ADrawItem.PartDesc_Eng);
     LListItem.SubItems.Add(ADrawItem.PartDesc_Kor);
     LListItem.SubItems.Add(ADrawItem.FilePath);
+    LListItem.SubItems.Add(ADrawItem.RelFilePath);
+    LListItem.SubItems.Add(ADrawItem.DrawNumber);
     LListItem.MakeVisible(False);
   finally
     AListView.Items.EndUpdate;
@@ -130,6 +139,7 @@ begin
     LListItem.SubItems.Add(AManualItem.PartDesc_Eng);
     LListItem.SubItems.Add(AManualItem.PartDesc_Kor);
     LListItem.SubItems.Add(AManualItem.FilePath);
+    LListItem.SubItems.Add(AManualItem.RelFilePath);
     LListItem.MakeVisible(False);
   finally
     AListView.Items.EndUpdate;
@@ -149,6 +159,19 @@ begin
       with OpManual.Add do
         Assign(THiMECSManualInfo(ASource).OpManual.Items[i]);
 //  end;
+end;
+
+procedure THiMECSManualInfo.AssignDesc2ManualItemFromRecord(
+  AHiMECSOpManualItem: THiMECSOpManualItem;
+  AHiMECSManualRecord: THiMECSManualRecord);
+begin
+  if AHiMECSManualRecord.IsUpdate then
+  begin
+    AHiMECSOpManualItem.SystemDesc_Eng := AHiMECSManualRecord.SystemDesc_Eng;
+    AHiMECSOpManualItem.SystemDesc_Kor := AHiMECSManualRecord.SystemDesc_Kor;
+    AHiMECSOpManualItem.PartDesc_Eng := AHiMECSManualRecord.PartDesc_Eng;
+    AHiMECSOpManualItem.PartDesc_Kor := AHiMECSManualRecord.PartDesc_Kor;
+  end;
 end;
 
 procedure THiMECSManualInfo.Clear;
@@ -203,10 +226,14 @@ begin
         LVar := _JSON(LDocData.Value[i]);
         LStr := LVar.Category_No;
 
-        if LStr = 'OM' then
+        if LStr = '' then
+        begin
+//          ShowMessage('Category_No field is null');
+          exit;
+        end
+        else if LStr = 'OM' then
           LItem := TObject(OpManual.Add)
-        else
-        if LStr = 'DR' then
+        else if LStr = 'DR' then
           LItem := TObject(Drawings.Add);
 
         LoadRecordPropertyFromVariant(LItem, LVar);
@@ -217,13 +244,20 @@ begin
   end;
 end;
 
-function THiMECSManualInfo.LoadFromSqliteFile(ADBFileName: string; AEngParamKind: TEngParamListItemKind): integer;
+function THiMECSManualInfo.LoadFromSqliteFile(ADBFileName: string): integer;
 var
+  LSQLRestClientURI: TRestClientURI;
+  LHiMECSManualModel: TSQLModel;
   LUtf8: RawUtf8;
 begin
-  InitHiMECSManualClient(ADBFileName);
-  LUtf8 := GetHiMECSManualList2JSONArrayFromProductModel;//(stParam)
-  LoadFromJSONArray(LUtf8);
+  LSQLRestClientURI := InitHiMECSManualClient2(ADBFileName, LHiMECSManualModel);
+  try
+    LUtf8 := GetHiMECSManualList2JSONArrayFromProductModel(LSQLRestClientURI);//(stParam)
+    LoadFromJSONArray(LUtf8);
+  finally
+    LHiMECSManualModel.Free;
+    LSQLRestClientURI.Free;
+  end;
 end;
 
 procedure THiMECSManualInfo.ManualInfo2ListView(AListView: TListView);
@@ -240,8 +274,8 @@ var
   LUtf8: RawUTF8;
   LDoc: variant;
   i: integer;
-  LSQLRestClientURI: TRestClientDB;
-  LHiMECSManualModel: TOrmModel;
+  LSQLRestClientURI: TRestClientURI;
+  LHiMECSManualModel: TSQLModel;
 begin
 //  if Not FileExists(AFileName) then
 //    exit;
@@ -254,9 +288,50 @@ begin
       LoadRecordPropertyToVariant(OpManual.Items[i], LDoc);
       AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
     end;
+
+    for i := 0 to ServiceManual.Count - 1 do
+    begin
+      LoadRecordPropertyToVariant(ServiceManual.Items[i], LDoc);
+      AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
+    end;
+
+    for i := 0 to Drawings.Count - 1 do
+    begin
+      LoadRecordPropertyToVariant(Drawings.Items[i], LDoc);
+      AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
+    end;
   finally
     LHiMECSManualModel.Free;
     LSQLRestClientURI.Free;
+  end;
+end;
+
+procedure THiMECSManualInfo.SetDescFromDrawNo(const AFileName, ADrawNo: string;
+  AHiMECSOpManualItem: THiMECSOpManualItem);
+var
+  LHiMECSManualRecord: THiMECSManualRecord;
+begin
+  InitHiMECSManualClient(AFileName);
+  LHiMECSManualRecord := GetHiMECSManualFromDrawNo(ADrawNo);
+  try
+    AssignDesc2ManualItemFromRecord(AHiMECSOpManualItem, LHiMECSManualRecord);
+  finally
+    LHiMECSManualRecord.Free;
+  end;
+end;
+
+procedure THiMECSManualInfo.SetDescFromFileName(const ADBFileName,
+  ADrawFileName: string; AHiMECSOpManualItem: THiMECSOpManualItem);
+var
+  LHiMECSManualRecord: THiMECSManualRecord;
+begin
+  InitHiMECSManualClient(ADBFileName);
+  LHiMECSManualRecord := GetHiMECSManualFromFileName(ADrawFileName);
+
+  try
+    AssignDesc2ManualItemFromRecord(AHiMECSOpManualItem, LHiMECSManualRecord);
+  finally
+    LHiMECSManualRecord.Free;
   end;
 end;
 
@@ -268,16 +343,33 @@ begin
   InitHiMECSManualClient(AFileName);
   LHiMECSManualRecord := GetHiMECSManualFromSectionNo(ASecNo);
 
-  if LHiMECSManualRecord.IsUpdate then
-  begin
-    AHiMECSOpManualItem.SystemDesc_Eng := LHiMECSManualRecord.SystemDesc_Eng;
-    AHiMECSOpManualItem.SystemDesc_Kor := LHiMECSManualRecord.SystemDesc_Kor;
-    AHiMECSOpManualItem.PartDesc_Eng := LHiMECSManualRecord.PartDesc_Eng;
-    AHiMECSOpManualItem.PartDesc_Kor := LHiMECSManualRecord.PartDesc_Kor;
+  try
+    AssignDesc2ManualItemFromRecord(AHiMECSOpManualItem, LHiMECSManualRecord);
+  finally
+    LHiMECSManualRecord.Free;
   end;
 end;
 
-{ THiMECSOpManualItem }
+procedure THiMECSManualInfo.SetRelFilePathBothOpmanualNDrawings(const AEngType: string);
+var
+  i: integer;
+  LManualItem: THiMECSOpManualItem;
+  LDrawingItem: THiMECSDrawingItem;
+begin
+  for i := 0 to OpManual.Count - 1 do
+  begin
+    LManualItem := OpManual.Items[i];
+    LManualItem.RelFilePath := AEngType;
+  end;
+
+  for i := 0 to Drawings.Count - 1 do
+  begin
+    LDrawingItem := Drawings.Items[i];
+    LDrawingItem.RelFilePath := AEngType;
+  end;
+end;
+
+{HiMECSOpManualItem }
 
 procedure THiMECSOpManualItem.Assign(Source: TPersistent);
 begin

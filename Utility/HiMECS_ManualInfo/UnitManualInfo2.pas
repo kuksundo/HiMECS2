@@ -9,7 +9,7 @@ uses
   OtlTask, OtlCommon, OtlCollections, OtlParallel, OtlTaskControl,
   OtlEventMonitor, OtlComm, PdfiumCtrl, PdfiumCore,
   mormot.core.os,
-  HiMECSManualClass2, CommonUtil;
+  UnitHiMECSManualClass2, CommonUtil;
 
 const
   WM_FUTURE_RESULT = WM_USER + 1;
