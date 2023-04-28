@@ -44,6 +44,7 @@ type
     GetDrawNofrompdffile1: TMenuItem;
     Label4: TLabel;
     PrefixDrawNoEdit: TEdit;
+    Button12: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -61,6 +62,7 @@ type
     procedure Button10Click(Sender: TObject);
     procedure Button11Click(Sender: TObject);
     procedure GetDrawNofrompdffile1Click(Sender: TObject);
+    procedure Button12Click(Sender: TObject);
   private
     FHiMECSManualInfo: THiMECSManualInfo;
     FGetManualInfoFuture: IOmniFuture<Boolean>;
@@ -83,6 +85,7 @@ type
       out ASystem, APart: string): string;
     function GetControlSystemInfoFromFileName2(AFileName: string; AIgnorePrefix: Boolean;
       out ASystem, APart: string): string;
+    function GetSvcLetterInfoFromFileName(AFileName: string; out ASystem, APart: string): string;
     procedure GetCategory(ADir: string);
     procedure GetManualInfo(const task: IOmniTask);
     procedure OnGetManualInfoCompleted(const task: IOmniTaskControl);
@@ -91,6 +94,7 @@ type
     procedure GetControlSystemInfoFromFolder2(AFolderName: string; AIgnorePrefix: Boolean=True);
     procedure GetDrawingsInfoFromFolder(AFolderName: string);
     function GetDrawNumberFromPdfFile(APdfFileName, APrefixDrawNo: string): string;
+    procedure GetSvcLetterInfoFromFolder(AFolderName: string);
     procedure InitPDFCtrl;
     procedure FinalizePDFCtrl;
     procedure SplitPDfFileFromContents(APdfFileName: string);
@@ -98,6 +102,7 @@ type
     procedure ManualNDrawingInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure ManualInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure DrawingInfo2ListView(AManualInfo: THiMECSManualInfo);
+    procedure SvcLetterInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure AddManualItem2ListView(AManualItem: THiMECSOpManualItem);
   end;
 
@@ -135,6 +140,20 @@ begin
   GetControlSystemInfoFromFolder2(JvDirectoryEdit1.Directory, True);
   ListView1.Clear;
   ManualNDrawingInfo2ListView(FHiMECSManualInfo);
+end;
+
+procedure TForm1.Button12Click(Sender: TObject);
+begin
+  if JvDirectoryEdit1.Directory = '' then
+  begin
+    ShowMessage('Select folder first.');
+    JvDirectoryEdit1.SetFocus;
+    exit;
+  end;
+
+  GetSvcLetterInfoFromFolder(JvDirectoryEdit1.Directory);
+  ListView1.Clear;
+  SvcLetterInfo2ListView(FHiMECSManualInfo);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -474,22 +493,25 @@ var
   LStr, LSystem, LPart: string;
 begin
   LManualFileList := GetFileListFromDir(AFolderName, '*.*', False);
-
-  for i := 0 to LManualFileList.Count - 1 do
-  begin
-    LStr := GetControlSystemInfoFromFileName(LManualFileList.Strings[i], AIgnorePrefix, LSystem, LPart);
-
-    if LStr <> '' then
+  try
+    for i := 0 to LManualFileList.Count - 1 do
     begin
-      LHiMECSDrawingItem := FHiMECSManualInfo.Drawings.Add;
-      LHiMECSDrawingItem.FileName := ExtractFileName(LManualFileList.Strings[i]);
-      LHiMECSDrawingItem.FilePath := ExtractFilePath(LManualFileList.Strings[i]);
+      LStr := GetControlSystemInfoFromFileName(LManualFileList.Strings[i], AIgnorePrefix, LSystem, LPart);
 
-      LHiMECSDrawingItem.Category_No := 'DR';//Drawing
-      LSystem := LSystem.Insert(7, ' ');
-      LHiMECSDrawingItem.SystemDesc_Eng := LSystem;
-      LHiMECSDrawingItem.PartDesc_Eng := LPart;
+      if LStr <> '' then
+      begin
+        LHiMECSDrawingItem := FHiMECSManualInfo.Drawings.Add;
+        LHiMECSDrawingItem.FileName := ExtractFileName(LManualFileList.Strings[i]);
+        LHiMECSDrawingItem.FilePath := ExtractFilePath(LManualFileList.Strings[i]);
+
+        LHiMECSDrawingItem.Category_No := 'DR';//Drawing
+        LSystem := LSystem.Insert(7, ' ');
+        LHiMECSDrawingItem.SystemDesc_Eng := LSystem;
+        LHiMECSDrawingItem.PartDesc_Eng := LPart;
+      end;
     end;
+  finally
+    LManualFileList.Free;
   end;
 end;
 
@@ -502,22 +524,25 @@ var
   LStr, LSystem, LPart: string;
 begin
   LManualFileList := GetFileListFromDir(AFolderName, '*.*', False);
-
-  for i := 0 to LManualFileList.Count - 1 do
-  begin
-    LStr := GetControlSystemInfoFromFileName2(LManualFileList.Strings[i], AIgnorePrefix, LSystem, LPart);
-
-    if LStr <> '' then
+  try
+    for i := 0 to LManualFileList.Count - 1 do
     begin
-      LHiMECSDrawingItem := FHiMECSManualInfo.Drawings.Add;
-      LHiMECSDrawingItem.FileName := ExtractFileName(LManualFileList.Strings[i]);
-      LHiMECSDrawingItem.FilePath := ExtractFilePath(LManualFileList.Strings[i]);
-      LHiMECSDrawingItem.DrawNumber := GetDrawNumberFromPdfFile(LManualFileList.Strings[i], PrefixDrawNoEdit.Text);
-      LHiMECSDrawingItem.Category_No := 'DR';//Drawing
-      LSystem := LSystem.Insert(7, ' ');
-      LHiMECSDrawingItem.SystemDesc_Eng := LSystem;
-      LHiMECSDrawingItem.PartDesc_Eng := LPart;
+      LStr := GetControlSystemInfoFromFileName2(LManualFileList.Strings[i], AIgnorePrefix, LSystem, LPart);
+
+      if LStr <> '' then
+      begin
+        LHiMECSDrawingItem := FHiMECSManualInfo.Drawings.Add;
+        LHiMECSDrawingItem.FileName := ExtractFileName(LManualFileList.Strings[i]);
+        LHiMECSDrawingItem.FilePath := ExtractFilePath(LManualFileList.Strings[i]);
+        LHiMECSDrawingItem.DrawNumber := GetDrawNumberFromPdfFile(LManualFileList.Strings[i], PrefixDrawNoEdit.Text);
+        LHiMECSDrawingItem.Category_No := 'DR';//Drawing
+        LSystem := LSystem.Insert(7, ' ');
+        LHiMECSDrawingItem.SystemDesc_Eng := LSystem;
+        LHiMECSDrawingItem.PartDesc_Eng := LPart;
+      end;
     end;
+  finally
+    LManualFileList.Free;
   end;
 end;
 
@@ -857,6 +882,54 @@ begin
   end;
 end;
 
+function TForm1.GetSvcLetterInfoFromFileName(AFileName: string; out ASystem,
+  APart: string): string;
+var
+  LStr: string;
+begin
+  Result := '';
+  LStr := ExtractFileName(AFileName);
+
+  if (Pos('ServiceLetter', LStr) = 0) then
+    exit;
+
+  strToken(LStr, '_');
+  ASystem := strToken(LStr, '_');
+
+  APart := strToken(LStr, '_');
+
+  Result := ASystem + '_' + APart;
+end;
+
+procedure TForm1.GetSvcLetterInfoFromFolder(AFolderName: string);
+var
+  LHiMECSSvcLetterItem: THiMECSSvcLetterItem;
+  LManualFileList: TStringList;
+  i: integer;
+  LStr, LSystem, LPart: string;
+begin
+  LManualFileList := GetFileListFromDir(AFolderName, '*.*', False);
+  try
+    for i := 0 to LManualFileList.Count - 1 do
+    begin
+      LStr := GetSvcLetterInfoFromFileName(LManualFileList.Strings[i], LSystem, LPart);
+
+      if LStr <> '' then
+      begin
+        LHiMECSSvcLetterItem := FHiMECSManualInfo.SvcLetter.Add;
+        LHiMECSSvcLetterItem.FileName := ExtractFileName(LManualFileList.Strings[i]);
+        LHiMECSSvcLetterItem.FilePath := ExtractFilePath(LManualFileList.Strings[i]);
+        LHiMECSSvcLetterItem.Category_No := 'SL';//Service Letter
+        LHiMECSSvcLetterItem.Category_Eng := 'Service Letter';//Service Letter
+        LHiMECSSvcLetterItem.SystemDesc_Eng := LSystem;
+        LHiMECSSvcLetterItem.PartDesc_Eng := LPart;
+      end;
+    end;
+  finally
+    LManualFileList.Free;
+  end;
+end;
+
 procedure TForm1.InitPDFCtrl;
 begin
   PDFiumDllDir := 'E:\pjh\project\util\HiMECS\Application\Bin\Applications\';
@@ -983,6 +1056,11 @@ begin
     LContentsList.Free;
     LStrList.Free;
   end;
+end;
+
+procedure TForm1.SvcLetterInfo2ListView(AManualInfo: THiMECSManualInfo);
+begin
+  AManualInfo.SvcLetterInfo2ListView(ListView1);
 end;
 
 end.

@@ -7,7 +7,7 @@ uses System.SysUtils, Classes, Vcl.ComCtrls, Generics.Legacy, JHP.BaseConfigColl
   HiMECSConst, UnitHiMECSManualRecord2, UnitEngineMasterData;
 
 type
-  TManualItemKind = (mikNull, mikOpManual, mikMaintenance, mikDrawings, mikFinal);
+  TManualItemKind = (mikNull, mikOpManual, mikMaintenance, mikDrawings, mikSvcLetter, mikFinal);
 
   THiMECSOpManualItem = class(TCollectionItem)
   public
@@ -51,11 +51,26 @@ type
     property DrawingLanguage: TManualLanguage read FDrawingLanguage write FDrawingLanguage;
   end;
 
+  THiMECSSvcLetterItem = class(THiMECSOpManualItem)
+  private
+  public
+  published
+  end;
+
+  TSvcLetterCollect<T: THiMECSSvcLetterItem> = class(Generics.Legacy.TCollection<T>)
+  private
+    FServiceLetterLanguage: TManualLanguage;
+  public
+  published
+    property ServiceLetterLanguage: TManualLanguage read FServiceLetterLanguage write FServiceLetterLanguage;
+  end;
+
   THiMECSManualInfo = class(TpjhBase)
   private
     FOpManualCollect: THiMECSOpManualCollect<THiMECSOpManualItem>;
-    FMaintenanceManualCollect: TMaintenanceManualCollect<THiMECSMaintenanceManualItem>;
     FDrawingCollect: TDrawingCollect<THiMECSDrawingItem>;
+    FSvcLetterCollect: TSvcLetterCollect<THiMECSSvcLetterItem>;
+    FMaintenanceManualCollect: TMaintenanceManualCollect<THiMECSMaintenanceManualItem>;
     //ConfigJSONClass를 이용하여 환경설정 폼을 편집 시에 현재 CollectItem Index를 저장하기 위함
     FConfigItemIndex:integer;
   public
@@ -81,12 +96,15 @@ type
     procedure AddManualItem2ListView(AManualItem: THiMECSOpManualItem; AListView: TListView);
     procedure DrawingInfo2ListView(AListView: TListView);
     procedure AddDrawItem2ListView(ADrawItem: THiMECSDrawingItem; AListView: TListView);
+    procedure SvcLetterInfo2ListView(AListView: TListView);
+    procedure AddSvcLetterItem2ListView(ASvcLetterItem: THiMECSSvcLetterItem; AListView: TListView);
 
     property ConfigItemIndex: integer read FConfigItemIndex write FConfigItemIndex;
   published
     property OpManual: THiMECSOpManualCollect<THiMECSOpManualItem> read FOpManualCollect write FOpManualCollect;
-    property ServiceManual: TMaintenanceManualCollect<THiMECSMaintenanceManualItem> read FMaintenanceManualCollect write FMaintenanceManualCollect;
     property Drawings: TDrawingCollect<THiMECSDrawingItem> read FDrawingCollect write FDrawingCollect;
+    property SvcLetter: TSvcLetterCollect<THiMECSSvcLetterItem> read FSvcLetterCollect write FSvcLetterCollect;
+    property MaintenanceManual: TMaintenanceManualCollect<THiMECSMaintenanceManualItem> read FMaintenanceManualCollect write FMaintenanceManualCollect;
   end;
 
 implementation
@@ -146,6 +164,32 @@ begin
   end;
 end;
 
+procedure THiMECSManualInfo.AddSvcLetterItem2ListView(
+  ASvcLetterItem: THiMECSSvcLetterItem; AListView: TListView);
+var
+  LListItem: TListItem;
+begin
+  AListView.Items.BeginUpdate;
+  try
+    LListItem:= AListView.Items.Add;
+    LListItem.Data := ASvcLetterItem;
+    LListItem.Caption:= ASvcLetterItem.FileName;
+    LListItem.SubItems.Add(ASvcLetterItem.SectionNo);
+    LListItem.SubItems.Add(ASvcLetterItem.RevNo);
+    LListItem.SubItems.Add(ASvcLetterItem.Category_No);
+    LListItem.SubItems.Add(ASvcLetterItem.SystemDesc_Eng);
+    LListItem.SubItems.Add(ASvcLetterItem.SystemDesc_Kor);
+    LListItem.SubItems.Add(ASvcLetterItem.PartDesc_Eng);
+    LListItem.SubItems.Add(ASvcLetterItem.PartDesc_Kor);
+    LListItem.SubItems.Add(ASvcLetterItem.FilePath);
+    LListItem.SubItems.Add(ASvcLetterItem.RelFilePath);
+    LListItem.SubItems.Add(ASvcLetterItem.DrawNumber);
+    LListItem.MakeVisible(False);
+  finally
+    AListView.Items.EndUpdate;
+  end;
+end;
+
 procedure THiMECSManualInfo.Assign(ASource: THiMECSManualInfo);
 var
   i: integer;
@@ -182,16 +226,18 @@ end;
 constructor THiMECSManualInfo.Create(AOwner: TComponent);
 begin
   FOpManualCollect := THiMECSOpManualCollect<THiMECSOpManualItem>.Create;
-  FMaintenanceManualCollect := TMaintenanceManualCollect<THiMECSMaintenanceManualItem>.Create;
   FDrawingCollect := TDrawingCollect<THiMECSDrawingItem>.Create;
+  FSvcLetterCollect := TSvcLetterCollect<THiMECSSvcLetterItem>.Create;
+  FMaintenanceManualCollect := TMaintenanceManualCollect<THiMECSMaintenanceManualItem>.Create;
 end;
 
 destructor THiMECSManualInfo.Destroy;
 begin
   inherited;
 
-  FDrawingCollect.Free;
+  FSvcLetterCollect.Free;
   FMaintenanceManualCollect.Free;
+  FDrawingCollect.Free;
   FOpManualCollect.Free;
 end;
 
@@ -289,17 +335,24 @@ begin
       AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
     end;
 
-    for i := 0 to ServiceManual.Count - 1 do
-    begin
-      LoadRecordPropertyToVariant(ServiceManual.Items[i], LDoc);
-      AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
-    end;
-
     for i := 0 to Drawings.Count - 1 do
     begin
       LoadRecordPropertyToVariant(Drawings.Items[i], LDoc);
       AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
     end;
+
+    for i := 0 to SvcLetter.Count - 1 do
+    begin
+      LoadRecordPropertyToVariant(SvcLetter.Items[i], LDoc);
+      AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
+    end;
+
+    for i := 0 to MaintenanceManual.Count - 1 do
+    begin
+      LoadRecordPropertyToVariant(MaintenanceManual.Items[i], LDoc);
+      AddOrUpdateHiMECSManualFromVariant(LDoc, False, LSQLRestClientURI);
+    end;
+
   finally
     LHiMECSManualModel.Free;
     LSQLRestClientURI.Free;
@@ -355,21 +408,44 @@ procedure THiMECSManualInfo.SetRelFilePathBothOpmanualNDrawings(const AEngType: 
   i: integer;
   LManualItem: THiMECSOpManualItem;
   LDrawingItem: THiMECSDrawingItem;
+  LSvcLetterItem: THiMECSSvcLetterItem;
+  LMaintenanceItem: THiMECSMaintenanceManualItem;
 begin
-  for i := 0 to OpManual.Count - 1 do
+  for i := 0 to FOpManualCollect.Count - 1 do
   begin
-    LManualItem := OpManual.Items[i];
+    LManualItem := FOpManualCollect.Items[i];
     LManualItem.RelFilePath := AEngType;
   end;
 
-  for i := 0 to Drawings.Count - 1 do
+  for i := 0 to FDrawingCollect.Count - 1 do
   begin
-    LDrawingItem := Drawings.Items[i];
+    LDrawingItem := FDrawingCollect.Items[i];
     LDrawingItem.RelFilePath := AEngType;
+  end;
+
+  for i := 0 to FSvcLetterCollect.Count - 1 do
+  begin
+    LSvcLetterItem := FSvcLetterCollect.Items[i];
+    LSvcLetterItem.RelFilePath := AEngType;
+  end;
+
+  for i := 0 to FMaintenanceManualCollect.Count - 1 do
+  begin
+    LMaintenanceItem := FMaintenanceManualCollect.Items[i];
+    LMaintenanceItem.RelFilePath := AEngType;
   end;
 end;
 
-{HiMECSOpManualItem }
+procedure THiMECSManualInfo.SvcLetterInfo2ListView(AListView: TListView);
+var
+  LListItem: TListItem;
+  i: integer;
+begin
+  for i := 0 to FSvcLetterCollect.Count - 1 do
+    AddSvcLetterItem2ListView(FSvcLetterCollect.Items[i], AListView);
+end;
+
+{HiMECSOpManualItem }
 
 procedure THiMECSOpManualItem.Assign(Source: TPersistent);
 begin

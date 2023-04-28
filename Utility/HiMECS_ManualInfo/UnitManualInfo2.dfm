@@ -19,7 +19,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 1110
-    Height = 145
+    Height = 201
     Align = alTop
     TabOrder = 0
     object Label1: TLabel
@@ -178,7 +178,7 @@ object Form1: TForm1
       Width = 394
       Height = 25
       Hint = #54028#51068#51060#47492'.txt'#50640#49436' '#47785#52264#47484' '#51069#50612#49436' '#47785#52264#51060#47492'.pdf '#54028#51068#51012' '#49373#49457#54632
-      Caption = #54260#45908#51032' '#54028#51068#51060#47492#51004#47196' Control System '#47564' ManualItem'#50640' '#52292#50864#44592
+      Caption = #54260#45908#45236' '#54028#51068#51060#47492#51004#47196' Control System '#47564' ManualItem'#50640' '#52292#50864#44592
       TabOrder = 13
       OnClick = Button11Click
     end
@@ -190,12 +190,22 @@ object Form1: TForm1
       TabOrder = 14
       Text = 'B94-'
     end
+    object Button12: TButton
+      Left = 688
+      Top = 142
+      Width = 394
+      Height = 25
+      Hint = #54028#51068#51060#47492'.txt'#50640#49436' '#47785#52264#47484' '#51069#50612#49436' '#47785#52264#51060#47492'.pdf '#54028#51068#51012' '#49373#49457#54632
+      Caption = #54260#45908#45236' '#54028#51068#51060#47492#51004#47196' Service Letter '#47564' ManualItem'#50640' '#52292#50864#44592
+      TabOrder = 15
+      OnClick = Button12Click
+    end
   end
   object ListView1: TListView
     Left = 0
-    Top = 145
+    Top = 201
     Width = 1110
-    Height = 532
+    Height = 476
     Align = alClient
     Columns = <
       item
@@ -242,6 +252,8 @@ object Form1: TForm1
     PopupMenu = PopupMenu1
     TabOrder = 1
     ViewStyle = vsReport
+    ExplicitTop = 145
+    ExplicitHeight = 532
   end
   object Button2: TButton
     Left = 327
