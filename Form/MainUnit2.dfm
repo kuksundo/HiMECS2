@@ -164,7 +164,7 @@ object MainForm: TMainForm
     ActiveColorTo = 7257087
     ActiveMirrorColor = 4370174
     ActiveMirrorColorTo = 8053246
-    ActiveTabIndex = 3
+    ActiveTabIndex = 7
     AllowCollaps = True
     BorderColor = 16765615
     CaptionColor = 16773091
@@ -301,80 +301,6 @@ object MainForm: TMainForm
           Height = 195
           ExplicitWidth = 279
           ExplicitHeight = 195
-        end
-      end
-    end
-    object EngineInfoPanel: TAdvNavBarPanel
-      Left = 1
-      Top = 27
-      Width = 279
-      Height = 195
-      Caption = 'Engine Info'
-      CaptionStyle = [fsBold]
-      Color = clWhite
-      ImageIndex = 4
-      PanelIndex = 0
-      Sections = <>
-      object EngineInfoInspector: TNextInspector
-        Left = 0
-        Top = 0
-        Width = 279
-        Height = 195
-        Align = alClient
-        HighlightTextColor = 33023
-        PopupMenu = EngineInfoPopupMenu
-        Style = psOffice2010
-        TabOrder = 0
-        OnAfterEdit = EngineInfoInspectorAfterEdit
-        OnKeyDown = EngineInfoInspectorKeyDown
-        OnKeyUp = EngineInfoInspectorKeyUp
-        OnMouseDown = EngineInfoInspectorMouseDown
-        OnMouseMove = EngineInfoInspectorMouseMove
-        object SelectEngineCombo: TNxComboBoxItem
-          Caption = 'Select Engine'
-          Color = clBlack
-          ValueFont.Charset = ANSI_CHARSET
-          ValueFont.Color = clYellow
-          ValueFont.Height = -11
-          ValueFont.Name = 'Tahoma'
-          ValueFont.Style = [fsBold]
-          OnCloseUp = SelectEngineComboCloseUp
-          ParentIndex = -1
-        end
-        object NxTextItem1: TNxTextItem
-          Caption = 'Basic Spec.'
-          DrawingOptions = doBackgroundOnly
-          ReadOnly = True
-          ParentIndex = -1
-        end
-        object NxTextItem2: TNxTextItem
-          Caption = 'Dimension(mm)'
-          Expanded = False
-          ReadOnly = True
-          ParentIndex = -1
-        end
-        object NxTextItem3: TNxTextItem
-          Caption = 'Dry Mass(ton)'
-          Expanded = False
-          ReadOnly = True
-          ParentIndex = -1
-        end
-        object NxTextItem4: TNxTextItem
-          Caption = 'CAM Profile'
-          Expanded = False
-          ReadOnly = True
-          ParentIndex = -1
-        end
-        object ComponentsNxItem: TNxTextItem
-          Caption = 'Components'
-          Expanded = False
-          ReadOnly = True
-          ParentIndex = -1
-        end
-        object NxTextItem5: TNxTextItem
-          Caption = 'IP ADRESS'
-          ReadOnly = True
-          ParentIndex = -1
         end
       end
     end
@@ -576,17 +502,79 @@ object MainForm: TMainForm
         CheckBoxOptions.Style = cbsNone
       end
     end
-    object EngMaintenancePanel: TAdvNavBarPanel
+    object EngineInfoPanel: TAdvNavBarPanel
       Left = 1
       Top = 27
       Width = 279
       Height = 195
-      Caption = 'Maintenance'
+      Caption = 'Engine Info'
       CaptionStyle = [fsBold]
       Color = clWhite
-      ImageIndex = 1
-      PanelIndex = 7
+      ImageIndex = 4
+      PanelIndex = 0
       Sections = <>
+      object EngineInfoInspector: TNextInspector
+        Left = 0
+        Top = 0
+        Width = 279
+        Height = 195
+        Align = alClient
+        HighlightTextColor = 33023
+        PopupMenu = EngineInfoPopupMenu
+        Style = psOffice2010
+        TabOrder = 0
+        OnAfterEdit = EngineInfoInspectorAfterEdit
+        OnKeyDown = EngineInfoInspectorKeyDown
+        OnKeyUp = EngineInfoInspectorKeyUp
+        OnMouseDown = EngineInfoInspectorMouseDown
+        OnMouseMove = EngineInfoInspectorMouseMove
+        object SelectEngineCombo: TNxComboBoxItem
+          Caption = 'Select Engine'
+          Color = clBlack
+          ValueFont.Charset = ANSI_CHARSET
+          ValueFont.Color = clYellow
+          ValueFont.Height = -11
+          ValueFont.Name = 'Tahoma'
+          ValueFont.Style = [fsBold]
+          OnCloseUp = SelectEngineComboCloseUp
+          ParentIndex = -1
+        end
+        object NxTextItem1: TNxTextItem
+          Caption = 'Basic Spec.'
+          DrawingOptions = doBackgroundOnly
+          ReadOnly = True
+          ParentIndex = -1
+        end
+        object NxTextItem2: TNxTextItem
+          Caption = 'Dimension(mm)'
+          Expanded = False
+          ReadOnly = True
+          ParentIndex = -1
+        end
+        object NxTextItem3: TNxTextItem
+          Caption = 'Dry Mass(ton)'
+          Expanded = False
+          ReadOnly = True
+          ParentIndex = -1
+        end
+        object NxTextItem4: TNxTextItem
+          Caption = 'CAM Profile'
+          Expanded = False
+          ReadOnly = True
+          ParentIndex = -1
+        end
+        object ComponentsNxItem: TNxTextItem
+          Caption = 'Components'
+          Expanded = False
+          ReadOnly = True
+          ParentIndex = -1
+        end
+        object NxTextItem5: TNxTextItem
+          Caption = 'IP ADRESS'
+          ReadOnly = True
+          ParentIndex = -1
+        end
+      end
     end
     object ManualPanel: TAdvNavBarPanel
       Left = 1
@@ -618,7 +606,8 @@ object MainForm: TMainForm
           TabOrder = 0
           OnChange = ManualSearchEditChange
           OnKeyDown = ManualSearchEditKeyDown
-          ExplicitHeight = 21
+          ExplicitLeft = -3
+          ExplicitTop = 25
         end
         object Panel3: TPanel
           Left = 1
@@ -629,6 +618,7 @@ object MainForm: TMainForm
           Color = clWhite
           ParentBackground = False
           TabOrder = 1
+          ExplicitLeft = -3
           object SystemRB: TRadioButton
             Left = 1
             Top = 1
@@ -677,6 +667,94 @@ object MainForm: TMainForm
         OnKeyUp = ManualCheckTVKeyUp
         OnMouseDown = ManualCheckTVMouseDown
         CheckBoxOptions.Style = cbsNone
+        ExplicitLeft = -5
+        ExplicitTop = 50
+      end
+    end
+    object EngMaintenancePanel: TAdvNavBarPanel
+      Left = 1
+      Top = 27
+      Width = 279
+      Height = 195
+      Caption = 'Maintenance'
+      CaptionStyle = [fsBold]
+      Color = clWhite
+      ImageIndex = 1
+      PanelIndex = 7
+      Sections = <>
+      object MaintenanceTV: TJvCheckTreeView
+        Left = 0
+        Top = 45
+        Width = 279
+        Height = 150
+        Align = alClient
+        Indent = 19
+        PopupMenu = ManualPopup
+        TabOrder = 0
+        OnDblClick = ManualCheckTVDblClick
+        OnKeyDown = ManualCheckTVKeyDown
+        OnKeyUp = ManualCheckTVKeyUp
+        OnMouseDown = ManualCheckTVMouseDown
+        CheckBoxOptions.Style = cbsNone
+        ExplicitLeft = -5
+        ExplicitTop = 50
+      end
+      object Panel7: TPanel
+        Left = 0
+        Top = 0
+        Width = 279
+        Height = 45
+        Align = alTop
+        Color = clWhite
+        TabOrder = 1
+        ExplicitTop = 8
+        object MaintenanceSrchEdit: TEdit
+          Left = 1
+          Top = 21
+          Width = 277
+          Height = 23
+          Align = alClient
+          ImeName = 'Microsoft IME 2010'
+          TabOrder = 0
+          OnChange = ManualSearchEditChange
+          OnKeyDown = ManualSearchEditKeyDown
+          ExplicitLeft = -3
+          ExplicitTop = 25
+        end
+        object Panel8: TPanel
+          Left = 1
+          Top = 1
+          Width = 277
+          Height = 20
+          Align = alTop
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 1
+          ExplicitLeft = -3
+          ExplicitTop = 2
+          object RadioButton1: TRadioButton
+            Left = 1
+            Top = 1
+            Width = 104
+            Height = 18
+            Align = alLeft
+            Caption = 'Maintenance'
+            Checked = True
+            TabOrder = 0
+            TabStop = True
+            OnClick = SystemRBClick
+          end
+          object RadioButton3: TRadioButton
+            Left = 105
+            Top = 1
+            Width = 112
+            Height = 18
+            Align = alLeft
+            Caption = 'Service Letter'
+            TabOrder = 1
+            OnClick = SectionRBClick
+          end
+        end
       end
     end
   end
@@ -1530,7 +1608,7 @@ object MainForm: TMainForm
     Left = 340
     Top = 88
     Bitmap = {
-      494C01010800F007500410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010800F007540410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1939,7 +2017,7 @@ object MainForm: TMainForm
     Left = 372
     Top = 92
     Bitmap = {
-      494C01010A008002680418001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010A0080026C0418001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2965,7 +3043,7 @@ object MainForm: TMainForm
     Left = 408
     Top = 88
     Bitmap = {
-      494C010112001400440410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010112001400480410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3672,7 +3750,7 @@ object MainForm: TMainForm
     Left = 392
     Top = 135
     Bitmap = {
-      494C01011900E8045C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900E804600410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       000000000000000000000000000000000000FAF3EE00FAF3EE00FAF3EE00FAF3
       EE00FAF3EE00FAF3EE00FAF3EE00FAF3EE00EFE9E400FAF3EE00FAF3EE00FAF3
@@ -5124,7 +5202,7 @@ object MainForm: TMainForm
     Left = 356
     Top = 136
     Bitmap = {
-      494C01010D001300440420002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D001300480420002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000008000000001002000000000000000
       0100000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

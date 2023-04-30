@@ -8,6 +8,7 @@ uses System.SysUtils, Classes, Vcl.ComCtrls, Generics.Legacy, JHP.BaseConfigColl
 
 type
   TManualItemKind = (mikNull, mikOpManual, mikMaintenance, mikDrawings, mikSvcLetter, mikFinal);
+  TManualItemKinds = set of TManualItemKind;
 
   THiMECSOpManualItem = class(TCollectionItem)
   public
@@ -98,6 +99,8 @@ type
     procedure AddDrawItem2ListView(ADrawItem: THiMECSDrawingItem; AListView: TListView);
     procedure SvcLetterInfo2ListView(AListView: TListView);
     procedure AddSvcLetterItem2ListView(ASvcLetterItem: THiMECSSvcLetterItem; AListView: TListView);
+    procedure MaintenanceInfo2ListView(AListView: TListView);
+    procedure AddMaintenanceItem2ListView(AMaintenanceItem: THiMECSMaintenanceManualItem; AListView: TListView);
 
     property ConfigItemIndex: integer read FConfigItemIndex write FConfigItemIndex;
   published
@@ -133,6 +136,32 @@ begin
     LListItem.SubItems.Add(ADrawItem.FilePath);
     LListItem.SubItems.Add(ADrawItem.RelFilePath);
     LListItem.SubItems.Add(ADrawItem.DrawNumber);
+    LListItem.MakeVisible(False);
+  finally
+    AListView.Items.EndUpdate;
+  end;
+end;
+
+procedure THiMECSManualInfo.AddMaintenanceItem2ListView(
+  AMaintenanceItem: THiMECSMaintenanceManualItem; AListView: TListView);
+var
+  LListItem: TListItem;
+begin
+  AListView.Items.BeginUpdate;
+  try
+    LListItem:= AListView.Items.Add;
+    LListItem.Data := AMaintenanceItem;
+    LListItem.Caption:= AMaintenanceItem.FileName;
+    LListItem.SubItems.Add(AMaintenanceItem.SectionNo);
+    LListItem.SubItems.Add(AMaintenanceItem.RevNo);
+    LListItem.SubItems.Add(AMaintenanceItem.Category_No);
+    LListItem.SubItems.Add(AMaintenanceItem.SystemDesc_Eng);
+    LListItem.SubItems.Add(AMaintenanceItem.SystemDesc_Kor);
+    LListItem.SubItems.Add(AMaintenanceItem.PartDesc_Eng);
+    LListItem.SubItems.Add(AMaintenanceItem.PartDesc_Kor);
+    LListItem.SubItems.Add(AMaintenanceItem.FilePath);
+    LListItem.SubItems.Add(AMaintenanceItem.RelFilePath);
+    LListItem.SubItems.Add(AMaintenanceItem.DrawNumber);
     LListItem.MakeVisible(False);
   finally
     AListView.Items.EndUpdate;
@@ -280,7 +309,11 @@ begin
         else if LStr = 'OM' then
           LItem := TObject(OpManual.Add)
         else if LStr = 'DR' then
-          LItem := TObject(Drawings.Add);
+          LItem := TObject(Drawings.Add)
+        else if LStr = 'SL' then
+          LItem := TObject(SvcLetter.Add)
+        else if LStr = 'MM' then
+          LItem := TObject(MaintenanceManual.Add);
 
         LoadRecordPropertyFromVariant(LItem, LVar);
       end;
@@ -304,6 +337,15 @@ begin
     LHiMECSManualModel.Free;
     LSQLRestClientURI.Free;
   end;
+end;
+
+procedure THiMECSManualInfo.MaintenanceInfo2ListView(AListView: TListView);
+var
+  LListItem: TListItem;
+  i: integer;
+begin
+  for i := 0 to FMaintenanceManualCollect.Count - 1 do
+    AddMaintenanceItem2ListView(FMaintenanceManualCollect.Items[i], AListView);
 end;
 
 procedure THiMECSManualInfo.ManualInfo2ListView(AListView: TListView);

@@ -118,7 +118,7 @@ object Form1: TForm1
       OnClick = Button5Click
     end
     object Button6: TButton
-      Left = 328
+      Left = 327
       Top = 87
       Width = 161
       Height = 25
@@ -252,8 +252,6 @@ object Form1: TForm1
     PopupMenu = PopupMenu1
     TabOrder = 1
     ViewStyle = vsReport
-    ExplicitTop = 145
-    ExplicitHeight = 532
   end
   object Button2: TButton
     Left = 327

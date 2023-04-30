@@ -99,10 +99,12 @@ type
     procedure FinalizePDFCtrl;
     procedure SplitPDfFileFromContents(APdfFileName: string);
   public
+    procedure AllManualInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure ManualNDrawingInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure ManualInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure DrawingInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure SvcLetterInfo2ListView(AManualInfo: THiMECSManualInfo);
+    procedure MaintenanceInfo2ListView(AManualInfo: THiMECSManualInfo);
     procedure AddManualItem2ListView(AManualItem: THiMECSOpManualItem);
   end;
 
@@ -118,6 +120,14 @@ uses UnitFolderSelect, RegExpr, UnitStringUtil, UnitPdfiumUtil;
 procedure TForm1.AddManualItem2ListView(AManualItem: THiMECSOpManualItem);
 begin
 
+end;
+
+procedure TForm1.AllManualInfo2ListView(AManualInfo: THiMECSManualInfo);
+begin
+  ManualInfo2ListView(AManualInfo);
+  DrawingInfo2ListView(AManualInfo);
+  SvcLetterInfo2ListView(AManualInfo);
+  MaintenanceInfo2ListView(AManualInfo);
 end;
 
 procedure TForm1.Button10Click(Sender: TObject);
@@ -184,7 +194,8 @@ begin
     FHiMECSManualInfo.Clear;
     ListView1.Clear;
     FHiMECSManualInfo.LoadFromJSONFile(LStr);
-    ManualNDrawingInfo2ListView(FHiMECSManualInfo);
+//    ManualNDrawingInfo2ListView(FHiMECSManualInfo);
+    AllManualInfo2ListView(FHiMECSManualInfo);
   end;
 end;
 
@@ -297,9 +308,8 @@ begin
     FHiMECSManualInfo.Clear;
     ListView1.Clear;
     FHiMECSManualInfo.LoadFromSqliteFile(LStr);
-    ManualNDrawingInfo2ListView(FHiMECSManualInfo);
-//    Self.ManualInfo2ListView(FHiMECSManualInfo);
-//    Self.DrawingInfo2ListView(FHiMECSManualInfo);
+//    ManualNDrawingInfo2ListView(FHiMECSManualInfo);
+    AllManualInfo2ListView(FHiMECSManualInfo);
   end;
 end;
 
@@ -536,6 +546,7 @@ begin
         LHiMECSDrawingItem.FilePath := ExtractFilePath(LManualFileList.Strings[i]);
         LHiMECSDrawingItem.DrawNumber := GetDrawNumberFromPdfFile(LManualFileList.Strings[i], PrefixDrawNoEdit.Text);
         LHiMECSDrawingItem.Category_No := 'DR';//Drawing
+        LHiMECSDrawingItem.Category_Eng := 'Drawing';
         LSystem := LSystem.Insert(7, ' ');
         LHiMECSDrawingItem.SystemDesc_Eng := LSystem;
         LHiMECSDrawingItem.PartDesc_Eng := LPart;
@@ -862,6 +873,8 @@ begin
           LHiMECSOpManualItem := FHiMECSManualInfo.OpManual.Add;
           LHiMECSOpManualItem.FileName := ExtractFileName(LManualFileList.Strings[i]);
           LHiMECSOpManualItem.FilePath := ExtractFilePath(LManualFileList.Strings[i]);
+          LHiMECSOpManualItem.Category_No := 'OM';
+          LHiMECSOpManualItem.Category_Eng := 'Operation Manual';
 
           if LRegExpr.Exec(LStr) then
           begin
@@ -941,6 +954,11 @@ begin
   FCtrl.ScaleMode := smFitWidth;
 //  FCtrl.PageColor := RGB(255, 255, 200);
 //  FCtrl.OnWebLinkClick := WebLinkClick;
+end;
+
+procedure TForm1.MaintenanceInfo2ListView(AManualInfo: THiMECSManualInfo);
+begin
+  AManualInfo.MaintenanceInfo2ListView(ListView1);
 end;
 
 procedure TForm1.ManualInfo2ListView(AManualInfo: THiMECSManualInfo);

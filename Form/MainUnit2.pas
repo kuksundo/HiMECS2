@@ -270,6 +270,12 @@ type
     ShowSelectedParameterList1: TMenuItem;
     N15: TMenuItem;
     ShowParameterListToNewForm1: TMenuItem;
+    MaintenanceTV: TJvCheckTreeView;
+    Panel7: TPanel;
+    MaintenanceSrchEdit: TEdit;
+    Panel8: TPanel;
+    RadioButton1: TRadioButton;
+    RadioButton3: TRadioButton;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EngineInfoInspectorMouseMove(Sender: TObject; Shift: TShiftState; X,
@@ -603,16 +609,16 @@ type
     //Manual Info\
     procedure LoadManualInfoFromFile(AFileName: string; AIndex: integer = -1);
     procedure SetManualInfo2Inspector;
-    procedure LoadManualInfo2TV(ASortMethod: TManualSortMethod = msmMSNo; ATV: TJvCheckTreeView=nil);
-    procedure LoadManualInfo2TreeView(ASortMethod: TManualSortMethod; ARootNode: TTreeNode = nil; AIndex: integer = -1; ATV: TJvCheckTreeView=nil);
+    procedure LoadManualInfo2TV(AManualKind : TManualItemKinds; ASortMethod: TManualSortMethod = msmMSNo; ATV: TJvCheckTreeView=nil);
+    procedure LoadManualInfo2TreeView(AManualKind : TManualItemKinds; ASortMethod: TManualSortMethod; ARootNode: TTreeNode = nil; AIndex: integer = -1; ATV: TJvCheckTreeView=nil);
 //    procedure LoadManualInfo2TreeView(AFileName:string;
 //      ASortMethod: TManualSortMethod; ARootNode: TTreeNode = nil; AIndex: integer = -1; ATV: TJvCheckTreeView=nil);
-    procedure LoadManualInfo2MsNoTV(ARoot: TTreeNode; AManualInfo: THiMECSManualInfo; ATV: TJvCheckTreeView=nil);
-    procedure LoadManualInfo2PlateNoTV(ARoot: TTreeNode; AManualInfo: THiMECSManualInfo; ATV: TJvCheckTreeView=nil);
-    procedure LoadSearchTreeFromManualInfoSrc(ASearchSrc: TManualSearchSrc; ASortMethod: TManualSortMethod=msmMSNo; ATV: TJvCheckTreeView=nil);
-    procedure LoadSearchTreeFromManualInfo(ASearchText: string; ASortMethod: TManualSortMethod=msmMSNo;
+    procedure LoadManualInfo2MsNoTV(ARoot: TTreeNode; AManualInfo: THiMECSManualInfo; AManualKind : TManualItemKinds; ATV: TJvCheckTreeView=nil);
+    procedure LoadManualInfo2PlateNoTV(ARoot: TTreeNode; AManualInfo: THiMECSManualInfo; AManualKind : TManualItemKinds; ATV: TJvCheckTreeView=nil);
+    procedure LoadSearchTreeFromManualInfoSrc(ASearchSrc: TManualSearchSrc; AManualKind : TManualItemKinds; ASortMethod: TManualSortMethod=msmMSNo; ATV: TJvCheckTreeView=nil);
+    procedure LoadSearchTreeFromManualInfo(ASearchText: string; AManualKind : TManualItemKinds; ASortMethod: TManualSortMethod=msmMSNo;
       ASearchSrc: TManualSearchSrc=mssSystem;ATV: TJvCheckTreeView=nil);
-    procedure LoadSearchTreeFromManualInfo2(ASearchText: string; ASortMethod: TManualSortMethod=msmMSNo;
+    procedure LoadSearchTreeFromManualInfo2(ASearchText: string; AManualKind : TManualItemKinds; ASortMethod: TManualSortMethod=msmMSNo;
       ASearchSrc: TManualSearchSrc=mssSystem; ATV: TJvCheckTreeView=nil);
     function GetFullFilePathFromManualInfo(var ADrawingPath, AManualPath: string): Boolean;
     procedure CreateMDI4PDF(AFileName, ASystemDesc: string; APageB: integer; ADocType: THiMECSDocType);
@@ -967,17 +973,25 @@ begin
         LManualItem.FIsHideItem := False;
     end;
 
-    for j := LHiMECSManualInfo.ServiceManual.Count - 1 downto 0 do
+    for j := LHiMECSManualInfo.Drawings.Count - 1 downto 0 do
     begin
-      LManualItem := LHiMECSManualInfo.ServiceManual.Items[j];
+      LManualItem := LHiMECSManualInfo.Drawings.Items[j];
 
       if LManualItem.FIsHideItem then
         LManualItem.FIsHideItem := False;
     end;
 
-    for j := LHiMECSManualInfo.Drawings.Count - 1 downto 0 do
+    for j := LHiMECSManualInfo.SvcLetter.Count - 1 downto 0 do
     begin
-      LManualItem := LHiMECSManualInfo.Drawings.Items[j];
+      LManualItem := LHiMECSManualInfo.SvcLetter.Items[j];
+
+      if LManualItem.FIsHideItem then
+        LManualItem.FIsHideItem := False;
+    end;
+
+    for j := LHiMECSManualInfo.MaintenanceManual.Count - 1 downto 0 do
+    begin
+      LManualItem := LHiMECSManualInfo.MaintenanceManual.Items[j];
 
       if LManualItem.FIsHideItem then
         LManualItem.FIsHideItem := False;
@@ -2206,8 +2220,7 @@ begin
     Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
 end;
 
-function TMainForm.GetFullFilePathFromManualInfo(var ADrawingPath,
-  AManualPath: string): Boolean;
+function TMainForm.GetFullFilePathFromManualInfo(var ADrawingPath, AManualPath: string): Boolean;
 var
   LHiMECSManualInfo: THiMECSManualInfo;
   i: integer;
@@ -2298,7 +2311,7 @@ begin
     if ACommandRec.Cmd = HiMECS_Cmd_GetManList then
     begin
       if ACommandRec.ParamStr <> '' then
-        LoadSearchTreeFromManualInfo2(ACommandRec.ParamStr,
+        LoadSearchTreeFromManualInfo2(ACommandRec.ParamStr, [mikOpManual],
           TManualSortMethod(ACommandRec.ParamInt),
           TManualSearchSrc(ACommandRec.ParamInt2),
           LTV); //msmMSNo
@@ -3715,7 +3728,7 @@ begin
 end;
 
 procedure TMainForm.LoadManualInfo2MsNoTV(ARoot: TTreeNode;
-  AManualInfo: THiMECSManualInfo; ATV: TJvCheckTreeView=nil);
+  AManualInfo: THiMECSManualInfo; AManualKind : TManualItemKinds; ATV: TJvCheckTreeView=nil);
 var
   i: integer;
   LTreeNode,
@@ -3776,27 +3789,61 @@ begin
   ATV.Items.BeginUpdate;
 
   try
-    for i := 0 to AManualInfo.OpManual.Count - 1 do
+    if mikOpManual in AManualKind then
     begin
-      LStr := 'Operation Manual';
-
-      with AManualInfo.OpManual.Items[i] do
+      for i := 0 to AManualInfo.OpManual.Count - 1 do
       begin
-        if not FIsHideItem then
-          AddItem2TV(LStr, SystemDesc_Eng, PartDesc_Eng, TObject(AManualInfo.OpManual.Items[i]));
-      end;//with
-    end;//for
+        LStr := 'Operation Manual';
 
-    for i := 0 to AManualInfo.Drawings.Count - 1 do
+        with AManualInfo.OpManual.Items[i] do
+        begin
+          if not FIsHideItem then
+            AddItem2TV(LStr, SystemDesc_Eng, PartDesc_Eng, TObject(AManualInfo.OpManual.Items[i]));
+        end;//with
+      end;//for
+    end;
+
+    if mikDrawings in AManualKind then
     begin
-      LStr := 'Drawing';
-
-      with AManualInfo.Drawings.Items[i] do
+      for i := 0 to AManualInfo.Drawings.Count - 1 do
       begin
-        if not FIsHideItem then
-          AddItem2TV(LStr, SystemDesc_Eng, PartDesc_Eng, TObject(AManualInfo.Drawings.Items[i]));
-      end;//with
-    end;//for
+        LStr := 'Drawing';
+
+        with AManualInfo.Drawings.Items[i] do
+        begin
+          if not FIsHideItem then
+            AddItem2TV(LStr, SystemDesc_Eng, PartDesc_Eng, TObject(AManualInfo.Drawings.Items[i]));
+        end;//with
+      end;//for
+    end;
+
+    if mikSvcLetter in AManualKind then
+    begin
+      for i := 0 to AManualInfo.SvcLetter.Count - 1 do
+      begin
+        LStr := 'Service Letter';
+
+        with AManualInfo.SvcLetter.Items[i] do
+        begin
+          if not FIsHideItem then
+            AddItem2TV(LStr, SystemDesc_Eng, PartDesc_Eng, TObject(AManualInfo.SvcLetter.Items[i]));
+        end;//with
+      end;//for
+    end;
+
+    if mikMaintenance in AManualKind then
+    begin
+      for i := 0 to AManualInfo.MaintenanceManual.Count - 1 do
+      begin
+        LStr := 'Maintenance';
+
+        with AManualInfo.MaintenanceManual.Items[i] do
+        begin
+          if not FIsHideItem then
+            AddItem2TV(LStr, SystemDesc_Eng, PartDesc_Eng, TObject(AManualInfo.MaintenanceManual.Items[i]));
+        end;//with
+      end;//for
+    end;
   finally
     ATV.Items.EndUpdate;
     LSystemlst.Free;
@@ -3805,7 +3852,7 @@ begin
 end;
 
 procedure TMainForm.LoadManualInfo2PlateNoTV(ARoot: TTreeNode;
-  AManualInfo: THiMECSManualInfo; ATV: TJvCheckTreeView=nil);
+  AManualInfo: THiMECSManualInfo; AManualKind : TManualItemKinds; ATV: TJvCheckTreeView=nil);
 begin
   if ATV = nil then
     ATV := ManualCheckTV;
@@ -3878,8 +3925,8 @@ end;
 //  end;
 //end;
 
-procedure TMainForm.LoadManualInfo2TreeView(ASortMethod: TManualSortMethod;
-  ARootNode: TTreeNode; AIndex: integer; ATV: TJvCheckTreeView);
+procedure TMainForm.LoadManualInfo2TreeView(AManualKind : TManualItemKinds;
+  ASortMethod: TManualSortMethod; ARootNode: TTreeNode; AIndex: integer; ATV: TJvCheckTreeView);
 var
   LStr: string;
   LHiMECSManualInfo: THiMECSManualInfo;
@@ -3909,15 +3956,16 @@ begin
       exit;
 
     case ASortMethod of
-      msmMSNo: LoadManualInfo2MsNoTV(ARootNode, LHiMECSManualInfo, ATV);
-      msmPlateNo: LoadManualInfo2PlateNoTV(ARootNode, LHiMECSManualInfo, ATV);
+      msmMSNo: LoadManualInfo2MsNoTV(ARootNode, LHiMECSManualInfo, AManualKind, ATV);
+      msmPlateNo: LoadManualInfo2PlateNoTV(ARootNode, LHiMECSManualInfo, AManualKind, ATV);
     end;//case
   finally
 //    ATV.Items.EndUpdate;
   end;
 end;
 
-procedure TMainForm.LoadManualInfo2TV(ASortMethod: TManualSortMethod; ATV: TJvCheckTreeView);
+procedure TMainForm.LoadManualInfo2TV(AManualKind : TManualItemKinds;
+  ASortMethod: TManualSortMethod; ATV: TJvCheckTreeView);
 var
   i,LIndex: integer;
   LStr: string;
@@ -3948,7 +3996,7 @@ begin
 
 //      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
 //      LStr := LHiMECSConfig.ManualInfoFileName;
-      LoadManualInfo2TreeView(ASortMethod, LRootNode, i, ATV);
+      LoadManualInfo2TreeView(AManualKind, ASortMethod, LRootNode, i, ATV);
       FCurrentManualSortMethod := ASortMethod;
 //    end;//for
   finally
@@ -4932,7 +4980,8 @@ begin
 end;
 
 procedure TMainForm.LoadSearchTreeFromManualInfo(ASearchText: string;
-  ASortMethod: TManualSortMethod; ASearchSrc: TManualSearchSrc; ATV: TJvCheckTreeView);
+  AManualKind : TManualItemKinds; ASortMethod: TManualSortMethod;
+  ASearchSrc: TManualSearchSrc; ATV: TJvCheckTreeView);
 var
   LHiMECSManualInfo: THiMECSManualInfo;
   ANode, NextNode: TTreeNode;
@@ -5029,8 +5078,8 @@ begin
           ANode := ATV.Items.AddChild(nil, LSearchManualList.Strings[i]);
 
           case ASortMethod of
-            msmMSNo: LoadManualInfo2MsNoTV(ANode, THiMECSManualInfo(LSearchManualList.Objects[i]), ATV);
-            msmPlateNo: LoadManualInfo2PlateNoTV(ANode, THiMECSManualInfo(LSearchManualList.Objects[i]), ATV);
+            msmMSNo: LoadManualInfo2MsNoTV(ANode, THiMECSManualInfo(LSearchManualList.Objects[i]), AManualKind, ATV);
+            msmPlateNo: LoadManualInfo2PlateNoTV(ANode, THiMECSManualInfo(LSearchManualList.Objects[i]), AManualKind, ATV);
           end;//case
         end;//for i
 
@@ -5055,15 +5104,15 @@ begin
       ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
       case ASortMethod of
-        msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSConfig.ManualInfo, ATV);
-        msmPlateNo: LoadManualInfo2PlateNoTV(ANode, LHiMECSConfig.ManualInfo, ATV);
+        msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSConfig.ManualInfo, AManualKind, ATV);
+        msmPlateNo: LoadManualInfo2PlateNoTV(ANode, LHiMECSConfig.ManualInfo, AManualKind, ATV);
       end;//case
     end;//
   end;
 end;
 
 procedure TMainForm.LoadSearchTreeFromManualInfo2(ASearchText: string;
-  ASortMethod: TManualSortMethod; ASearchSrc: TManualSearchSrc; ATV: TJvCheckTreeView);
+  AManualKind : TManualItemKinds; ASortMethod: TManualSortMethod; ASearchSrc: TManualSearchSrc; ATV: TJvCheckTreeView);
 var
   i: integer;
   LSearchMode: Boolean;
@@ -5095,8 +5144,8 @@ begin
           ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
           case ASortMethod of
-            msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSManualInfo, ATV);
-            msmPlateNo: LoadManualInfo2PlateNoTV(ANode, LHiMECSManualInfo, ATV);
+            msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSManualInfo, AManualKind, ATV);
+            msmPlateNo: LoadManualInfo2PlateNoTV(ANode, LHiMECSManualInfo, AManualKind, ATV);
           end;//case
 //        end;//for i
 
@@ -5120,19 +5169,19 @@ begin
       ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
       case ASortMethod of
-        msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSConfig.ManualInfo, ATV);
-        msmPlateNo: LoadManualInfo2PlateNoTV(ANode, LHiMECSConfig.ManualInfo, ATV);
+        msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSConfig.ManualInfo, AManualKind, ATV);
+        msmPlateNo: LoadManualInfo2PlateNoTV(ANode, LHiMECSConfig.ManualInfo, AManualKind, ATV);
       end;//case
 //    end;//for i
   end;
 end;
 
-procedure TMainForm.LoadSearchTreeFromManualInfoSrc(
-  ASearchSrc: TManualSearchSrc; ASortMethod: TManualSortMethod;
+procedure TMainForm.LoadSearchTreeFromManualInfoSrc(ASearchSrc: TManualSearchSrc;
+  AManualKind : TManualItemKinds; ASortMethod: TManualSortMethod;
   ATV: TJvCheckTreeView);
 begin
   ClearHideItemsOfManualInfoFromProj;
-  LoadSearchTreeFromManualInfo2(ManualSearchEdit.Text, ASortMethod, ASearchSrc, ATV);
+  LoadSearchTreeFromManualInfo2(ManualSearchEdit.Text, AManualKind, ASortMethod, ASearchSrc, ATV);
 end;
 
 //AType = 1: MonitorListTile
@@ -5985,7 +6034,7 @@ var
 begin
 //  LoadSearchTreeFromManualInfo(ManualSearchEdit.Text);
   LManualSearchSrc := GetManualSearchSrcFromForm;
-  LoadSearchTreeFromManualInfoSrc(LManualSearchSrc);
+  LoadSearchTreeFromManualInfoSrc(LManualSearchSrc, [mikOpManual]);
 end;
 
 procedure TMainForm.OnModbusChange(Sender: TObject; Handle: Integer;
@@ -7291,7 +7340,8 @@ begin
 
   LoadParameterList2TV(smSystem, EngModbusTV, FCOI, eplikModbus);
   LoadParameterList2TV(smSystem, ParameterTV, FCOI, eplikParameter);
-  LoadManualInfo2TV(msmMSNo);
+  LoadManualInfo2TV([mikOpManual, mikDrawings], msmMSNo);
+  LoadManualInfo2TV([mikMaintenance, mikSvcLetter], msmMSNo, MaintenanceTV);
 end;
 
 procedure TMainForm.SetEngineInfo2Inspector(AIndex: integer; AIsAdd2Combo: Boolean);
@@ -7398,9 +7448,9 @@ begin
   else
   if AKind = mikMaintenance then
   begin
-    for j := AManual.ServiceManual.Count - 1 downto 0 do // List is scanned from bottom to top
+    for j := AManual.MaintenanceManual.Count - 1 downto 0 do // List is scanned from bottom to top
     begin
-      LHiMECSOpManualItem := AManual.ServiceManual.Items[j];
+      LHiMECSOpManualItem := AManual.MaintenanceManual.Items[j];
       _SetHideItem(LHiMECSOpManualItem);
     end;//for j
   end
