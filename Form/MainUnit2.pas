@@ -414,6 +414,13 @@ type
     procedure Property2Click(Sender: TObject);
     procedure ShowSelectedParameterList1Click(Sender: TObject);
     procedure ShowParameterListToNewForm1Click(Sender: TObject);
+    procedure MaintenanceTVKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure MaintenanceTVDblClick(Sender: TObject);
+    procedure MaintenanceTVMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure MaintenanceTVKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     FEgg: TEasternEgg;
     FOldPanelProc: TWndMethod;
@@ -434,10 +441,12 @@ type
     FMouseClickModbusTV_X,
     FMouseClickModbusTV_Y,
     FMouseClickParamTV_X,
-    FMouseClickParamTV_Y
-    : Integer;
+    FMouseClickParamTV_Y,
     FMouseClickManualTV_X,
-    FMouseClickManualTV_Y: Integer;
+    FMouseClickManualTV_Y,
+    FMouseClickMaintenanceTV_X,
+    FMouseClickMaintenanceTV_Y
+    : Integer;
 
     FHiMECSUser: THiMECSUser;
     FHiMECSForms: THiMECSForms; //xml로 부터 MDI Child form(bpl) list를 저장함
@@ -492,8 +501,10 @@ type
     //Key Map
     FKeyBdShiftState: TShiftState;
     FTempState: integer;
-    FControlPressed: Boolean;
-    FControlPressedManualTV: Boolean;
+    FControlPressed,
+    FControlPressedManualTV,
+    FControlPressedMaintenanceTV
+    : Boolean;
     FParamSearchMode: Boolean;//Parameter Treeview searchmode
 
     //FIPCServer: TIPCServer;
@@ -688,6 +699,7 @@ type
     procedure SetConfigMonitorTile(ATile: TAdvSmoothTile);
     procedure ShowWindowFromSelectedTile;
     procedure ShowManualFileInfo();
+    procedure ShowMaintenanceFileInfo();
 
     procedure LoadKillProcess;
     procedure ExecProcessKill;
@@ -2988,6 +3000,63 @@ begin
 //  ShowMessage(GetDocContents2Json4Mobile('{"DeviceName": "HGA-HiLS", "MenuName":"Manual", "ContentType":"Part", "SearchText":"Fuel"}'));
   ShowMessage(GetDocContents2Json4Mobile(LRec));
 
+end;
+
+procedure TMainForm.MaintenanceTVDblClick(Sender: TObject);
+var
+  LNode: TTreeNode;
+  LFileName: string;
+begin
+  LNode := MaintenanceTV.GetNodeAt( FMouseClickMaintenanceTV_X, FMouseClickMaintenanceTV_Y );
+
+  if not FControlPressedMaintenanceTV then
+  begin
+    if Assigned(LNode) and Assigned(LNode.Data) then
+    begin
+      if TObject(LNode.Data) is THiMECSMaintenanceManualItem then
+      begin
+        LFileName := IncludeTrailingPathDelimiter(THiMECSMaintenanceManualItem(LNode.Data).FilePath) +
+          THiMECSMaintenanceManualItem(LNode.Data).FileName;
+        CreateMDI4PDF(LFileName, THiMECSMaintenanceManualItem(LNode.Data).SystemDesc_Eng,
+          THiMECSMaintenanceManualItem(LNode.Data).PageNo_B, hdtMtManual);
+      end
+      else
+      if TObject(LNode.Data) is THiMECSSvcLetterItem then
+      begin
+        LFileName := IncludeTrailingPathDelimiter(THiMECSSvcLetterItem(LNode.Data).FilePath) +
+          THiMECSSvcLetterItem(LNode.Data).FileName;
+        CreateMDI4PDF(LFileName,THiMECSSvcLetterItem(LNode.Data).SystemDesc_Eng,
+          THiMECSSvcLetterItem(LNode.Data).PageNo_B, hdtSvcLetter);
+      end
+    end;
+
+    FControlPressedMaintenanceTV := False;
+  end;
+end;
+
+procedure TMainForm.MaintenanceTVKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  case Key of
+//    vk_delete: DeleteItem1Click(EngModbusTV);
+    vk_control: FControlPressedMaintenanceTV := True;
+  end;
+end;
+
+procedure TMainForm.MaintenanceTVKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  case Key of
+//    vk_delete: DeleteItem1Click(EngModbusTV);
+    vk_control: FControlPressedMaintenanceTV := False;
+  end;
+end;
+
+procedure TMainForm.MaintenanceTVMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  FMouseClickMaintenanceTV_X := X;
+  FMouseClickMaintenanceTV_Y := Y;
 end;
 
 procedure TMainForm.ManualCheckTVDblClick(Sender: TObject);
@@ -7655,6 +7724,41 @@ end;
 procedure TMainForm.ShowLOPPanelInside;
 begin
   ShowPanelInside(pkaLOP);
+end;
+
+procedure TMainForm.ShowMaintenanceFileInfo;
+var
+  LNode: TTreeNode;
+  LStr: string;
+  LHiMECSMaintenanceManualItem: THiMECSMaintenanceManualItem;
+  LHiMECSSvcLetterItem: THiMECSSvcLetterItem;
+begin
+  LNode := MaintenanceTV.GetNodeAt( FMouseClickMaintenanceTV_X, FMouseClickMaintenanceTV_Y );
+
+  if Assigned(LNode) then
+  begin
+    if TObject(LNode.Data) is THiMECSMaintenanceManualItem then
+    begin
+      LHiMECSMaintenanceManualItem := THiMECSMaintenanceManualItem(LNode.Data);
+//      LFileName := IncludeTrailingPathDelimiter(LHiMECSOpManualItem.FilePath) +
+//        LHiMECSOpManualItem.FileName;
+      LStr := 'File Path : ' + LHiMECSMaintenanceManualItem.FilePath + #13#10 +
+        'File Name : ' + LHiMECSMaintenanceManualItem.FileName + #13#10 +
+        'MS No : ' + LHiMECSMaintenanceManualItem.MSNumber;
+    end
+    else
+    if TObject(LNode.Data) is THiMECSSvcLetterItem then
+    begin
+      LHiMECSSvcLetterItem := THiMECSSvcLetterItem(LNode.Data);
+//      LFileName := IncludeTrailingPathDelimiter(LHiMECSDrawingItem.FilePath) +
+//        LHiMECSDrawingItem.FileName;
+      LStr := 'File Path : ' + LHiMECSSvcLetterItem.FilePath + #13#10 +
+        'File Name : ' + LHiMECSSvcLetterItem.FileName + #13#10 +
+        'MS No : ' + LHiMECSSvcLetterItem.MSNumber;
+    end;
+
+    ShowMessage(LStr);
+  end;
 end;
 
 procedure TMainForm.ShowManual;
