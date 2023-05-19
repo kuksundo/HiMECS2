@@ -1,0 +1,20 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhxIOCompPkg.bpl,pjhJvCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\..\HiMECS\WatchList\SCR\LP_SCR_2S__5</DesignFormFileName>
+			<DesignFormCaption>LP SCR System</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhxIOCompPkg.bpl,pjhJvCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\..\HiMECS\WatchList\SCR\LP_SCR_2S__6</DesignFormFileName>
+			<DesignFormCaption>ECS-EMS Interface</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>DF Engine LOP</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>
