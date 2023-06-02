@@ -240,6 +240,10 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\Form\FrmSelectEquipment.pas">
+            <Form>SelectEquipF</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <None Include="HiMECS2.todo"/>
         <None Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\EngineParameter.inc"/>
         <None Include="..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECSManual.inc"/>

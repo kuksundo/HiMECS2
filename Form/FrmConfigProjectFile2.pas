@@ -77,6 +77,7 @@ type
     procedure ClearForm;
   end;
 
+  procedure CreateProjectFileForm(var AProjectFile: TProjectFile);
 var
   ConfigProjectFileForm: TConfigProjectFileForm;
 
@@ -85,6 +86,35 @@ implementation
 uses FrmSelectProject2, CommonUtil, HiMECSConst;
 
 {$R *.dfm}
+
+procedure CreateProjectFileForm(var AProjectFile: TProjectFile);
+var
+  LConfigProjectFileForm: TConfigProjectFileForm;
+  LProjectFile: TProjectFile;
+begin
+  if AProjectFile = nil then
+    exit;
+
+  LConfigProjectFileForm := TConfigProjectFileForm.Create(nil);
+  try
+    with LConfigProjectFileForm do
+    begin
+      SetCurrentDir(ExtractFilePath(Application.ExeName));
+      OptionFilenameEdit.InitialDir := '.\config';
+      UserFilenameEdit.InitialDir := '.\config';
+
+      ConfigData2Form(LProjectFile,-1);
+
+      if ShowModal = mrOK then
+      begin
+        FormData2ItemVar(AProjectFile, ProjectItemLV.Selected.Index);
+      end;
+    end;
+  finally
+    FreeAndNil(LConfigProjectFileForm);
+  end;
+
+end;
 
 procedure TConfigProjectFileForm.BitBtn3Click(Sender: TObject);
 var
@@ -281,7 +311,7 @@ var
   LPath: string;
 begin
   if AHiMECSHomePath = '' then
-    AHiMECSHomePath := Application.ExeName;
+    AHiMECSHomePath := ExtractFilePath(Application.ExeName);
 
   with AProjectFile.ProjectFileCollect.Items[AIndex] do
   begin

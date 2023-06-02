@@ -77,7 +77,8 @@ uses
   UnitHiMECSRestAPIInterface in '..\Utility\HiMECS_Common\UnitHiMECSRestAPIInterface.pas',
   UnitFrameTileList2 in '..\..\..\Common\UnitFrameTileList2.pas' {TileListFrame: TFrame},
   FrmEngParamConfig2 in '..\Form\FrmEngParamConfig2.pas' {EngParamItemConfigForm2},
-  UnitFrameEngParamDecTV2 in '..\Utility\HiMECS_Common\UnitFrameEngParamDecTV2.pas' {FrameDecTreeView2: TFrame};
+  UnitFrameEngParamDecTV2 in '..\Utility\HiMECS_Common\UnitFrameEngParamDecTV2.pas' {FrameDecTreeView2: TFrame},
+  FrmSelectEquipment in '..\Form\FrmSelectEquipment.pas' {SelectEquipF};
 
 {$R *.res}
 
