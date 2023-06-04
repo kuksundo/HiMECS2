@@ -35,7 +35,7 @@ type
     EncryptMonitorCB: TCheckBox;
     Splitter1: TSplitter;
     ProjectItemLV: TListView;
-    Panel1: TPanel;
+    BtnPanel: TPanel;
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
@@ -48,6 +48,8 @@ type
     SpinButton1: TSpinButton;
     Label9: TLabel;
     DisplayOnTabCB: TCheckBox;
+    Label10: TLabel;
+    ImageFilenameEdit: TJvFilenameEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -72,8 +74,8 @@ type
 
     procedure ItemData2Form(AProjectItem: TListItem);
     procedure ConfigData2Form(AProjectFile: TProjectFile; AIndex: integer);
-    procedure FormData2ItemVar(var AProjectFile: TProjectFile;
-      AIndex: integer; AHiMECSHomePath: string='');
+    procedure FormData2ItemVar(var AProjectFileItem: TProjectFileItem;
+      AHiMECSHomePath: string='');
     procedure ClearForm;
   end;
 
@@ -90,7 +92,7 @@ uses FrmSelectProject2, CommonUtil, HiMECSConst;
 procedure CreateProjectFileForm(var AProjectFile: TProjectFile);
 var
   LConfigProjectFileForm: TConfigProjectFileForm;
-  LProjectFile: TProjectFile;
+  LProjectFileItem: TProjectFileItem;
 begin
   if AProjectFile = nil then
     exit;
@@ -103,11 +105,27 @@ begin
       OptionFilenameEdit.InitialDir := '.\config';
       UserFilenameEdit.InitialDir := '.\config';
 
-      ConfigData2Form(LProjectFile,-1);
+      //기존 Project file에 Item만 신규로 추가할 경우 Project List View를 Hide 함
+      if AProjectFile.FIsAddNewItem then
+      begin
+        BtnPanel.Visible := False;
+        ProjectItemLV.Visible := False;
+        Splitter1.Visible := False;
+      end;
+
+      ConfigData2Form(AProjectFile,-1);
 
       if ShowModal = mrOK then
       begin
-        FormData2ItemVar(AProjectFile, ProjectItemLV.Selected.Index);
+        if AProjectFile.FIsAddNewItem then
+          LProjectFileItem := AProjectFile.ProjectFileCollect.Add
+        else
+          LProjectFileItem := AProjectFile.ProjectFileCollect.Items[ProjectItemLV.Selected.Index];
+
+        FormData2ItemVar(LProjectFileItem);
+
+        if not AProjectFile.FIsAddNewItem then
+          ProjectItemLV.Items[LProjectFileItem.Index].Caption := LProjectFileItem.ProjectItemName;
       end;
     end;
   finally
@@ -235,8 +253,11 @@ begin
 end;
 
 procedure TConfigProjectFileForm.Button3Click(Sender: TObject);
+var
+  LProjectFileItem: TProjectFileItem;
 begin
-  FormData2ItemVar(FProjectFile, ProjectItemLV.Selected.Index,'E:\pjh\project\util\HiMECS\Application\Bin\');
+  LProjectFileItem := FProjectFile.ProjectFileCollect.Items[ProjectItemLV.Selected.Index];
+  FormData2ItemVar(LProjectFileItem, 'E:\pjh\project\util\HiMECS\Application\Bin\');
 end;
 
 procedure TConfigProjectFileForm.ClearForm;
@@ -245,6 +266,7 @@ begin
   OptionFilenameEdit.Text := '';
   RunListFilenameEdit.FileName := '';
   MonitorFilenameEdit.FileName := '';
+  ImageFilenameEdit.FileName := '';
   EncryptOptionCB.Checked := False;
   EncryptRunListCB.Checked := False;
   EncryptMonitorCB.Checked := False;
@@ -287,6 +309,7 @@ begin
     OptionFilenameEdit.Text := OptionsFileName;
     RunListFilenameEdit.FileName := RunListFileName;
     MonitorFilenameEdit.FileName := MonitorFileName;
+    ImageFilenameEdit.FileName := ImgFileName;
     EncryptOptionCB.Checked := OptionFileEncrypt;
     EncryptRunListCB.Checked := RunListFileEncrypt;
     EncryptMonitorCB.Checked := MonitorFileEncrypt;
@@ -305,15 +328,15 @@ begin
 end;
 
 //AHiMECSHomePath 맨 끝에 '\' 추가할 것
-procedure TConfigProjectFileForm.FormData2ItemVar(var AProjectFile: TProjectFile;
-  AIndex: integer; AHiMECSHomePath: string='');
+procedure TConfigProjectFileForm.FormData2ItemVar(var AProjectFileItem: TProjectFileItem;
+  AHiMECSHomePath: string='');
 var
   LPath: string;
 begin
   if AHiMECSHomePath = '' then
     AHiMECSHomePath := ExtractFilePath(Application.ExeName);
 
-  with AProjectFile.ProjectFileCollect.Items[AIndex] do
+  with AProjectFileItem do
   begin
     ProjectItemName := ProjectItemEdit.Text;//ProjectItemLV.Items[AIndex].Caption;
     OptionsFileName := ExtractRelativePathBaseApplication(AHiMECSHomePath,
@@ -322,6 +345,8 @@ begin
                                     RunListFilenameEdit.FileName);
     MonitorFileName := ExtractRelativePathBaseApplication(AHiMECSHomePath,
                                     MonitorFilenameEdit.FileName);
+    ImgFileName := ExtractRelativePathBaseApplication(AHiMECSHomePath,
+                                    ImageFilenameEdit.FileName);
     OptionFileEncrypt := EncryptOptionCB.Checked;
     RunListFileEncrypt := EncryptRunListCB.Checked;
     MonitorFileEncrypt := EncryptMonitorCB.Checked;
@@ -334,9 +359,6 @@ begin
                                     UserFilenameEdit.FileName);
     IsDisplayOnTab := DisplayOnTabCB.Checked;
   end;
-
-  ProjectItemLV.Items[AIndex].Caption := AProjectFile.ProjectFileCollect.Items[AIndex].ProjectItemName;
-  ConfigData2Form(AProjectFile, AIndex);
 end;
 
 procedure TConfigProjectFileForm.FormDestroy(Sender: TObject);

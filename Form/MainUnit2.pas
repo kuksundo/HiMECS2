@@ -276,6 +276,7 @@ type
     Panel8: TPanel;
     RadioButton1: TRadioButton;
     RadioButton3: TRadioButton;
+    SelectEquipment1: TMenuItem;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EngineInfoInspectorMouseMove(Sender: TObject; Shift: TShiftState; X,
@@ -421,6 +422,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure MaintenanceTVKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure SelectEquipment1Click(Sender: TObject);
   private
     FEgg: TEasternEgg;
     FOldPanelProc: TWndMethod;
@@ -803,6 +805,8 @@ type
     procedure ShowMCPPanelInside;
     procedure ShowACPPanelInside;
     procedure ShowLOPPanelInside;
+    //Equipment select
+    procedure SelectEquipment;
   end;
 
 var
@@ -818,7 +822,7 @@ uses JvgXMLSerializer_Encrypt, UnitProcessUtil, EngineConst, FrmLogin2, FrmParam
   FrmSensorCableRoute2, DomSensorTypes2, UnitHiMECS2, UnitEncryptedRegInfo2,
   FrmMCPPanelInside2, FrmMCPPanelInside_MDI2, FrmACPPanelInside2, FrmACPPanelInside_MDI2,
   FrmLOPPanelInside, FrmLOPPanelInside_MDI,
-  UnitEngineElecPartClass2, UnitNxInspectorUtil,
+  UnitEngineElecPartClass2, UnitNxInspectorUtil, FrmSelectEquipment,
   OtlParallel, OtlComm, mormot.core.os;
 
 {$R *.dfm}
@@ -2983,23 +2987,10 @@ begin
 end;
 
 procedure TMainForm.JvCaptionButton1Click(Sender: TObject);
-var
-  LRec: TRestAPIResponseDoc;
+//var
+//  LRec: TRestAPIResponseDoc;
 begin
-  LRec.MethodName := 'DocContent';
-  LRec.ProjName := 'ProjName';
-  LRec.DeviceName := 'HGA-HiLS';
-  LRec.DocName := 'Manual';
-  LRec.ContentType := 'Part';
-  LRec.DocName := 'Fuel';
-
-//  ShowMessage(GetProjectList2Json4Mobile);
-//  ShowMessage(GetDeviceList2Json4Mobile('hgs'));
-//  ShowMessage(GetDocList2Json4Mobile('HGA-HiLS #2'));
-//  ShowMessage(GetDocContents2Json4Mobile('{"DeviceName": "HGA-HiLS", "MenuName":"Parameter", "SensorType":"Parameter", "SearchText":"30112"}'));
-//  ShowMessage(GetDocContents2Json4Mobile('{"DeviceName": "HGA-HiLS", "MenuName":"Manual", "ContentType":"Part", "SearchText":"Fuel"}'));
-  ShowMessage(GetDocContents2Json4Mobile(LRec));
-
+  SelectEquipment;
 end;
 
 procedure TMainForm.MaintenanceTVDblClick(Sender: TObject);
@@ -6917,6 +6908,17 @@ begin
 //  FCOI := SelectEngineCombo.ItemIndex;
 //  SetEngineInfo2Inspector(SelectEngineCombo.ItemIndex);
 //  SetAutoRunList2Inspector(SelectEngineCombo.ItemIndex);
+end;
+
+procedure TMainForm.SelectEquipment;
+begin
+  CreateSelectEquipForm(FProjectFile);
+  ShowMessage(IntToStr(FProjectFile.CurrentProjectIndex));
+end;
+
+procedure TMainForm.SelectEquipment1Click(Sender: TObject);
+begin
+  SelectEquipment();
 end;
 
 //Project Select 해서 Project File Read 성공하면 True return

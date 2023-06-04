@@ -7,10 +7,11 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, AdvSmoothTileList,AdvGDIP,
   AdvSmoothTileListImageVisualizer, AdvSmoothTileListHTMLVisualizer,
   Vcl.ComCtrls, Vcl.ExtCtrls, ShellApi, GDIPPictureContainer, AdvGlowButton,
-  Data.DBXJSON, Data.DBXJSONCommon, Vcl.Imaging.jpeg, Vcl.ImgList,
+  Vcl.Imaging.jpeg, Vcl.ImgList,//Data.DBXJSON, Data.DBXJSONCommon,
   Vcl.StdCtrls, Vcl.Menus, CopyData, TimerPool,
+
   HiMECSConst, JHP.BaseConfigCollect, UnitFrameTileList2, UnitProjectFileClass2,
-  UnitHiMECSMonitorListClass2;
+  UnitHiMECSMonitorListClass2, Vcl.Buttons;
 
 type
   TeditType = (ftInsert,ftEdit);
@@ -39,6 +40,9 @@ type
     N4: TMenuItem;
     HideAllMonitor1: TMenuItem;
     TileListFrame: TTileListFrame;
+    Panel2: TPanel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure AdvGlowButton1Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -55,6 +59,7 @@ type
     procedure ShowAllMonitor1Click(Sender: TObject);
     procedure HideAllMonitor1Click(Sender: TObject);
   private
+    FProjectFile: TProjectFile;
     FFilePath: string;
     FFirst: Boolean;
     FeditType : TeditType;
@@ -64,14 +69,17 @@ type
     property EditType : TeditType read FeditType write FeditType;
     procedure AddNewEquip2List;
 //    function Create_newApp(aEditType:Integer;aPath:String) : TJSONObject;
-    function JSONObject2AutoRunClass(AJSONObject: TJSONObject;
-      AdvSmoothTileContent:TAdvSmoothTileContent): integer;
+//    function JSONObject2AutoRunClass(AJSONObject: TJSONObject;
+//      AdvSmoothTileContent:TAdvSmoothTileContent): integer;
     procedure WMCopyData(var Msg: TMessage); message WM_COPYDATA;
     procedure OnDisableAppStatus(Sender : TObject; Handle : Integer;
             Interval : Cardinal; ElapsedTime : LongInt);
+
+    function AddTileFromProjectFile(var AProjectFile: TProjectFile): integer;
+    function AddTileFromProjectFileItem(AItem:TProjectFileItem): integer;
   public
 //    procedure SetConfigTile(ATile: TAdvSmoothTile);
-    function Get_JsonValues(aJsonPair:TJSONPair):String;
+//    function Get_JsonValues(aJsonPair:TJSONPair):String;
     procedure LoadTileFromFile(AFileName: string; AIsAppend: Boolean);
 
 //    procedure LoadConfigForm2Var(AForm: TnewMonApp_Frm; AVar: THiMECSMonitorListItem);
@@ -93,14 +101,13 @@ var
 
 implementation
 
-uses UnitStringUtil, HiMECSCommonWinMessage;
+uses UnitStringUtil, HiMECSCommonWinMessage, FrmConfigProjectFile2;
 
 {$R *.dfm}
 
 procedure CreateSelectEquipForm(var AProjectFile: TProjectFile);
 var
   LSelectEquipF: TSelectEquipF;
-  i: integer;
   LStr: string;
 begin
   if AProjectFile = nil then
@@ -110,14 +117,12 @@ begin
   try
     with LSelectEquipF do
     begin
-      for i := 0 to AProjectFile.ProjectFileCollect.Count - 1 do
-      begin
-        LStr := AProjectFile.ProjectFileCollect.Items[i].ProjectItemName;
-      end;
+      FProjectFile := AProjectFile;
+      AddTileFromProjectFile(FProjectFile);
 
       if ShowModal = mrOK then
       begin
-
+        AProjectFile.CurrentProjectIndex := TileListFrame.tileList.SelectedTile.Index;
       end;
     end;
   finally
@@ -127,51 +132,47 @@ begin
 end;
 
 procedure TSelectEquipF.AddNewEquip2List;
-var
-  lJSONObject : TJSONObject;
-  lTile : TAdvSmoothTile;
-  lstr : String;
-  LAutoRun: Boolean;
-  i: integer;
 begin
-//  lJSONObject := Create_newApp(0,'');
-  try
-    if lJSONObject <> nil then
-    begin
-      lTile := TileListFrame.tileList.Tiles.Add;
-      with lTile do
-      begin
-        DisplayName := Get_JsonValues(lJSONObject.get('MONDESC'));
-        Content.Text := Get_JsonValues(lJSONObject.get('MONTITLE'));
-        Content.TextPosition := tpBottomCenter;
-
-        LAutoRun := StrToBool(Get_JsonValues(lJSONObject.get('AUTOLOAD')));
-        if LAutoRun then
-          StatusIndicator := 'Auto'
-        else
-          StatusIndicator := '';
-
-        lstr := Get_JsonValues(lJSONObject.get('USERELATIVEPATH'));
-        if StrToBool(LStr) then
-          LStr := ExtractRelativePathBaseApplication(FFilePath, Get_JsonValues(lJSONObject.get('MONFILENAME')))
-        else
-          LStr := Get_JsonValues(lJSONObject.get('MONFILENAME'));
-
-        Content.Hint := LStr;
-        Content.Image.LoadFromFile(Get_JsonValues(lJSONObject.get('MONICON')));
-        i := JSONObject2AutoRunClass(lJSONObject, Content);
-        FMonitorList.MonitorListCollect.Items[i].TileIndex := Index;
-        ItemOject := FMonitorList.MonitorListCollect.Items[i];
-      end;
-    end;
-  finally
-    //FreeAndNil(lJSONObject);
-  end;
+  FProjectFile.FIsAddNewItem := True;
+  CreateProjectFileForm(FProjectFile);
 end;
 
 procedure TSelectEquipF.AddNewTile1Click(Sender: TObject);
 begin
 //  SetConfigTile(TileListFrame.tileList.SelectedTile);
+end;
+
+function TSelectEquipF.AddTileFromProjectFile(
+  var AProjectFile: TProjectFile): integer;
+var
+  i: integer;
+begin
+  for i := 0 to AProjectFile.ProjectFileCollect.Count - 1 do
+  begin
+    AddTileFromProjectFileItem(AProjectFile.ProjectFileCollect.Items[i]);
+  end;
+end;
+
+function TSelectEquipF.AddTileFromProjectFileItem(
+  AItem: TProjectFileItem): integer;
+var
+  lTile : TAdvSmoothTile;
+begin
+  Result := -1;
+  lTile := TileListFrame.tileList.Tiles.Add;
+
+  with lTile do
+  begin
+//    DisplayName := AItem.ProjectItemName;
+//    Data := AItem.ProjectItemDescript;
+    Content.Text := AItem.ProjectItemDescript;
+    Content.TextPosition := tpBottomCenter;
+//    StatusIndicator := 'Auto';
+    Content.Hint := AItem.ProjectItemDescript;
+    Content.Image.LoadFromFile('E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Bin\Doc\Img\GE1.png');
+    ItemOject := AItem;
+    Result := Index;
+  end;
 end;
 
 procedure TSelectEquipF.AdvGlowButton1Click(Sender: TObject);
@@ -313,7 +314,7 @@ begin
   SetCurrentDir(FFilePath);
 
   TileListFrame.InitVar;
-  TileListFrame.FAddNewApp2List := AddNewEquip2List;
+//  TileListFrame.FAddNewApp2List := AddNewEquip2List;
 
   FMonitorList := THiMECSMonitorList.Create(Self);
   FPJHTimerPool := TPJHTimerPool.Create(Self);
@@ -339,14 +340,14 @@ begin
   FreeAndNil(FMonitorList);
 end;
 
-function TSelectEquipF.Get_JsonValues(aJsonPair: TJSONPair): String;
-var
-  lstr : String;
-  ljsonValue : TJSONValue;
-begin
-  ljsonValue := aJsonPair.JsonValue;
-  Result := ljsonValue.Value;
-end;
+//function TSelectEquipF.Get_JsonValues(aJsonPair: TJSONPair): String;
+//var
+//  lstr : String;
+//  ljsonValue : TJSONValue;
+//begin
+//  ljsonValue := aJsonPair.JsonValue;
+//  Result := ljsonValue.Value;
+//end;
 
 procedure TSelectEquipF.HideAllMonitor1Click(Sender: TObject);
 var
@@ -360,35 +361,35 @@ begin
   end;
 end;
 
-function TSelectEquipF.JSONObject2AutoRunClass(AJSONObject: TJSONObject;
-  AdvSmoothTileContent:TAdvSmoothTileContent): integer;
-var
-  LAutoRunItem: THiMECSMonitorListItem;
-  LStr: string;
-begin
-  LAutoRunItem := FMonitorList.MonitorListCollect.Add;
-  Result := LAutoRunItem.Index;
-  LAutoRunItem.IsAutoLoad := StrToBool(Get_JsonValues(AJSONObject.get('AUTOLOAD')));
-  LAutoRunItem.MonitorDesc := Get_JsonValues(AJSONObject.get('MONDESC'));
-  LAutoRunItem.MonitorTitle := Get_JsonValues(AJSONObject.get('MONTITLE'));
-  Lstr := Get_JsonValues(AJSONObject.get('USERELATIVEPATH'));
-  if StrToBool(LStr) then
-    LStr := ExtractRelativePathBaseApplication(FFilePath, Get_JsonValues(AJSONObject.get('MONFILENAME')))
-  else
-    LStr := Get_JsonValues(AJSONObject.get('MONFILENAME'));
-
-  LAutoRunItem.MonitorFileName := LStr;
-
-  Lstr := Get_JsonValues(AJSONObject.get('USEPROGRELATIVEPATH'));
-  if StrToBool(LStr) then
-    LStr := ExtractRelativePathBaseApplication(FFilePath, Get_JsonValues(AJSONObject.get('RUNPROGNAME')))
-  else
-    LStr := Get_JsonValues(AJSONObject.get('RUNPROGNAME'));
-
-  LAutoRunItem.RunProgramName := LStr;
-  LAutoRunItem.RunParameter := Get_JsonValues(AJSONObject.get('RUNPARAM'));
-  LAutoRunItem.MonitorImage := TileListFrame.ConvertImage2String(AdvSmoothTileContent.Image);
-end;
+//function TSelectEquipF.JSONObject2AutoRunClass(AJSONObject: TJSONObject;
+//  AdvSmoothTileContent:TAdvSmoothTileContent): integer;
+//var
+//  LAutoRunItem: THiMECSMonitorListItem;
+//  LStr: string;
+//begin
+//  LAutoRunItem := FMonitorList.MonitorListCollect.Add;
+//  Result := LAutoRunItem.Index;
+//  LAutoRunItem.IsAutoLoad := StrToBool(Get_JsonValues(AJSONObject.get('AUTOLOAD')));
+//  LAutoRunItem.MonitorDesc := Get_JsonValues(AJSONObject.get('MONDESC'));
+//  LAutoRunItem.MonitorTitle := Get_JsonValues(AJSONObject.get('MONTITLE'));
+//  Lstr := Get_JsonValues(AJSONObject.get('USERELATIVEPATH'));
+//  if StrToBool(LStr) then
+//    LStr := ExtractRelativePathBaseApplication(FFilePath, Get_JsonValues(AJSONObject.get('MONFILENAME')))
+//  else
+//    LStr := Get_JsonValues(AJSONObject.get('MONFILENAME'));
+//
+//  LAutoRunItem.MonitorFileName := LStr;
+//
+//  Lstr := Get_JsonValues(AJSONObject.get('USEPROGRELATIVEPATH'));
+//  if StrToBool(LStr) then
+//    LStr := ExtractRelativePathBaseApplication(FFilePath, Get_JsonValues(AJSONObject.get('RUNPROGNAME')))
+//  else
+//    LStr := Get_JsonValues(AJSONObject.get('RUNPROGNAME'));
+//
+//  LAutoRunItem.RunProgramName := LStr;
+//  LAutoRunItem.RunParameter := Get_JsonValues(AJSONObject.get('RUNPARAM'));
+//  LAutoRunItem.MonitorImage := TileListFrame.ConvertImage2String(AdvSmoothTileContent.Image);
+//end;
 
 //procedure TSelectEquipF.LoadConfigForm2Var(AForm: TnewMonApp_Frm;
 //  AVar: THiMECSMonitorListItem);

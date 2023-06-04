@@ -14,11 +14,17 @@ type
     FProjectFileCollect: TProjectFileCollect;
     FProjectDescript,
     FProjectFileName: string;
+
+    FCurrentProjectIndex: integer;
   public
+    FIsAddNewItem: Boolean;
+
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;
     procedure Clear;
     procedure Assign(Source: TProjectFile);
+
+    property CurrentProjectIndex: integer read FCurrentProjectIndex write FCurrentProjectIndex;
   published
     property ProjectFileCollect: TProjectFileCollect read FProjectFileCollect write FProjectFileCollect;
     property ProjectDescript: string read FProjectDescript write FProjectDescript;
@@ -32,7 +38,9 @@ type
     FUserFileName,
     FRunListFileName, //Auto run program list file(자동 실행되는 통신 프로그램 리스트)
     FMonitorFileName, //Monitoring form list file(Watch List 파일임)
-    FProjectItemDescript: string;
+    FProjectItemDescript,
+    FImgFileName //Project를 Select할때 표시되는 이미지 파일 이름(경로포함)
+    : string;
     FUserLevel: THiMECSUserLevel;
     FOptionFileEncrypt: Boolean;//Engine Parameter file Encryption
     FRunListFileEncrypt: Boolean;//Run List file Encryption
@@ -55,6 +63,7 @@ type
     property RunListFileName: string read FRunListFileName write FRunListFileName;
     property MonitorFileName: string read FMonitorFileName write FMonitorFileName;
     property ProjectItemDescript: string read FProjectItemDescript write FProjectItemDescript;
+    property ImgFileName: string read FImgFileName write FImgFileName;
     property UserLevel: THiMECSUserLevel read FUserLevel write FUserLevel;
     property OptionFileEncrypt: Boolean read FOptionFileEncrypt write FOptionFileEncrypt;
     property RunListFileEncrypt: Boolean read FRunListFileEncrypt write FRunListFileEncrypt;
@@ -148,6 +157,7 @@ begin
     UserFileName := TProjectFileItem(Source).UserFileName;
     RunListFileName := TProjectFileItem(Source).RunListFileName;
     MonitorFileName := TProjectFileItem(Source).MonitorFileName;
+    ImgFileName := TProjectFileItem(Source).ImgFileName;
     ProjectItemDescript := TProjectFileItem(Source).ProjectItemDescript;
     UserLevel := TProjectFileItem(Source).UserLevel;
     OptionFileEncrypt := TProjectFileItem(Source).OptionFileEncrypt;

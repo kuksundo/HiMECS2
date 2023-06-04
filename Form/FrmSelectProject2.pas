@@ -72,6 +72,7 @@ procedure TSelectProjectForm.ConfigProjectFile(AFileName: string = '';
 var
   LConfigProjectFileForm: TConfigProjectFileForm;
   LProjectFile: TProjectFile;
+  LProjectFileItem: TProjectFileItem;
   LFileName: string;
   F : TextFile;
   LFS: TJclFileSummary;
@@ -100,7 +101,8 @@ begin
 
       if ShowModal = mrOK then
       begin
-        FormData2ItemVar(FProjectFile, ProjectItemLV.Selected.Index,'E:\pjh\project\util\HiMECS\Application\Bin\');
+        LProjectFileItem := FProjectFile.ProjectFileCollect.Items[ProjectItemLV.Selected.Index];
+        FormData2ItemVar(LProjectFileItem,'E:\pjh\project\util\HiMECS\Application\Bin\');
 
         LProjectFile.Assign(FProjectFile);
 

@@ -1234,7 +1234,7 @@ object SelectEquipF: TSelectEquipF
       ExplicitHeight = 105
     end
     object AdvGlowButton1: TAdvGlowButton
-      Left = 440
+      Left = 448
       Top = 40
       Width = 84
       Height = 19
@@ -1278,17 +1278,44 @@ object SelectEquipF: TSelectEquipF
     Left = 0
     Top = 65
     Width = 533
-    Height = 336
+    Height = 303
     Align = alClient
     TabOrder = 2
     ExplicitTop = 65
     ExplicitWidth = 533
-    ExplicitHeight = 336
+    ExplicitHeight = 303
     inherited tileList: TAdvSmoothTileList
       Width = 533
-      Height = 336
+      Height = 303
       ExplicitWidth = 533
-      ExplicitHeight = 336
+      ExplicitHeight = 303
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 368
+    Width = 533
+    Height = 33
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 3
+    object BitBtn1: TBitBtn
+      Left = 96
+      Top = 2
+      Width = 105
+      Height = 25
+      Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
+    end
+    object BitBtn2: TBitBtn
+      Left = 336
+      Top = 2
+      Width = 97
+      Height = 25
+      Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object ImageList1: TImageList
@@ -1296,7 +1323,7 @@ object SelectEquipF: TSelectEquipF
     Left = 344
     Top = 232
     Bitmap = {
-      494C010101000800440010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010101000800500010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       000000000000000000000000000000000000000000000505052E101010521717
       17611D1D1D6C1F1D1E6D272425792523257825232578262425791F1E1E6E1E1E

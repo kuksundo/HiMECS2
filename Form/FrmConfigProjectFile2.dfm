@@ -26,8 +26,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     Height = 3
     Cursor = crVSplit
     Align = alBottom
-    ExplicitTop = 191
-    ExplicitWidth = 493
+    ExplicitTop = 143
   end
   object Panel2: TPanel
     Left = 0
@@ -57,7 +56,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     end
     object BitBtn6: TBitBtn
       Left = 259
-      Top = 6
+      Top = 7
       Width = 97
       Height = 33
       Caption = 'Save As'
@@ -77,6 +76,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     Align = alBottom
     TabHeight = 30
     TabOrder = 1
+    ExplicitTop = 151
     object TabSheet1: TTabSheet
       Caption = 'General'
       Font.Charset = DEFAULT_CHARSET
@@ -85,6 +85,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 0
       object Label1: TLabel
         Left = 15
         Top = 40
@@ -101,8 +102,8 @@ object ConfigProjectFileForm: TConfigProjectFileForm
         ShowHint = False
       end
       object Label4: TLabel
-        Left = 6
-        Top = 136
+        Left = 3
+        Top = 162
         Width = 142
         Height = 16
         Caption = 'Project Item Description:'
@@ -116,8 +117,8 @@ object ConfigProjectFileForm: TConfigProjectFileForm
         ShowHint = False
       end
       object Label6: TLabel
-        Left = 4
-        Top = 69
+        Left = 7
+        Top = 73
         Width = 111
         Height = 16
         Caption = 'Run List File Name:'
@@ -160,6 +161,21 @@ object ConfigProjectFileForm: TConfigProjectFileForm
         ParentShowHint = False
         ShowHint = False
       end
+      object Label10: TLabel
+        Left = 16
+        Top = 129
+        Width = 102
+        Height = 16
+        Caption = 'Image File Name:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = False
+      end
       object OptionFilenameEdit: TJvFilenameEdit
         Left = 124
         Top = 39
@@ -185,10 +201,10 @@ object ConfigProjectFileForm: TConfigProjectFileForm
         TabOrder = 1
       end
       object PrjDescriptMemo: TMemo
-        Left = 4
-        Top = 158
+        Left = 3
+        Top = 184
         Width = 569
-        Height = 79
+        Height = 53
         ImeName = 'Microsoft Office IME 2007'
         TabOrder = 2
       end
@@ -279,7 +295,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       end
       object DisplayOnTabCB: TCheckBox
         Left = 342
-        Top = 130
+        Top = 161
         Width = 131
         Height = 17
         Caption = 'Display On Tab'
@@ -291,6 +307,17 @@ object ConfigProjectFileForm: TConfigProjectFileForm
         ParentFont = False
         TabOrder = 11
       end
+      object ImageFilenameEdit: TJvFilenameEdit
+        Left = 124
+        Top = 129
+        Width = 204
+        Height = 24
+        Hint = 'Monitoring form list file'
+        Filter = ' Monitor list(*.mlist)|*.mlist|All files (*.*)|*.*'
+        ImeName = 'Microsoft Office IME 2007'
+        TabOrder = 12
+        Text = ''
+      end
     end
     object users: TTabSheet
       Caption = 'Users'
@@ -301,10 +328,6 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 32
         Top = 48
@@ -414,7 +437,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     ViewStyle = vsReport
     OnClick = ProjectItemLVClick
   end
-  object Panel1: TPanel
+  object BtnPanel: TPanel
     Left = 0
     Top = 0
     Width = 595
