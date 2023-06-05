@@ -6,6 +6,8 @@ uses classes, JHP.BaseConfigCollect, HiMECSConst, UnitHiMECSConfigCollect2,
   UnitHiMECSMonitorListClass2, UnitAutoRunClass2;
 
 type
+  TProjectShowMode = (psmNull, psmAdd, PsmView, psmFinal);
+
   TProjectFileCollect = class;
   TProjectFileItem = class;
 
@@ -17,7 +19,7 @@ type
 
     FCurrentProjectIndex: integer;
   public
-    FIsAddNewItem: Boolean;
+    FShowMode: TProjectShowMode;
 
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;

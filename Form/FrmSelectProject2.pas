@@ -96,7 +96,7 @@ begin
         LProjectFile.LoadFromJSONFile(AFileName, ExtractFileName(AFileName), AIsEncrypt);
         ConfigData2Form(LProjectFile,-1);
         BitBtn1.Caption := 'Save';
-        BitBtn6.Visible := True;
+        SaveBtn.Visible := True;
       end;
 
       if ShowModal = mrOK then

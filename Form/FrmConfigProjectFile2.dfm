@@ -35,7 +35,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     Height = 49
     Align = alBottom
     TabOrder = 0
-    object BitBtn1: TBitBtn
+    object CreateBtn: TBitBtn
       Left = 99
       Top = 8
       Width = 97
@@ -45,7 +45,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       NumGlyphs = 2
       TabOrder = 0
     end
-    object BitBtn2: TBitBtn
+    object CancelBtn: TBitBtn
       Left = 427
       Top = 6
       Width = 89
@@ -54,7 +54,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       NumGlyphs = 2
       TabOrder = 1
     end
-    object BitBtn6: TBitBtn
+    object SaveBtn: TBitBtn
       Left = 259
       Top = 7
       Width = 97
@@ -64,7 +64,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       NumGlyphs = 2
       TabOrder = 2
       Visible = False
-      OnClick = BitBtn6Click
+      OnClick = SaveBtnClick
     end
   end
   object PageControl1: TPageControl
@@ -76,7 +76,6 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     Align = alBottom
     TabHeight = 30
     TabOrder = 1
-    ExplicitTop = 151
     object TabSheet1: TTabSheet
       Caption = 'General'
       Font.Charset = DEFAULT_CHARSET
@@ -85,7 +84,6 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 0
       object Label1: TLabel
         Left = 15
         Top = 40
@@ -507,7 +505,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       OnUpClick = SpinButton1UpClick
     end
   end
-  object Button3: TButton
+  object ApplyButton: TButton
     Left = 482
     Top = 152
     Width = 105
@@ -515,6 +513,6 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     Anchors = [akRight, akBottom]
     Caption = 'Apply Item'
     TabOrder = 4
-    OnClick = Button3Click
+    OnClick = ApplyButtonClick
   end
 end

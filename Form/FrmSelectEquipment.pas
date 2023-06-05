@@ -7,11 +7,11 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, AdvSmoothTileList,AdvGDIP,
   AdvSmoothTileListImageVisualizer, AdvSmoothTileListHTMLVisualizer,
   Vcl.ComCtrls, Vcl.ExtCtrls, ShellApi, GDIPPictureContainer, AdvGlowButton,
-  Vcl.Imaging.jpeg, Vcl.ImgList,//Data.DBXJSON, Data.DBXJSONCommon,
+  Vcl.Imaging.jpeg, Vcl.ImgList,Vcl.Buttons, //Data.DBXJSON, Data.DBXJSONCommon,
   Vcl.StdCtrls, Vcl.Menus, CopyData, TimerPool,
 
   HiMECSConst, JHP.BaseConfigCollect, UnitFrameTileList2, UnitProjectFileClass2,
-  UnitHiMECSMonitorListClass2, Vcl.Buttons;
+  UnitHiMECSMonitorListClass2, UnitHiMECSEquipListClass;
 
 type
   TeditType = (ftInsert,ftEdit);
@@ -58,6 +58,8 @@ type
     procedure AddNewTile1Click(Sender: TObject);
     procedure ShowAllMonitor1Click(Sender: TObject);
     procedure HideAllMonitor1Click(Sender: TObject);
+    procedure TileListFrametileListTileDblClick(Sender: TObject;
+      Tile: TAdvSmoothTile; State: TTileState);
   private
     FProjectFile: TProjectFile;
     FFilePath: string;
@@ -93,6 +95,7 @@ type
     procedure ExecuteManual;
     procedure ExecuteSelectedTile;
     procedure ShowWindowFromSelectedTile(AWinMsgAction: integer; AMonItem: THiMECSMonitorListItem = nil);
+    procedure ShowEquipmentInfoFromSelectedTile(AEquipItem: THiMECSEquipListItem = nil);
   end;
 
   procedure CreateSelectEquipForm(var AProjectFile: TProjectFile);
@@ -122,7 +125,8 @@ begin
 
       if ShowModal = mrOK then
       begin
-        AProjectFile.CurrentProjectIndex := TileListFrame.tileList.SelectedTile.Index;
+        if Assigned(TileListFrame.tileList.SelectedTile) then
+          AProjectFile.CurrentProjectIndex := TileListFrame.tileList.SelectedTile.Index;
       end;
     end;
   finally
@@ -133,7 +137,7 @@ end;
 
 procedure TSelectEquipF.AddNewEquip2List;
 begin
-  FProjectFile.FIsAddNewItem := True;
+  FProjectFile.FShowMode := psmAdd;
   CreateProjectFileForm(FProjectFile);
 end;
 
@@ -576,6 +580,19 @@ begin
   end;
 end;
 
+procedure TSelectEquipF.ShowEquipmentInfoFromSelectedTile(
+  AEquipItem: THiMECSEquipListItem);
+var
+  LEquipItem: THiMECSEquipListItem;
+begin
+  if AEquipItem = nil then
+    LEquipItem := TileListFrame.tileList.SelectedTile.ItemOject as THiMECSEquipListItem
+  else
+    LEquipItem := AEquipItem;
+
+
+end;
+
 procedure TSelectEquipF.ShowWindowFromSelectedTile(AWinMsgAction: integer;
   AMonItem: THiMECSMonitorListItem);
 var
@@ -606,6 +623,12 @@ begin
     if AWinMsgAction = SW_MINIMIZE then
       ShowWindow(MyPopup, SW_MINIMIZE);
   end;
+end;
+
+procedure TSelectEquipF.TileListFrametileListTileDblClick(Sender: TObject;
+  Tile: TAdvSmoothTile; State: TTileState);
+begin
+  ShowEquipmentInfoFromSelectedTile();
 end;
 
 procedure TSelectEquipF.tileListTileDblClick(Sender: TObject;

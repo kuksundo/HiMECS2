@@ -11,8 +11,8 @@ uses
 type
   TConfigProjectFileForm = class(TForm)
     Panel2: TPanel;
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
+    CreateBtn: TBitBtn;
+    CancelBtn: TBitBtn;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     users: TTabSheet;
@@ -38,12 +38,12 @@ type
     BtnPanel: TPanel;
     Button1: TButton;
     Button2: TButton;
-    Button3: TButton;
+    ApplyButton: TButton;
     Label8: TLabel;
     ProjectItemEdit: TEdit;
     BitBtn4: TBitBtn;
     BitBtn5: TBitBtn;
-    BitBtn6: TBitBtn;
+    SaveBtn: TBitBtn;
     BitBtn3: TBitBtn;
     SpinButton1: TSpinButton;
     Label9: TLabel;
@@ -54,12 +54,12 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    procedure ApplyButtonClick(Sender: TObject);
     procedure ProjectItemLVClick(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
     procedure BitBtn4Click(Sender: TObject);
     procedure BitBtn5Click(Sender: TObject);
-    procedure BitBtn6Click(Sender: TObject);
+    procedure SaveBtnClick(Sender: TObject);
     procedure SpinButton1DownClick(Sender: TObject);
     procedure SpinButton1UpClick(Sender: TObject);
   private
@@ -106,25 +106,32 @@ begin
       UserFilenameEdit.InitialDir := '.\config';
 
       //기존 Project file에 Item만 신규로 추가할 경우 Project List View를 Hide 함
-      if AProjectFile.FIsAddNewItem then
+      if (AProjectFile.FShowMode = psmAdd) or (AProjectFile.FShowMode = PsmView) then
       begin
         BtnPanel.Visible := False;
         ProjectItemLV.Visible := False;
         Splitter1.Visible := False;
+
+        if AProjectFile.FShowMode = PsmView then
+        begin
+          ApplyButton.Visible := False;
+          CreateBtn.Visible := False;
+          SaveBtn.Visible := False;
+        end;
       end;
 
       ConfigData2Form(AProjectFile,-1);
 
       if ShowModal = mrOK then
       begin
-        if AProjectFile.FIsAddNewItem then
+        if AProjectFile.FShowMode = psmAdd then
           LProjectFileItem := AProjectFile.ProjectFileCollect.Add
         else
           LProjectFileItem := AProjectFile.ProjectFileCollect.Items[ProjectItemLV.Selected.Index];
 
         FormData2ItemVar(LProjectFileItem);
 
-        if not AProjectFile.FIsAddNewItem then
+        if AProjectFile.FShowMode <> psmAdd then
           ProjectItemLV.Items[LProjectFileItem.Index].Caption := LProjectFileItem.ProjectItemName;
       end;
     end;
@@ -214,7 +221,7 @@ begin
     SetCurrentDir(ExtractFilePath(Application.ExeName));
 end;
 
-procedure TConfigProjectFileForm.BitBtn6Click(Sender: TObject);
+procedure TConfigProjectFileForm.SaveBtnClick(Sender: TObject);
 begin
   FSaveAs := True;
 end;
@@ -252,7 +259,7 @@ begin
     ShowMessage('Select List First!');
 end;
 
-procedure TConfigProjectFileForm.Button3Click(Sender: TObject);
+procedure TConfigProjectFileForm.ApplyButtonClick(Sender: TObject);
 var
   LProjectFileItem: TProjectFileItem;
 begin
