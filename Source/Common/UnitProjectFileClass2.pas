@@ -20,6 +20,7 @@ type
     FCurrentProjectIndex: integer;
   public
     FShowMode: TProjectShowMode;
+    FSelectedProjectItem: TProjectFileItem;//Equipment View시에 파라미터 전달을 위해 임시로 사용함
 
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;

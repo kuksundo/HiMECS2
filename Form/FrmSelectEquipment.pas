@@ -95,7 +95,7 @@ type
     procedure ExecuteManual;
     procedure ExecuteSelectedTile;
     procedure ShowWindowFromSelectedTile(AWinMsgAction: integer; AMonItem: THiMECSMonitorListItem = nil);
-    procedure ShowEquipmentInfoFromSelectedTile(AEquipItem: THiMECSEquipListItem = nil);
+    procedure ShowEquipmentInfoFromSelectedTile(AEquipItem: TProjectFileItem = nil);
   end;
 
   procedure CreateSelectEquipForm(var AProjectFile: TProjectFile);
@@ -581,16 +581,19 @@ begin
 end;
 
 procedure TSelectEquipF.ShowEquipmentInfoFromSelectedTile(
-  AEquipItem: THiMECSEquipListItem);
+  AEquipItem: TProjectFileItem);
 var
-  LEquipItem: THiMECSEquipListItem;
+  LEquipItem: TProjectFileItem;
 begin
   if AEquipItem = nil then
-    LEquipItem := TileListFrame.tileList.SelectedTile.ItemOject as THiMECSEquipListItem
+    LEquipItem := TileListFrame.tileList.SelectedTile.ItemOject as TProjectFileItem
   else
     LEquipItem := AEquipItem;
 
+  FProjectFile.FShowMode := PsmView;
+  FProjectFile.FSelectedProjectItem := LEquipItem;
 
+  CreateProjectFileForm(FProjectFile);
 end;
 
 procedure TSelectEquipF.ShowWindowFromSelectedTile(AWinMsgAction: integer;
