@@ -117,10 +117,11 @@ begin
           ApplyButton.Visible := False;
           CreateBtn.Visible := False;
           SaveBtn.Visible := False;
+          Height := 368;
         end;
       end;
 
-      ConfigData2Form(AProjectFile,-1);
+      ConfigData2Form(AProjectFile,AProjectFile.FSelectedProjectItem.Index);
 
       if ShowModal = mrOK then
       begin

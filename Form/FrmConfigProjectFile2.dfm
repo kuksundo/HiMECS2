@@ -2,7 +2,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
   Left = 0
   Top = 0
   Caption = 'Configure Project File'
-  ClientHeight = 479
+  ClientHeight = 501
   ClientWidth = 595
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,12 +16,12 @@ object ConfigProjectFileForm: TConfigProjectFileForm
   OnDestroy = FormDestroy
   DesignSize = (
     595
-    479)
+    501)
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
-    Top = 147
+    Top = 169
     Width = 595
     Height = 3
     Cursor = crVSplit
@@ -30,11 +30,12 @@ object ConfigProjectFileForm: TConfigProjectFileForm
   end
   object Panel2: TPanel
     Left = 0
-    Top = 430
+    Top = 452
     Width = 595
     Height = 49
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 430
     object CreateBtn: TBitBtn
       Left = 99
       Top = 8
@@ -69,13 +70,14 @@ object ConfigProjectFileForm: TConfigProjectFileForm
   end
   object PageControl1: TPageControl
     Left = 0
-    Top = 150
+    Top = 172
     Width = 595
     Height = 280
     ActivePage = TabSheet1
     Align = alBottom
     TabHeight = 30
     TabOrder = 1
+    ExplicitTop = 150
     object TabSheet1: TTabSheet
       Caption = 'General'
       Font.Charset = DEFAULT_CHARSET
@@ -326,6 +328,10 @@ object ConfigProjectFileForm: TConfigProjectFileForm
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label2: TLabel
         Left = 32
         Top = 48
@@ -413,7 +419,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     Left = 0
     Top = 49
     Width = 595
-    Height = 98
+    Height = 120
     Align = alClient
     Columns = <
       item
@@ -434,6 +440,7 @@ object ConfigProjectFileForm: TConfigProjectFileForm
     TabOrder = 2
     ViewStyle = vsReport
     OnClick = ProjectItemLVClick
+    ExplicitHeight = 98
   end
   object BtnPanel: TPanel
     Left = 0
@@ -507,12 +514,13 @@ object ConfigProjectFileForm: TConfigProjectFileForm
   end
   object ApplyButton: TButton
     Left = 482
-    Top = 152
+    Top = 174
     Width = 105
     Height = 28
     Anchors = [akRight, akBottom]
     Caption = 'Apply Item'
     TabOrder = 4
     OnClick = ApplyButtonClick
+    ExplicitTop = 152
   end
 end

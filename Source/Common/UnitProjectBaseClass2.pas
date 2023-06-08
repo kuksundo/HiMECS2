@@ -24,7 +24,7 @@ type
   public
   end;
 
-  TVesselInfo = class(TpjhBase)
+  TEquipInfo4EngMaker = class(TpjhBase)
   private
     FProjectInfoCollect: TProjectInfoCollect<TProjectInfoItem>;
 
@@ -105,18 +105,18 @@ implementation
 
 { TProjectInfo }
 
-procedure TVesselInfo.Clear;
+procedure TEquipInfo4EngMaker.Clear;
 begin
 ;
 end;
 
-constructor TVesselInfo.Create(AOwner: TComponent);
+constructor TEquipInfo4EngMaker.Create(AOwner: TComponent);
 begin
   FProjectInfoCollect := TProjectInfoCollect<TProjectInfoItem>.Create;
   FProcessList := TStringList.Create;
 end;
 
-destructor TVesselInfo.Destroy;
+destructor TEquipInfo4EngMaker.Destroy;
 begin
   inherited Destroy;
 

@@ -56,7 +56,8 @@ uses
   UnitEngineParamRecord2, UnitEngineParamConst, decTreeView, FormAboutDefs,
   EasterEgg, JvExComCtrls, JvComCtrls, UnitHiMECSRestServer, //UnitHiMECSHttpApiServer2,
   JHP.Util.gpSharedMem, GpSharedEvents, JvCheckTreeView, CheckComboBox,
-  JvCaptionButton, Vcl.Buttons, cyBaseButton, cyBitBtn, UnitHiMECSRestAPIInterface
+  JvCaptionButton, Vcl.Buttons, cyBaseButton, cyBitBtn, UnitHiMECSRestAPIInterface,
+  UnitProjectGroupClass
   ;//, FrmModalAndMDIForm;
 
 type
@@ -457,7 +458,9 @@ type
     //FEngineInfoList: TStringList;
     //FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo로 데체함
 //    FProjectInfoCollect: TVesselInfo; //Project Info(공사번호 등...)
-    FProjectFile: TProjectFile;//project file
+    FCurrentSelectedProjectFile: TProjectFile;//project file
+    FProjectGroup: THiMECSProjectGroup;//Vessel 단위 관리
+    FCurrentProjectFileIndex: integer;//현재 선택된 Project File의 PeojectGroup Index
     FMenuBase: TMenuBase;
     //FHiMECSOptions: THiMECSOptions;
     //FHiMECSConfig: THiMECSConfig;
@@ -902,7 +905,7 @@ begin
   end;
 end;
 
-//AFileName의 Summary Information.Template = FProjectFile.ProjectFileName 이면 True
+//AFileName의 Summary Information.Template = FCurrentSelectedProjectFile.ProjectFileName 이면 True
 function TMainForm.CheckWatchListOfSummary(AFileName: string): Boolean;
 var
   LFS: TJclFileSummary;
@@ -916,7 +919,7 @@ begin
     if Assigned(LFSI) then
     begin
                        //상대경로임
-      if LFSI.Template = FProjectFile.ProjectFileName then
+      if LFSI.Template = FCurrentSelectedProjectFile.ProjectFileName then
       begin
         Result := True;
       end;
@@ -947,11 +950,11 @@ var
   LHiMECSConfig: THiMECSConfig;
   LEngParamItem: TEngineParameterItem;
 begin
-//  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //  begin
     LEngineParameter := GetEngParamFromHiMECSConfigByEPKind(AEPKind, FCOI);
 
-//    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+//    LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
 //
 //    if AEPKind = eplikModbus then
 //      LEngineParameter := LHiMECSConfig.ModbusList
@@ -976,9 +979,9 @@ var
   LHiMECSConfig: THiMECSConfig;
   LManualItem: THiMECSOpManualItem;
 begin
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
-    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+    LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
     LHiMECSManualInfo := LHiMECSConfig.ManualInfo;
 
     for j := LHiMECSManualInfo.OpManual.Count - 1 downto 0 do
@@ -1088,7 +1091,7 @@ var
 //  LHiMECSConfig: THiMECSConfig;
 begin
   Result := -1;
-//  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+//  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
   AEPItemRecord := TEngineParameterItem(Node.Data);
   LEngineParameter := GetEngParamFromItem(AEPItemRecord);
   LEngineParameterItem := LEngineParameter.EngineParameterCollect.AddEngineParameterItem(AEPItemRecord);
@@ -1113,9 +1116,9 @@ begin
       SendMessage(FWatchHandles[i], WM_MULTICOPY_END, 0, 0);
     end;
 
-    for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+    for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
     begin
-      LHiMECSMonitorList := FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor;
+      LHiMECSMonitorList := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor;
 
       for j := 0 to LHiMECSMonitorList.MonitorListCollect.Count - 1 do
       begin
@@ -1294,16 +1297,16 @@ begin
 //  LJson :=  GetJsonOfWirePathFromTagName(ATagName);
 //  LSensorCableRouteF.FrameDecTV1.LoadFromJsonString(LJson);
 
-  LSensorRouteDBName := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.SensorRouteFileName;
+  LSensorRouteDBName := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.SensorRouteFileName;
 
   if (LSensorRouteDBName = '\') or (LSensorRouteDBName = '') then
     LSensorRouteDBName := GetDbPathFromApplicationsFolder() + DefaultSensorRouteDBFileName
   else
     LSensorRouteDBName := GetDbPathFromApplicationsFolder() + LSensorRouteDBName;
   
-  LEngParamFileName := FApplicationPath + FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ParamFileName;
+  LEngParamFileName := FApplicationPath + FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ParamFileName;
 
-  LEngParamFileIsDB := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamFileFormat = 2;//Sqlite format
+  LEngParamFileIsDB := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamFileFormat = 2;//Sqlite format
   LSensorCableRouteF.FrameDecTV1.LoadFromFileDB(LSensorRouteDBName,
     AEngParam.ProjNo, AEngParam.EngNo, AEngParam.TagName, LEngParamFileName,
     True);//, LEngParamFileIsDB
@@ -1458,7 +1461,7 @@ begin
     // Determine if we got our custom format.
     if (FModbusDragFormatTarget.HasData) then
     begin
-      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
       // Extract the dropped data into our custom struct.
       FModbusDragFormatTarget.GetDataHere(DFP, sizeof(DFP));
       LStr2 := DFP.FCollectIndex;
@@ -1488,7 +1491,7 @@ var
   LHiMECSConfig: THiMECSConfig;
   LProcessId, LHandle: Integer;
 begin
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
   i := TMenuItem(Sender).Tag;
   LStr := FMenuBase.HiMECSMenuCollect.Items[i].DLLName;
   LStr := IncludeTrailingPathDelimiter(LHiMECSConfig.ExesPath) + LStr;
@@ -1509,7 +1512,7 @@ var
   LStr: string;
   LHiMECSConfig: THiMECSConfig;
 begin
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
   i := TMenuItem(Sender).Tag;
   LStr := FMenuBase.HiMECSMenuCollect.Items[i].DLLName;
 
@@ -1613,10 +1616,10 @@ procedure TMainForm.ExecuteSelectedTile(ATile: TAdvSmoothTileList);
 begin
 //  SetCurrentDir(FApplicationPath+'Applications');
   if ATile.Tag = 1 then
-    ExecuteMonitorList(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor, False, False, True)
+    ExecuteMonitorList(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor, False, False, True)
   else
   if ATile.Tag = 2 then
-    ExecuteAutoRunList(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun, False, False, True);
+    ExecuteAutoRunList(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun, False, False, True);
 //  SetCurrentDir(FApplicationPath);
 end;
 
@@ -1686,31 +1689,31 @@ begin
   //for i := Low(FMonitorHandles) to High(FMonitorHandles) do
   //  SendMessage(FMonitorHandles[i], WM_CLOSE, 0, 0);
 
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
-    if Assigned(FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor) then
+    if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor) then
     begin
-      if FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseMonLauncher then
-        PostMessage(FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.LauncherHandle,
+      if FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseMonLauncher then
+        PostMessage(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.LauncherHandle,
           WM_CLOSE, 0, 0)
       else
-        for j := 0 to FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Count - 1 do
-          PostMessage(FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Items[j].AppHandle,
+        for j := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Count - 1 do
+          PostMessage(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Items[j].AppHandle,
             WM_CLOSE, 0, 0);
     end;
 
-    if Assigned(FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun) then
+    if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun) then
     begin
-      if FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseCommLauncher then
-        PostMessage(FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.LauncherHandle,
+      if FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseCommLauncher then
+        PostMessage(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.LauncherHandle,
           WM_CLOSE, 0, 0)
       else
-        for j := 0 to FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Count - 1 do
-          SendMessage(FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Items[j].AppHandle,
+        for j := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Count - 1 do
+          SendMessage(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Items[j].AppHandle,
             WM_CLOSE, 0, 0);
     end;
 
-    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+    LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
 
     if Assigned(LHiMECSConfig.EngineParameter) then
       LHiMECSConfig.EngineParameter.Free;
@@ -1730,33 +1733,33 @@ begin
     LHiMECSConfig.Free;
 
     //Close 실패한 Process를 다시한번 강제 종료함
-    if Assigned(FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor) then
+    if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor) then
     begin
       Sleep(50);
 
-      if Assigned(FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor) then
+      if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor) then
       begin
-        if not FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseMonLauncher then
-          for j := 0 to FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Count - 1 do
-            KillProcessId(FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Items[j].AppProcessId);
+        if not FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseMonLauncher then
+          for j := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Count - 1 do
+            KillProcessId(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Items[j].AppProcessId);
       end;
 
-      FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.Free;
+      FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.Free;
     end;
 
-    if Assigned(FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun) then
+    if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun) then
     begin
       Sleep(50);
 
-      if not FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseCommLauncher then
-        for j := 0 to FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Count - 1 do
-          KillProcessId(FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Items[j].AppProcessId);
+      if not FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseCommLauncher then
+        for j := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Count - 1 do
+          KillProcessId(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Items[j].AppProcessId);
 
-      FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.Free;
+      FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.Free;
     end;
   end;
 
-  FProjectFile.ProjectFileCollect.Clear;
+  FCurrentSelectedProjectFile.ProjectFileCollect.Clear;
 
   FWatchHandles := nil;
   //FAutoRunHandles := nil;
@@ -1823,8 +1826,8 @@ begin
   end;
 
   if AFreePrjFile then
-    if Assigned(FProjectFile) then
-      FreeAndNil(FProjectFile);
+    if Assigned(FProjectGroup) then
+      FreeAndNil(FProjectGroup);
 
   //if Assigned(FHiMECSOptions) then
     //FreeAndNil(FHiMECSOptions);
@@ -1989,15 +1992,15 @@ begin
 
   LRec.MethodName := 'DeviceList';
 
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
-    if Assigned(FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo) then
+    if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo) then
     begin
-      if ARec.ProjName = FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo.ShipNo then
+      if ARec.ProjName = FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo.ShipNo then
       begin
         LRec.ProjName := ARec.ProjName;
-        LRec.Response := FProjectFile.ProjectFileCollect.Items[i].ProjectItemName;
-//        LVar.ProjectItemDescript := FProjectFile.ProjectFileCollect.Items[i].ProjectItemDescript;
+        LRec.Response := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName;
+//        LVar.ProjectItemDescript := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemDescript;
 
         if LDynArr.IndexOf(LRec) < 0 then
         begin
@@ -2022,14 +2025,14 @@ begin
 //  TDocVariant.New(LVar);
 //  LDynArr.Init(TypeInfo(TRawUTF8DynArray), LDynUtf8);
 //
-//  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //  begin
-//    if Assigned(FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo) then
+//    if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo) then
 //    begin
-//      if AProjName = FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo.ShipNo then
+//      if AProjName = FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo.ShipNo then
 //      begin
-//        LVar.ProjectItemName := FProjectFile.ProjectFileCollect.Items[i].ProjectItemName;
-//        LVar.ProjectItemDescript := FProjectFile.ProjectFileCollect.Items[i].ProjectItemDescript;
+//        LVar.ProjectItemName := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName;
+//        LVar.ProjectItemDescript := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemDescript;
 //        LUtf8 := LVar;
 //
 //        LDynArr.Add(LUtf8);
@@ -2054,11 +2057,11 @@ begin
   TDocVariant.New(LVar);
   LDynArr.Init(TypeInfo(TRawUTF8DynArray), LDynUtf8);
 
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
-    if ARec.DeviceName = FProjectFile.ProjectFileCollect.Items[i].ProjectItemName then
+    if ARec.DeviceName = FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName then
     begin
-      LHiMECSManualInfo := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ManualInfo;
+      LHiMECSManualInfo := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ManualInfo;
 
       for j := 0 to LHiMECSManualInfo.Drawings.Count - 1 do
       begin
@@ -2099,11 +2102,11 @@ begin
 //  TDocVariant.New(LVar);
 //  LDynArr.Init(TypeInfo(TRawUTF8DynArray), LDynUtf8);
 //
-//  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //  begin
-//    if ADeviceName = FProjectFile.ProjectFileCollect.Items[i].ProjectItemName then
+//    if ADeviceName = FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName then
 //    begin
-//      LHiMECSManualInfo := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ManualInfo;
+//      LHiMECSManualInfo := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ManualInfo;
 //
 //      for j := 0 to LHiMECSManualInfo.OpManual.Count - 1 do
 //      begin
@@ -2207,7 +2210,7 @@ function TMainForm.GetEngineType(AIndex: integer): string;
 var
   LHiMECSConfig: THiMECSConfig;
 begin
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig;
   Result := LHiMECSConfig.EngineInfo.GetEngineType;
 end;
 
@@ -2217,9 +2220,9 @@ begin
   Result := nil;
 
   if AEPKind = eplikModbus then
-    Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
+    Result := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
   else
-    Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
+    Result := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
 end;
 
 function TMainForm.GetEngParamFromItem(
@@ -2231,9 +2234,9 @@ begin
     AIndex := FCOI;
 
   if AEPItem.ParamNo = '' then
-    Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
+    Result := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
   else
-    Result := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
+    Result := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
 end;
 
 function TMainForm.GetFullFilePathFromManualInfo(var ADrawingPath, AManualPath: string): Boolean;
@@ -2242,7 +2245,7 @@ var
   i: integer;
 begin
   Result := False;
-  LHiMECSManualInfo := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ManualInfo;
+  LHiMECSManualInfo := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ManualInfo;
 
   for i := 0 to LHiMECSManualInfo.OpManual.Count - 1 do
   begin
@@ -2279,32 +2282,32 @@ var
     begin
       LEngineParameter := TEngineParameter.Create(Self);
       LEngineParameter.Assign(LHiMECSConfig.EngineParameter);
-      Result.AddObject(FProjectFile.ProjectFileCollect.Items[i].ProjectItemName, LEngineParameter);
+      Result.AddObject(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName, LEngineParameter);
     end
     else
     if AInfoName = 'Manual Info' then
     begin
       LHiMECSManualInfo := THiMECSManualInfo.Create(Self);
       LHiMECSManualInfo.Assign(LHiMECSConfig.ManualInfo);
-      Result.AddObject(FProjectFile.ProjectFileCollect.Items[i].ProjectItemName, LHiMECSManualInfo);
+      Result.AddObject(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName, LHiMECSManualInfo);
     end;
   end;
 begin
   Result := TStringList.Create;
 
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
     if ADeviceName <> '' then
     begin
-      if FProjectFile.ProjectFileCollect.Items[i].ProjectItemName = ADeviceName then
+      if FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName = ADeviceName then
       begin
-        LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+        LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
         AddObject2List;
       end;
     end
     else
     begin
-      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
       AddObject2List;
     end;
   end;
@@ -2370,9 +2373,9 @@ begin
 
   LRec.MethodName := 'ProjectList';
 
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
-    LRec.Response := StringToUTF8(FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo.ShipNo);
+    LRec.Response := StringToUTF8(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.ProjectInfo.ShipNo);
 
     if LDynArr.IndexOf(LRec) < 0 then
     begin
@@ -2484,9 +2487,9 @@ begin
 
     while LCount <= AEngParamItem.MultiStateItemCount do
     begin
-      if IntToStr(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ModbusList.MultiStateCollect.Items[LIdx].StateValue) = AEngParamItem.Value then
+      if IntToStr(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ModbusList.MultiStateCollect.Items[LIdx].StateValue) = AEngParamItem.Value then
       begin
-        Result := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ModbusList.MultiStateCollect.Items[LIdx].StateMeaning;
+        Result := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ModbusList.MultiStateCollect.Items[LIdx].StateMeaning;
         break;
       end
       else
@@ -3407,7 +3410,7 @@ begin
 
   LParam := AVar.RunParameter;
 
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
 
   if LHiMECSConfig.ExtAppInMDI then
     LParam := LParam + ' /C';  //MDI Child Mode
@@ -3466,9 +3469,9 @@ begin
   CommTileListFrame.InitVar;
   //MonTileListFrame.TileList.FAddNewApp2List := AddNewApp2List;
 
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
-    LStr := FProjectFile.ProjectFileCollect.Items[i].RunListFileName;
+    LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].RunListFileName;
 
     if LStr <> '' then
     begin
@@ -3478,9 +3481,9 @@ begin
           LStr := replaceString(LStr, '.\', '..\');
 
         LAutoRunList := TAutoRunList.Create(Self);
-        FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun := LAutoRunList;
+        FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun := LAutoRunList;
 
-        if FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseCommLauncher then
+        if FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseCommLauncher then
         begin
           LProgName := HiMECSCommLauncher;
           LParam := '/A' + LStr;
@@ -3589,7 +3592,7 @@ procedure TMainForm.LoadConfigCollect2Form(AForm: TConfigF);
 var
   LHiMECSConfig: THiMECSConfig;
 begin
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
   AForm.FHiMECSConfig.Assign(TPersistent(LHiMECSConfig));
   AForm.LoadConfigCollect2Form(AForm);
 //
@@ -3633,13 +3636,13 @@ var
   LFileName: string;
   LIsEncrypt: Boolean;
 begin
-  if not Assigned(FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig) then
-    FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig := THiMECSConfig.Create(Self);
+  if not Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig) then
+    FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig := THiMECSConfig.Create(Self);
 
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig;
 
-  LFileName := FProjectFile.ProjectFileCollect.Items[AIndex].OptionsFileName;
-  LIsEncrypt := FProjectFile.ProjectFileCollect.Items[AIndex].OptionFileEncrypt;
+  LFileName := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].OptionsFileName;
+  LIsEncrypt := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].OptionFileEncrypt;
 
   if LFileName <> '' then
   begin
@@ -3680,7 +3683,7 @@ var
   LPath: string;
   LHiMECSConfig: THiMECSConfig;
 begin
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
   AForm.LoadConfigForm2Collect(AForm);
   LHiMECSConfig.Assign(TPersistent(AForm.FHiMECSConfig));
 end;
@@ -3732,7 +3735,7 @@ begin
 
   SetCurrentDir(FApplicationPath);
 
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
 
   if not Assigned(LHiMECSConfig.EngineInfo) then
     LHiMECSConfig.EngineInfo := TICEngine.Create(Self);
@@ -3775,7 +3778,7 @@ procedure TMainForm.LoadKillProcess;
 var
   LHiMECSConfig: THiMECSConfig;
 begin
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
 
   if not FileExists(LHiMECSConfig.KillProcListFileName) then
     exit;
@@ -3940,14 +3943,14 @@ end;
 //    ATV.Items.Clear;
 //    ATV.Items.BeginUpdate;
 //
-//    LStr := FProjectFile.ProjectFileCollect.Items[LIndex].ProjectItemName;
+//    LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[LIndex].ProjectItemName;
 //    ARootNode := ATV.Items.AddChild(nil, LStr);
 //  end;
 //
 //  try
 //    SetCurrentDir(FApplicationPath);
 //    LHiMECSManualInfo := THiMECSManualInfo.Create(Self);
-//    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[LIndex].HiMECSConfig;
+//    LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[LIndex].HiMECSConfig;
 //
 //    if AFileName = '' then
 //    begin
@@ -4004,12 +4007,12 @@ begin
     ATV.Items.Clear;
 //    ATV.Items.BeginUpdate;
 
-    LStr := FProjectFile.ProjectFileCollect.Items[AIndex].ProjectItemName;
+    LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].ProjectItemName;
     ARootNode := ATV.Items.AddChild(nil, LStr);
   end;
 
   try
-    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig;
+    LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig;
     LHiMECSManualInfo := LHiMECSConfig.ManualInfo;
 
     if LHiMECSManualInfo.OpManual.Count <= 0 then
@@ -4038,11 +4041,11 @@ begin
 
   LRootList := TStringList.Create;
   try
-//    for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//    for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //    begin
       i := FCOI;
 
-      LStr := FProjectFile.ProjectFileCollect.Items[i].ProjectItemName;
+      LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName;
       LIndex := -1;
       LIndex := LRootList.IndexOf(LStr);
 
@@ -4054,7 +4057,7 @@ begin
       else
         LRootNode := TTreeNode(LRootList.Objects[LIndex]);
 
-//      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+//      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
 //      LStr := LHiMECSConfig.ManualInfoFileName;
       LoadManualInfo2TreeView(AManualKind, ASortMethod, LRootNode, i, ATV);
       FCurrentManualSortMethod := ASortMethod;
@@ -4072,7 +4075,7 @@ begin
     AIndex := FCOI;
 
   SetCurrentDir(FApplicationPath);
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig;
 
   if not Assigned(LHiMECSConfig.ManualInfo) then
     LHiMECSConfig.ManualInfo := THiMECSManualInfo.Create(Self);
@@ -4121,7 +4124,7 @@ begin
   if Pos('.',LRunName) > 0  then //'.'이 존재 하면
     LRunName := replaceString(LRunName, '.\', '.\Applications\');
 
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
 
   LParam := '/p' + AVar.MonitorFileName;
 
@@ -4150,9 +4153,9 @@ begin
   MonTileListFrame.InitVar;
   //MonTileListFrame.TileList.FAddNewApp2List := AddNewApp2List;
 
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
-    LStr := FProjectFile.ProjectFileCollect.Items[i].MonitorFileName;
+    LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].MonitorFileName;
 
     if LStr <> '' then
     begin
@@ -4162,9 +4165,9 @@ begin
           LStr := replaceString(LStr, '.\', '..\');
 
         LHiMECSMonitorList := THiMECSMonitorList.Create(Self);
-        FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor := LHiMECSMonitorList;
+        FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor := LHiMECSMonitorList;
 
-        if FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseMonLauncher then
+        if FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig.UseMonLauncher then
         begin
           LProgName := HiMECSMonitorLauncher;
           LParam := '/A' + LStr;
@@ -4465,14 +4468,14 @@ end;
 //    ATV.Items.Clear;
 ////    ATV.Items.BeginUpdate;
 //
-//    LStr := FProjectFile.ProjectFileCollect.Items[LIndex].ProjectItemName;
+//    LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[LIndex].ProjectItemName;
 //    ARootNode := ATV.Items.AddChild(nil, LStr);
 //  end;
 //
 //  SetCurrentDir(FApplicationPath);
 //  //FEngineParameter.EngineParameterCollect.Clear;
 //  LEngineParameter := TEngineParameter.Create(Self);
-//  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[LIndex].HiMECSConfig;
+//  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[LIndex].HiMECSConfig;
 //
 //  if AFileName = '' then
 //  begin
@@ -4541,16 +4544,16 @@ begin
     ATV.Items.Clear;
 //    ATV.Items.BeginUpdate;
 
-    LStr := FProjectFile.ProjectFileCollect.Items[AIndex].ProjectItemName;
+    LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].ProjectItemName;
     ARootNode := ATV.Items.AddChild(nil, LStr);
   end;
 
   LEngineParameter := GetEngParamFromHiMECSConfigByEPKind(AEPKind, AIndex);
 
 //  if AEPKind = eplikModbus then
-//    LEngineParameter := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
+//    LEngineParameter := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.ModbusList
 //  else
-//    LEngineParameter := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
+//    LEngineParameter := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineParameter;
 
   if not Assigned(LEngineParameter) or (LEngineParameter.EngineParameterCollect.Count <= 0) then
   begin
@@ -4602,10 +4605,10 @@ var
 
   procedure _LoadParam2TV(AIdx: integer);
   begin
-    if FProjectFile.ProjectFileCollect.Items[AIdx].IsDisplayOnTab then
+    if FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].IsDisplayOnTab then
     else
     begin
-      LStr := FProjectFile.ProjectFileCollect.Items[AIdx].ProjectItemName;
+      LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].ProjectItemName;
 
       LIndex := LRootList.IndexOf(LStr);
 
@@ -4618,7 +4621,7 @@ var
       else
         LRootNode := TTreeNode(LRootList.Objects[LIndex]);
 
-//      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig;
+//      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig;
 //      LStr := LHiMECSConfig.ParamFileName;
       LoadParameter2TreeView(ASortMethod, LRootNode, AIdx, ATV, AEPKind);
     end;
@@ -4631,7 +4634,7 @@ begin
   try
     if AOptIdx = -1 then
     begin
-      for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+      for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
       begin
         _LoadParam2TV(i);
       end;//for
@@ -4662,7 +4665,7 @@ begin
   end;
 
   LParamObj := nil;
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
 
   LoadParamterFromFile_(AFileName, LParamObj,
     LHiMECSConfig.EngParamFileFormat, LHiMECSConfig.EngParamEncrypt, AEPKind);
@@ -4725,10 +4728,10 @@ begin
 
   SetCurrentDir(FApplicationPath);
 
-  if not Assigned(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo) then
-    FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo := TVesselInfo.Create(Self);
+  if not Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo) then
+    FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo := TEquipInfo4EngMaker.Create(Self);
   
-  FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo.LoadFromJSONFile(AFileName,ExtractFileName(AFileName),AIsEncrypt);
+  FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo.LoadFromJSONFile(AFileName,ExtractFileName(AFileName),AIsEncrypt);
 
   if AIs2Inspector then
     SetProjectInfo2Inspector;
@@ -4868,10 +4871,10 @@ begin
   begin
     ATV.Items.Clear;
 
-    for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+    for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
     begin
-      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
-      ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
+      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+      ANode := ATV.Items.AddChild(nil, FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
       LoadParameter2TVBySortMtehod(ANode, LHiMECSConfig.EngineParameter, FCurrentEngParamSortMethod, ATV);
 
@@ -4909,12 +4912,12 @@ begin
   begin
     try
       try
-//        for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//        for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //        begin
           i := FCOI;
           LEngineParameter := GetEngParamFromHiMECSConfigByEPKind(AEPKind, i);
 
-//          LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+//          LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
 //
 //          if AEPKind = eplikModbus then
 //            LEngineParameter := LHiMECSConfig.ModbusList
@@ -4980,12 +4983,12 @@ begin
           end;//for j
 //        end;//for i
 
-//        for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//        for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //        begin
-//          LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+//          LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
 //          LEngineParameter := LHiMECSConfig.EngineParameter;
 
-          ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
+          ANode := ATV.Items.AddChild(nil, FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
           LoadParameter2TVBySortMtehod(ANode, LEngineParameter, ASortMethod, ATV);
 //        end;//for i
@@ -5002,12 +5005,12 @@ begin
   begin
     ATV.Items.Clear;
 
-//    for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//    for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //    begin
       i := FCOI;
       LEngineParameter := GetEngParamFromHiMECSConfigByEPKind(AEPKind, i);
 
-//      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+//      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
 
 //      if AEPKind = eplikModbus then
 //        LEngineParameter := LHiMECSConfig.ModbusList
@@ -5015,7 +5018,7 @@ begin
 //      if AEPKind = eplikParameter then
 //        LEngineParameter := LHiMECSConfig.EngineParameter;
 
-      ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
+      ANode := ATV.Items.AddChild(nil, FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
       LoadParameter2TVBySortMtehod(ANode, LEngineParameter, FCurrentEngParamSortMethod, ATV);
 //    end;//
@@ -5066,13 +5069,13 @@ begin
     try
       LSearchManualList := TStringList.Create;
       try
-        for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+        for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
         begin
-//          LHiMECSConfig.Assign(FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig);
-          LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+//          LHiMECSConfig.Assign(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig);
+          LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
           LHiMECSManualInfo := THiMECSManualInfo.Create(Self);
           LHiMECSManualInfo.Assign(LHiMECSConfig.ManualInfo);
-          LSearchManualList.AddObject(FProjectFile.ProjectFileCollect.Items[i].ProjectItemName, LHiMECSManualInfo);
+          LSearchManualList.AddObject(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName, LHiMECSManualInfo);
         end;
 
         // Search algorithm
@@ -5158,10 +5161,10 @@ begin
   begin
     ATV.Items.Clear;
 
-    for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+    for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
     begin
-      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
-      ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
+      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+      ANode := ATV.Items.AddChild(nil, FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
       case ASortMethod of
         msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSConfig.ManualInfo, AManualKind, ATV);
@@ -5192,16 +5195,16 @@ begin
   begin
     try
       try
-//        for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//        for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //        begin
           i := FCOI;
-          LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+          LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
           LHiMECSManualInfo := LHiMECSConfig.ManualInfo;
 
           SetHideItemsOfManualInfoBySearchTxt(LHiMECSManualInfo, mikOpManual, ASearchSrc, ASearchText);
           SetHideItemsOfManualInfoBySearchTxt(LHiMECSManualInfo, mikDrawings, ASearchSrc, ASearchText);
 
-          ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
+          ANode := ATV.Items.AddChild(nil, FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
           case ASortMethod of
             msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSManualInfo, AManualKind, ATV);
@@ -5222,11 +5225,11 @@ begin
   begin
     ATV.Items.Clear;
 
-//    for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+//    for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
 //    begin
       i := FCOI;
-      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
-      ANode := ATV.Items.AddChild(nil, FProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
+      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSConfig;
+      ANode := ATV.Items.AddChild(nil, FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].ProjectItemName);
 
       case ASortMethod of
         msmMSNo: LoadManualInfo2MsNoTV(ANode, LHiMECSConfig.ManualInfo, AManualKind, ATV);
@@ -5250,14 +5253,14 @@ procedure TMainForm.LoadTileConfig2Form(AConfigF: TTileConfigF; AType: integer);
 begin
   if AType = 1 then
   begin
-    AConfigF.RowNumEdit.Text := IntToStr(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileRowNum);
-    AConfigF.ColNumEdit.Text := IntToStr(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileColNum);
+    AConfigF.RowNumEdit.Text := IntToStr(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileRowNum);
+    AConfigF.ColNumEdit.Text := IntToStr(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileColNum);
   end
   else
   if AType = 2 then
   begin
-    AConfigF.RowNumEdit.Text := IntToStr(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileRowNum);
-    AConfigF.ColNumEdit.Text := IntToStr(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileColNum);
+    AConfigF.RowNumEdit.Text := IntToStr(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileRowNum);
+    AConfigF.ColNumEdit.Text := IntToStr(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileColNum);
   end;
 end;
 
@@ -5267,14 +5270,14 @@ procedure TMainForm.LoadTileConfigForm2Collect(AConfigF: TTileConfigF; AType: in
 begin
   if AType = 1 then
   begin
-    FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileRowNum := StrToIntDef(AConfigF.RowNumEdit.Text, 3);
-    FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileColNum := StrToIntDef(AConfigF.ColNumEdit.Text, 1);
+    FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileRowNum := StrToIntDef(AConfigF.RowNumEdit.Text, 3);
+    FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileColNum := StrToIntDef(AConfigF.ColNumEdit.Text, 1);
   end
   else
   if AType = 2 then
   begin
-    FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileRowNum := StrToIntDef(AConfigF.RowNumEdit.Text, 3);
-    FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileColNum := StrToIntDef(AConfigF.ColNumEdit.Text, 1);
+    FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileRowNum := StrToIntDef(AConfigF.RowNumEdit.Text, 3);
+    FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileColNum := StrToIntDef(AConfigF.ColNumEdit.Text, 1);
   end;
 end;
 
@@ -5535,7 +5538,7 @@ end;
 
 procedure TMainForm.MenuItem7Click(Sender: TObject);
 begin
-  MonTileListFrame.SaveTile2File(TpjhBase(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor));
+  MonTileListFrame.SaveTile2File(TpjhBase(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor));
 end;
 
 {
@@ -5605,7 +5608,7 @@ begin
   ASourceRecord.FYAxesMinValue := AEPItemRecord.YAxesMinValue;
   ASourceRecord.FYAxesSpanValue := AEPItemRecord.YAxesSpanValue;
 
-  ASourceRecord.FProjectFileName := FProjectFile.ProjectFileName;
+  ASourceRecord.FCurrentSelectedProjectFileName := FCurrentSelectedProjectFile.ProjectFileName;
 end;
 }
 
@@ -5643,7 +5646,7 @@ begin
     // Determine if we got our custom format.
     if (FParamDragFormatTarget.HasData) then
     begin
-      LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+      LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
       // Extract the dropped data into our custom struct.
       FParamDragFormatTarget.GetDataHere(DFP, sizeof(DFP));
       LStr2 := DFP.FCollectIndex;
@@ -5854,7 +5857,7 @@ begin
   if (AEPItem.ParameterSource <> psECS_AVAT2 ) and (AEPItem.ParameterType in TMatrixTypes) then
   begin
     LIdx := AEPItem.MatrixItemIndex;
-    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+    LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
     LHiMECSConfig.EngineParameter.MatrixCollect.Items[LIdx].AssignTo(ARecord);
   end;
 end;
@@ -5994,7 +5997,7 @@ var
   LStr: string;
   LHiMECSConfig: THiMECSConfig;
 begin
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
 
   if Item.Name = 'CylinderCount' then
     LHiMECSConfig.EngineInfo.CylinderCount := Item.AsInteger
@@ -6148,7 +6151,7 @@ var
   LHiMECSConfig: THiMECSConfig;
 begin
   SetCurrentDir(FApplicationPath);
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
   LStr := LHiMECSConfig.ExesPath;
 
   FHiMECSExes.ExeCollect.Clear;
@@ -6165,7 +6168,7 @@ var
   LHiMECSConfig: THiMECSConfig;
 begin
   SetCurrentDir(FApplicationPath);
-  LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+  LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
   LStr := IncludeTrailingPathDelimiter(LHiMECSConfig.ConfigPath);
 
   if FileExists(LStr+DefaultFormsFileName) then
@@ -6235,7 +6238,7 @@ begin
 
   if TEngineParameterItem(ANode.Data).IsMatrixData then
   begin
-    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+    LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
     i := TEngineParameterItem(ANode.Data).MatrixItemIndex;
     LMatrixItem := LHiMECSConfig.EngineParameter.MatrixCollect.Items[i];
     i := TFormParamList(AForm).AssignMatrixItem(LMatrixItem);
@@ -6416,14 +6419,14 @@ begin
 
   LStr := IncludeTrailingBackslash(ExtractRelativePath(
                             ExtractFilePath(Application.ExeName),
-                            ExtractFilePath(FProjectFile.ProjectFileName)))+
-                            ExtractFileName(FProjectFile.ProjectFileName);
+                            ExtractFilePath(FCurrentSelectedProjectFile.ProjectFileName)))+
+                            ExtractFileName(FCurrentSelectedProjectFile.ProjectFileName);
   if System.Pos('.\', LStr) = 0 then
     LStr := '.\' + LStr;
 
   //상대경로를 저장함
-  if FProjectFile.ProjectFileName = '' then
-    FProjectFile.ProjectFileName := LStr;
+  if FCurrentSelectedProjectFile.ProjectFileName = '' then
+    FCurrentSelectedProjectFile.ProjectFileName := LStr;
 
   SetCurrentDir(FApplicationPath);
 
@@ -6469,16 +6472,16 @@ begin
     ShowMessage('Creation fail for '+FApplicationPath+'\config\ folder!');
 
   try
-    for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+    for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
     begin
-      if ExtractFileName(FProjectFile.ProjectFileCollect.Items[i].OptionsFileName) = '' then
-        FProjectFile.ProjectFileCollect.Items[i].OptionsFileName := DefaultOptionsFileName;
+      if ExtractFileName(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].OptionsFileName) = '' then
+        FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].OptionsFileName := DefaultOptionsFileName;
 
-      LStr := FProjectFile.ProjectFileCollect.Items[i].OptionsFileName;
+      LStr := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].OptionsFileName;
       //'..' 과 '.'이 없는 경우 절대 경로 임
       if (Pos('..',LStr) = 0) and (Pos('.',LStr) = 0) then
       begin
-        LStr := '.\config\' + ExtractFileName(FProjectFile.ProjectFileCollect.Items[i].OptionsFileName);
+        LStr := '.\config\' + ExtractFileName(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].OptionsFileName);
       end;
 
       if not FileExists(LStr) then
@@ -6487,16 +6490,16 @@ begin
       FCOI := i;
       //FHiMECSConfig로 Option file 로드함
       LoadConfigCollectFromFile(FCOI);
-      LoadEngineInfo(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineInfoFileName, False);
-      LoadProjectInfo(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfoFileName, False);
-      LoadParamterFromFile(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ModbusFileName,
+      LoadEngineInfo(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineInfoFileName, False);
+      LoadProjectInfo(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfoFileName, False);
+      LoadParamterFromFile(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ModbusFileName,
         eplikModbus);
-      LoadParamterFromFile(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ParamFileName,
+      LoadParamterFromFile(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ParamFileName,
         eplikParameter);
-      LoadManualInfoFromFile(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ManualInfoFileName);
+      LoadManualInfoFromFile(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ManualInfoFileName);
 //      AsyncLoadInfoData();
       //FHiMECSOptions.AddFromHiMECSConfigCollect(
-      //  FProjectFile.ProjectFileCollect.Items[i].OptionsFileName,
+      //  FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].OptionsFileName,
       //  FHiMECSConfig);
 
       //with AdvSmoothSplashScreen1.ListItems.Add do
@@ -6522,7 +6525,7 @@ begin
     if FHiMECSUser.HiMECSUserCollect.Items[FCurrentUserIndex].MenuFileName <> '' then
       LoadMenuFromFile(FHiMECSUser.HiMECSUserCollect.Items[FCurrentUserIndex].MenuFileName, True)
     else
-      LoadMenuFromFile(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.MenuFileName, True);
+      LoadMenuFromFile(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.MenuFileName, True);
 
     UpdateProgress4Splash(20);
 
@@ -6571,7 +6574,7 @@ begin
   EngineInfoInspector.DoubleBuffered := False;
   AdvNavBar1.ActiveTabIndex := 0;
 
-//  if FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.UpdateWhenStart then
+//  if FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.UpdateWhenStart then
 //  begin
 //    if DoUpdateVersion(True) then
 //    begin
@@ -6648,7 +6651,7 @@ begin
 
   if i > -1 then
   begin
-    LHiMECSConfig := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
+    LHiMECSConfig := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig;
     TForm(MDIChildren[i]).Hint := LHiMECSConfig.ExesPath;
     TForm(MDIChildren[i]).Tag := Integer(LHiMECSConfig.ExtAppInMDI);
   end;
@@ -6681,8 +6684,8 @@ begin
 
     LFileName := ChangeFileExt(LFileName, '.option');
     //FHiMECSOptions.Add2HiMECSConfigCollect(FHiMECSConfig,FCOI);
-    FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.SaveToFile(LFileName, ExtractFileName(LFileName),
-      FProjectFile.ProjectFileCollect.Items[FCOI].OptionFileEncrypt);
+    FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.SaveToFile(LFileName, ExtractFileName(LFileName),
+      FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].OptionFileEncrypt);
     ShowMessage(LFileName + ' is saved!');
   end;
 end;
@@ -6711,7 +6714,7 @@ begin
         CloseFile(F);
 
         LFileName := ChangeFileExt(LFileName, '.himecs');
-        FProjectFile.SaveToFile(LFileName, ExtractFileName(LFileName), True);
+        FCurrentSelectedProjectFile.SaveToFile(LFileName, ExtractFileName(LFileName), True);
       end;
     end;
   end;
@@ -6723,7 +6726,7 @@ var
 begin
   ChangeFileExt(AFileName, '.einfo');
 
-//  LEngineInfo := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineInfo;
+//  LEngineInfo := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineInfo;
   LEngineInfo := TICEngine.Create(nil);
   try
     EngineInfoInspector2Class(EngineInfoInspector, LEngineInfo, True);
@@ -6770,8 +6773,8 @@ begin
   LExt := 'log';
 
   case AMessaggeType of
-    mtError: SaveData2DateFile(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.LogPath,LExt,AMessage,soFromEnd);
-    mtInformation: SaveData2DateFile(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.LogPath,LExt,AMessage,soFromEnd);
+    mtError: SaveData2DateFile(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.LogPath,LExt,AMessage,soFromEnd);
+    mtInformation: SaveData2DateFile(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.LogPath,LExt,AMessage,soFromEnd);
     mtAlarm: ;
     mtFault: ;
     mtShutdown: ;
@@ -6803,13 +6806,13 @@ begin
       end;
     end;//for
 
-    if FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamFileFormat = 0 then //XML format
+    if FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamFileFormat = 0 then //XML format
       LEngineParameter.SaveToFile(AFileName, ExtractFileName(AFileName), AIsEncrypt)
     else
-    if FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamFileFormat = 1 then //JSON format
+    if FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamFileFormat = 1 then //JSON format
       LEngineParameter.SaveToJSONFile(AFileName, ExtractFileName(AFileName), AIsEncrypt)
     else
-    if FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamFileFormat = 2 then //Sqlite DB format
+    if FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamFileFormat = 2 then //Sqlite DB format
     begin
       LEngineParameter.SaveToSqliteFile(AFileName, LEngineParameterItem2.Index)
     end;
@@ -6824,7 +6827,7 @@ var
 begin
   ChangeFileExt(AFileName, '.pinfo');
 
-  with FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo do
+  with FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo do
   begin
     ProjectName := ProjectInfoInspector.items.ItemByName['FProjName'].AsString;
     ProjectNo := ProjectInfoInspector.items.ItemByName['FProjNo'].AsString;
@@ -6893,7 +6896,7 @@ begin
       end;
     end;
 
-    SaveParamTV2File(JvSaveDialog1.FileName, FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamEncrypt);
+    SaveParamTV2File(JvSaveDialog1.FileName, FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngParamEncrypt);
   end;
 end;
 
@@ -6912,8 +6915,8 @@ end;
 
 procedure TMainForm.SelectEquipment;
 begin
-  CreateSelectEquipForm(FProjectFile);
-  ShowMessage(IntToStr(FProjectFile.CurrentProjectIndex));
+  CreateSelectEquipForm(FCurrentSelectedProjectFile);
+  ShowMessage(IntToStr(FCurrentSelectedProjectFile.CurrentProjectIndex));
 end;
 
 procedure TMainForm.SelectEquipment1Click(Sender: TObject);
@@ -7013,7 +7016,7 @@ begin
         begin
           LStr := projectLV.ItemFocused.Caption;
           LStr := projectLV.ItemFocused.SubItems[0]+LStr;
-          FProjectFile.ProjectFileName := LStr;
+          FCurrentSelectedProjectFile.ProjectFileName := LStr;
           Result := True;
         end;
       end;
@@ -7059,7 +7062,7 @@ begin
       else
         LParam := '';
 
-      LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+HiMECSWatchName2, LParam);
+      LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+HiMECSWatchName2, LParam);
       FMultiWatchHandle := DSiGetProcessWindow(LProcessId);
 
       if Assigned(LForm) then
@@ -7175,13 +7178,13 @@ begin
       begin
         SetCurrentDir(FApplicationPath);
         Self.LoadConfigForm2Collect(ConfigData);
-        SaveConfig(FProjectFile.ProjectFileCollect.Items[FCOI].OptionsFileName,
-          FProjectFile.ProjectFileCollect.Items[FCOI].OptionFileEncrypt);
-//        LStr := IncludeTrailingPathDelimiter(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ConfigPath);
-//        FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.SaveToFile(
-//          FProjectFile.ProjectFileCollect.Items[FCOI].OptionsFileName,
-//          ExtractFileName(FProjectFile.ProjectFileCollect.Items[FCOI].OptionsFileName),
-//          FProjectFile.ProjectFileCollect.Items[FCOI].OptionFileEncrypt);
+        SaveConfig(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].OptionsFileName,
+          FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].OptionFileEncrypt);
+//        LStr := IncludeTrailingPathDelimiter(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ConfigPath);
+//        FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.SaveToFile(
+//          FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].OptionsFileName,
+//          ExtractFileName(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].OptionsFileName),
+//          FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].OptionFileEncrypt);
         DoConfigChange;
       end;
     end;//with
@@ -7218,7 +7221,7 @@ begin
       if ShowModal = mrOK then
       begin
         SetCurrentDir(FApplicationPath);
-        LoadConfigForm2EngParamItem(AEPItem);//FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter
+        LoadConfigForm2EngParamItem(AEPItem);//FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter
 
         if Dialogs.MessageDlg('Do you save a changed parameter to the '''+
                           FCurrentModbusFileName+'''?' +#13#10,
@@ -7226,27 +7229,27 @@ begin
         begin
           LEngineParameter := GetEngParamFromItem(AEPItem, AIdx);
 
-          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 0 then //XML format
+          if FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 0 then //XML format
             LEngineParameter.SaveToFile(FCurrentModbusFileName,
                   ExtractFileName(FCurrentModbusFileName),False)
           else
-          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 1 then //JSON format
+          if FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 1 then //JSON format
             LEngineParameter.SaveToJSONFile(FCurrentModbusFileName,
                   ExtractFileName(FCurrentModbusFileName),False)
           else
-          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 2 then //Sqlite format
+          if FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 2 then //Sqlite format
             LEngineParameter.SaveToSqliteFile(FCurrentModbusFileName, AEPItem.Index);
 
-//          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 0 then //XML format
-//            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToFile(FCurrentModbusFileName,
+//          if FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 0 then //XML format
+//            FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToFile(FCurrentModbusFileName,
 //                  ExtractFileName(FCurrentModbusFileName),False)
 //          else
-//          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 1 then //JSON format
-//            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToJSONFile(FCurrentModbusFileName,
+//          if FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 1 then //JSON format
+//            FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToJSONFile(FCurrentModbusFileName,
 //                  ExtractFileName(FCurrentModbusFileName),False)
 //          else
-//          if FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 2 then //Sqlite format
-//            FProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToSqliteFile(FCurrentModbusFileName, AEPItem.Index);
+//          if FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngParamFileFormat = 2 then //Sqlite format
+//            FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIdx].HiMECSConfig.EngineParameter.SaveToSqliteFile(FCurrentModbusFileName, AEPItem.Index);
         end;
 
         Result := True;
@@ -7286,7 +7289,7 @@ var
   LAutoRunList: TAutoRunList;
   i: integer;
 begin
-  LAutoRunList := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSAutoRun;
+  LAutoRunList := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSAutoRun;
 
   if not Assigned(LAutoRunList) then
     exit;
@@ -7365,13 +7368,13 @@ var
 begin
   HideAllEngineCountBtn();
 
-  for i := FProjectFile.ProjectFileCollect.Count downto 1 do
+  for i := FCurrentSelectedProjectFile.ProjectFileCollect.Count downto 1 do
   begin
     LEngBtn := FindComponent('EngBtn' + IntToStr(i)) as TCyBitBtn;
 
     if LEngBtn <> nil then
     begin
-      LEngBtn.Caption := FProjectFile.ProjectFileCollect.Items[i-1].ProjectItemName;
+      LEngBtn.Caption := FCurrentSelectedProjectFile.ProjectFileCollect.Items[i-1].ProjectItemName;
       LEngBtn.Visible := True;
 
       if i = (FCOI+1) then
@@ -7387,9 +7390,9 @@ begin
 
   try
     ClearNavBar();
-//    LoadEngineInfo(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineInfoFileName, False);
+//    LoadEngineInfo(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineInfoFileName, False);
 
-    if Assigned(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineInfo) then
+    if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineInfo) then
     begin
 //      SelectEngineCombo.ItemIndex := 0;
       SetEngineInfo2Inspector(FCOI);
@@ -7398,16 +7401,16 @@ begin
   except
   end;
 
-  if FProjectFile.ProjectFileCollect.Items[FCOI].IsDisplayOnTab then
+  if FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].IsDisplayOnTab then
   else
   begin
-    if Assigned(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo) then
+    if Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo) then
     begin
       SetProjectInfo2Inspector;
       ProjectInfoInspector.Invalidate;
     end;
   end;
-//    LoadProjectInfo(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfoFileName, False);
+//    LoadProjectInfo(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfoFileName, False);
 
   LoadParameterList2TV(smSystem, EngModbusTV, FCOI, eplikModbus);
   LoadParameterList2TV(smSystem, ParameterTV, FCOI, eplikParameter);
@@ -7420,7 +7423,7 @@ var
   LEngineInfo: TICEngine;
 begin
   EngineInfoInspector.Items[1].Clear;
-  LEngineInfo := FProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineInfo;
+  LEngineInfo := FCurrentSelectedProjectFile.ProjectFileCollect.Items[AIndex].HiMECSConfig.EngineInfo;
 
   if not Assigned(LEngineInfo) then
   begin
@@ -7612,16 +7615,16 @@ var
 begin
   ShowWindow(Self.Handle,SW_SHOWMINNOACTIVE);//SW_SHOWNOACTIVATE);
 
-  for i := 0 to FProjectFile.ProjectFileCollect.Count - 1 do
+  for i := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Count - 1 do
   begin
-    if not Assigned(FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor) then
+    if not Assigned(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor) then
       continue;
 
-    for j := 0 to FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Count - 1 do
-      BringWindowToTop(FProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Items[j].AppHandle);
+    for j := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Count - 1 do
+      BringWindowToTop(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSMonitor.MonitorListCollect.Items[j].AppHandle);
 
-    //for j := 0 to FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Count - 1 do
-      //SendMessage(FProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Items[j].AppHandle,
+    //for j := 0 to FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Count - 1 do
+      //SendMessage(FCurrentSelectedProjectFile.ProjectFileCollect.Items[i].HiMECSAutoRun.AutoRunCollect.Items[j].AppHandle,
        // WM_SHOW, 0, 0);
   end;
 end;
@@ -7630,7 +7633,7 @@ procedure TMainForm.SetProjectInfo2Inspector;
 begin
   ProjectInfoInspector.Items[0].Clear;
 
-  with FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo do
+  with FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfo do
   begin
     AddItemsToInspector(ProjectInfoInspector, TNxTextItem, 0,
                                             'FProjNo','Project No.', ProjectNo);
@@ -8103,15 +8106,17 @@ begin
   //User File Name 정보가 없을 경우 Project File 내 User File Name 가져옴
   if LUserFileName = '' then
   begin
-    if not Assigned(FProjectFile) then
+    if not Assigned(FCurrentSelectedProjectFile) then
     begin
-      FProjectFile := TProjectFile.Create(Self);
+      FProjectGroup.ProjectGroupCollect.Items[FCurrentProjectFileIndex];
+
+//      FCurrentSelectedProjectFile := TProjectFile.Create(Self);
     end
     else
-      FProjectFile.ProjectFileCollect.Clear;
+      FCurrentSelectedProjectFile.ProjectFileCollect.Clear;
 
-    FProjectFile.LoadFromJSONFile(AFileName, ExtractFileName(AFileName), True);
-    LUserFileName := FProjectFile.ProjectFileCollect.Items[FCOI].UserFileName;
+    FCurrentSelectedProjectFile.LoadFromJSONFile(AFileName, ExtractFileName(AFileName), True);
+    LUserFileName := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].UserFileName;
   end;
 
   //Project File 별로 user file이 할당됨(한번 더 검사함)
@@ -8121,7 +8126,7 @@ begin
     CloseProject(False);
     CreateProc;
 
-    FProjectFile.ProjectFileName := AFileName;
+    FCurrentSelectedProjectFile.ProjectFileName := AFileName;
     Result := True;
   end;
 
@@ -8149,21 +8154,21 @@ begin
       if ShowModal = mrOK then
       begin
         LoadTileConfigForm2Collect(ConfigData, ATile.Tag);
-        LStr := IncludeTrailingPathDelimiter(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ConfigPath);
+        LStr := IncludeTrailingPathDelimiter(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ConfigPath);
         if ATile.Tag = 1 then
         begin
-          FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.SaveToJSONFile(
-            LStr + ExtractFileName(FProjectFile.ProjectFileCollect.Items[FCOI].MonitorFileName),
-            ExtractFileName(FProjectFile.ProjectFileCollect.Items[FCOI].MonitorFileName),
-            FProjectFile.ProjectFileCollect.Items[FCOI].MonitorFileEncrypt);
+          FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.SaveToJSONFile(
+            LStr + ExtractFileName(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].MonitorFileName),
+            ExtractFileName(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].MonitorFileName),
+            FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].MonitorFileEncrypt);
         end
         else
         if ATile.Tag = 2 then
         begin
-          FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.SaveToJSONFile(
-            LStr + ExtractFileName(FProjectFile.ProjectFileCollect.Items[FCOI].RunListFileName),
-            ExtractFileName(FProjectFile.ProjectFileCollect.Items[FCOI].RunListFileName),
-            FProjectFile.ProjectFileCollect.Items[FCOI].RunListFileEncrypt);
+          FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.SaveToJSONFile(
+            LStr + ExtractFileName(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].RunListFileName),
+            ExtractFileName(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].RunListFileName),
+            FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].RunListFileEncrypt);
         end;
 
         TileConfigChange(ATile.Tag);
@@ -8179,14 +8184,14 @@ procedure TMainForm.TileConfigChange(AType: integer);
 begin
   if AType = 1 then //MonTileListFrame.TileList
   begin
-    MonTileListFrame.TileList.Rows := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileRowNum;
-    MonTileListFrame.TileList.Columns := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileColNum;
+    MonTileListFrame.TileList.Rows := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileRowNum;
+    MonTileListFrame.TileList.Columns := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSMonitor.TileColNum;
   end
   else
   if AType = 2 then//CommTileListFrame.TileList
   begin
-    CommTileListFrame.TileList.Rows := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileRowNum;
-    CommTileListFrame.TileList.Columns := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileColNum;
+    CommTileListFrame.TileList.Rows := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileRowNum;
+    CommTileListFrame.TileList.Columns := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSAutoRun.TileColNum;
   end;
 end;
 
@@ -8219,28 +8224,28 @@ function TMainForm.DoUpdateVersion(ACheckOnly: Boolean = False): Boolean;
 begin
   Result := False;
 
-  case FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.UpdateProtocol of
+  case FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.UpdateProtocol of
     0: begin
       WebUpdate1.UpdateType := httpUpdate;//HTTP
-      WebUpdate1.URL := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ServerURL;
+      WebUpdate1.URL := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ServerURL;
       end;
     1: begin
       WebUpdate1.UpdateType := httpUpdate;//HTTPS
-      WebUpdate1.URL := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ServerURL;
-      WebUpdate1.UserID := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPUserID;
-      WebUpdate1.Password := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPPasswd;
+      WebUpdate1.URL := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ServerURL;
+      WebUpdate1.UserID := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPUserID;
+      WebUpdate1.Password := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPPasswd;
       end;
     2: begin
       WebUpdate1.UpdateType := ftpUpdate;//FTP
-      WebUpdate1.Host := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPHost;
-      WebUpdate1.UserID := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPUserID;
-      WebUpdate1.Password := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPPasswd;
-      WebUpdate1.FTPDirectory := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPDirectory;
-      WebUpdate1.Port := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPPort
+      WebUpdate1.Host := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPHost;
+      WebUpdate1.UserID := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPUserID;
+      WebUpdate1.Password := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPPasswd;
+      WebUpdate1.FTPDirectory := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPDirectory;
+      WebUpdate1.Port := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.FTPPort
       end;
     3: begin
       WebUpdate1.UpdateType := fileUpdate;//Network File
-      WebUpdate1.URL := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ServerURL;
+      WebUpdate1.URL := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ServerURL;
       end;
   end;
 
@@ -8341,8 +8346,11 @@ begin
   if not Assigned(FPJHTimerPool) then
     FPJHTimerPool := TPJHTimerPool.Create(nil);
 
-  if not Assigned(FProjectFile) then
-    FProjectFile := TProjectFile.Create(Self);
+  if not Assigned(FProjectGroup) then
+    FProjectGroup := THiMECSProjectGroup.Create(Self);
+
+//  if not Assigned(FCurrentSelectedProjectFile) then
+//    FCurrentSelectedProjectFile := TProjectFile.Create(Self);
 
   if not Assigned(FKillProcessList) then
     FKillProcessList := TKillProcessList.Create(Self);
@@ -8402,7 +8410,7 @@ begin
     LAvatParamViewF := TAvatParamViewF(MDITabSet.GetChildForm(LOfficeTabCollectionItem));
   end;
 
-  LAvatParamViewF.FParamDBFileName := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ParamFileName;
+  LAvatParamViewF.FParamDBFileName := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ParamFileName;
   Add2ParamViewList(LAvatParamViewF.Handle, ANode);
   LAvatParamViewF.Show;
 end;
@@ -8466,7 +8474,7 @@ begin
         0: ;//ShowMessage(PRecToPass(PCopyDataStruct(Msg.LParam)^.lpData)^.StrMsg); //MDI Child Caption 수신
 
         1: begin//Wire Path Form을 Display함(FrmPLCChannelInfo에서 TagName을 보냄)
-          LEngParamItem := FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineParameter.GetItemFromTagName(
+          LEngParamItem := FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineParameter.GetItemFromTagName(
             PRecToPass(PCopyDataStruct(Msg.LParam)^.lpData)^.StrMsg);
 
           if Assigned(LEngParamItem) then
@@ -8512,7 +8520,7 @@ begin
     if FAlarmListHandle = 0 then
     begin
       LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(
-        FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+HiMECSWatchName2+' '+AlarmListMode);
+        FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+HiMECSWatchName2+' '+AlarmListMode);
       FAlarmListHandle := DSiGetProcessWindow(LProcessId);
     end;
 
@@ -8646,7 +8654,7 @@ begin
   begin
     if FMultiWatchHandle = 0 then
     begin
-      LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+HiMECSWatchSaveName);
+      LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+HiMECSWatchSaveName);
       FMultiWatchHandle := DSiGetProcessWindow(LProcessId);
       SetLength(FWatchHandles, Length(FWatchHandles)+1);
       FWatchHandles[High(FWatchHandles)] := FMultiWatchHandle;
@@ -8697,7 +8705,7 @@ begin
   begin
     if AHandle = 0 then
     begin
-      LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+AExeName);
+      LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+AExeName);
       AHandle := DSiGetProcessWindow(LProcessId);
       SetLength(AHandleArray, Length(AHandleArray)+1);
       AHandleArray[High(AHandleArray)] := AHandle;
@@ -8733,10 +8741,10 @@ end;
 
 procedure TMainForm.AddDefaultData2File(AFileName: string);
 begin
-  FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.MenuFileName := DefaultMenuFileNameOnLogOut;
+  FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.MenuFileName := DefaultMenuFileNameOnLogOut;
 
-  FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.SaveToFile(AFileName, ExtractFileName(AFileName),
-    FProjectFile.ProjectFileCollect.Items[FCOI].OptionFileEncrypt);
+  FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.SaveToFile(AFileName, ExtractFileName(AFileName),
+    FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].OptionFileEncrypt);
 end;
 
 procedure TMainForm.AddDummy1Click(Sender: TObject);
@@ -8774,7 +8782,7 @@ var
 begin
   i := CopyItem2EngineParamCollect(Node);
   Node1 := EngModbusTV.Items.AddObject(Node,
-             'New', FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineParameter.EngineParameterCollect.Items[i]);
+             'New', FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.EngineParameter.EngineParameterCollect.Items[i]);
   SetNodeImages(Node1, False);
 end;
 
@@ -8805,7 +8813,7 @@ begin
     if TObject(LNode.Data) is TEngineParameterItem then
     begin
       SetCurrentDir(FApplicationPath);
-      LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+HiMECSWatchName);
+      LProcessId := ExecNewProcess2(IncludeTrailingPathDelimiter(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ExesPath)+HiMECSWatchName);
       LEngineParameterItem := TEngineParameterItem(LNode.Data);
       LEngineParameterItem.AssignTo(FEngineParameterItemRecord);
       //MoveEngineParameterItemRecord(FEngineParameterItemRecord,LEngineParameterItem);
@@ -8906,8 +8914,8 @@ begin
 //  Parallel.Async(
 //    procedure (const task: IOmniTask)
 //    begin
-//      LoadProjectInfo(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfoFileName, False);
-//      LoadParamterFromFile(FProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ParamFileName);
+//      LoadProjectInfo(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ProjectInfoFileName, False);
+//      LoadParamterFromFile(FCurrentSelectedProjectFile.ProjectFileCollect.Items[FCOI].HiMECSConfig.ParamFileName);
 //    
 //          task.Invoke(
 //            procedure

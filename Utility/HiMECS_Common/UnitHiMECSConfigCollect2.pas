@@ -53,7 +53,7 @@ type
 
     FEngineParameter: TEngineParameter;
     FModbusList: TEngineParameter;
-    FProjectInfo: TVesselInfo;
+    FProjectInfo: TEquipInfo4EngMaker;
     FEngineInfo: TICEngine;
     FManualInfo: THiMECSManualInfo;
   public
@@ -64,7 +64,7 @@ type
 
     property EngineParameter: TEngineParameter read FEngineParameter write FEngineParameter;
     property ModbusList: TEngineParameter read FModbusList write FModbusList;
-    property ProjectInfo: TVesselInfo read FProjectInfo write FProjectInfo;
+    property ProjectInfo: TEquipInfo4EngMaker read FProjectInfo write FProjectInfo;
     property EngineInfo: TICEngine read FEngineInfo write FEngineInfo;
     property ManualInfo: THiMECSManualInfo read FManualInfo write FManualInfo;
 //    property HiMECSConfigCollect: THiMECSConfigCollect read FHiMECSConfigCollect write FHiMECSConfigCollect;

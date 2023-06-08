@@ -80,7 +80,8 @@ uses
   UnitFrameEngParamDecTV2 in '..\Utility\HiMECS_Common\UnitFrameEngParamDecTV2.pas' {FrameDecTreeView2: TFrame},
   FrmSelectEquipment in '..\Form\FrmSelectEquipment.pas' {SelectEquipF},
   UnitHiMECSEquipListClass in 'Common\UnitHiMECSEquipListClass.pas',
-  UnitTileListBase in 'Common\UnitTileListBase.pas';
+  UnitTileListBase in 'Common\UnitTileListBase.pas',
+  UnitProjectGroupClass in 'Common\UnitProjectGroupClass.pas';
 
 {$R *.res}
 
