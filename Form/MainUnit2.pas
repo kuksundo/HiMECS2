@@ -8108,9 +8108,9 @@ begin
   begin
     if not Assigned(FCurrentSelectedProjectFile) then
     begin
-      FProjectGroup.ProjectGroupCollect.Items[FCurrentProjectFileIndex];
+//      FProjectGroup.ProjectGroupCollect.Items[FCurrentProjectFileIndex];
 
-//      FCurrentSelectedProjectFile := TProjectFile.Create(Self);
+      FCurrentSelectedProjectFile := TProjectFile.Create(Self);
     end
     else
       FCurrentSelectedProjectFile.ProjectFileCollect.Clear;
