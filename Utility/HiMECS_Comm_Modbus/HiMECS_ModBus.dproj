@@ -157,7 +157,7 @@
         <DCCReference Include="..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\FrmModbusConfig.pas">
             <Form>ModbusConfigF</Form>
         </DCCReference>
-        <DCCReference Include="..\..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECSConst.pas"/>
+        <DCCReference Include="..\..\Source\Common\HiMECSConst2.pas"/>
         <DCCReference Include="..\..\..\..\..\..\..\project\common\IPCThreadEvent.pas"/>
         <DCCReference Include="..\..\..\..\..\..\..\project\common\IPCThrdClient_Generic.pas"/>
         <DCCReference Include="..\HiMECS_Common\UnitIPCClientAll2.pas"/>

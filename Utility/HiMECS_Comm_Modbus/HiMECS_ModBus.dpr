@@ -9,7 +9,7 @@ uses
   UnitModBusComThread in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModBusComThread.pas',
   UnitModBusTCPThread in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModBusTCPThread.pas',
   FrmModbusConfig in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\FrmModbusConfig.pas' {ModbusConfigF},
-  HiMECSConst in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECSConst.pas',
+  HiMECSConst2 in '..\..\Source\Common\HiMECSConst2.pas',
   IPCThreadEvent in '..\..\..\..\..\..\..\project\common\IPCThreadEvent.pas',
   IPCThrdClient_Generic in '..\..\..\..\..\..\..\project\common\IPCThrdClient_Generic.pas',
   UnitIPCClientAll2 in '..\HiMECS_Common\UnitIPCClientAll2.pas',
@@ -35,6 +35,6 @@ uses
 
 begin
   Application.Initialize;
-  Application.CreateForm(TModbusComF, ModbusComF);
-  Application.Run;
+  AApplication.CreateForm(TModbusComF, ModbusComF);
+  pplication.Run;
 end.
