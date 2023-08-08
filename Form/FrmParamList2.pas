@@ -10,11 +10,11 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, NxCollection, NxScrollControl, NxCustomGridControl,
   NxCustomGrid, NxGrid, NxColumns, NxColumnClasses, UnitEngineParameterClass2,
-  HiMECSConst, AdvOfficeStatusBar, Vcl.StdCtrls, Vcl.Mask, JvExMask, JvToolEdit,
+  HiMECSConst2, AdvOfficeStatusBar, Vcl.StdCtrls, Vcl.Mask, JvExMask, JvToolEdit,
   UnitFrameIPCMonitorAll2, IPCThrdMonitor_Generic, //IPC_ModbusComm_Const
   IPC_HIC_Const, NxEdit, Vcl.ComCtrls, Vcl.ToolWin, Vcl.ImgList, ModbusComConst_endurance,//ModbusComConst_HIC,
   MatrixParameterConst, UnitDragDropRecord2, DropTarget, CopyData, Vcl.Menus,
-  UnitFrameWatchGrid2;
+  UnitFrameWatchGrid2;//, UnitFrameWatchGrid2_;
 
 type
   TFormParamList = class(TForm)

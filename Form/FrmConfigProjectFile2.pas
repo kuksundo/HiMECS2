@@ -85,7 +85,7 @@ var
 
 implementation
 
-uses FrmSelectProject2, CommonUtil, HiMECSConst;
+uses FrmSelectProject2, CommonUtil, HiMECSConst2;
 
 {$R *.dfm}
 

@@ -21,6 +21,10 @@ object FrameElecPartEdit2: TFrameElecPartEdit2
     object TabSheet4: TTabSheet
       Caption = 'Project Info'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label19: TLabel
         Left = 35
         Top = 41
@@ -107,6 +111,10 @@ object FrameElecPartEdit2: TFrameElecPartEdit2
     end
     object TabSheet1: TTabSheet
       Caption = 'T/B Info'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label1: TLabel
         Left = 32
         Top = 17
@@ -247,6 +255,10 @@ object FrameElecPartEdit2: TFrameElecPartEdit2
     object TabSheet3: TTabSheet
       Caption = 'PLC Info'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label14: TLabel
         Left = 9
         Top = 14
@@ -319,6 +331,10 @@ object FrameElecPartEdit2: TFrameElecPartEdit2
     object NodeInfoTabSheet: TTabSheet
       Caption = 'Node Info'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label5: TLabel
         Left = 72
         Top = 17

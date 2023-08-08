@@ -6,7 +6,7 @@ uses
   SysUtils,
   Sx.DDD.Core, mormot.orm.core, mormot.core.base, mormot.rest.core, mormot.core.search,
   UnitEngineElecPartClass2,
-  UnitECUData2, HiMECSConst,
+  UnitECUData2, HiMECSConst2,
   DomSensorCQRS2,
   DomSensorInterfaces2,
   DomSensorServices2,

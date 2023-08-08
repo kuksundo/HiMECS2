@@ -39,6 +39,9 @@ object ConfigF: TConfigF
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 252
       object Label1: TLabel
         Left = 47
@@ -252,6 +255,9 @@ object ConfigF: TConfigF
     object TabSheet1: TTabSheet
       Caption = 'Directories'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 317
       object Label6: TLabel
         Left = 18
@@ -386,6 +392,9 @@ object ConfigF: TConfigF
     object TabSheet3: TTabSheet
       Caption = 'Etc.'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 317
       object CBExtAppInMDI: TCheckBox
         Left = 40
@@ -437,6 +446,9 @@ object ConfigF: TConfigF
     object TabSheet4: TTabSheet
       Caption = 'TCP'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 317
       object Label14: TLabel
         Left = 49
@@ -478,6 +490,9 @@ object ConfigF: TConfigF
     object TabSheet5: TTabSheet
       Caption = 'Update'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 317
       object Label21: TLabel
         Left = 3

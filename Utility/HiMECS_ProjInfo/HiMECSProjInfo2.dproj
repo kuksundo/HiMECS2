@@ -70,6 +70,7 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <DCC_DcuOutput>Y:\pjh\Dcu\Win32\$(MSBuildProjectName)</DCC_DcuOutput>
         <DCC_Define>DEF_CRYPT_ALL;$(DCC_Define)</DCC_Define>
         <DCC_UnitSearchPath>E:\pjh\project\util\HiMECS\Application\Source\Common;E:\pjh\project\util\HiMECS\Application\Utility\Watch2\common;E:\pjh\project\common;E:\pjh\Dev\Lang\Delphi\Common;E:\pjh\Dev\Lang\Delphi\Project\mORMot2Dcu\Win32\Debug;E:\pjh\Dev\Lang\Delphi\Project\NoGitHub\win32\Debug;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_ExeOutput>.\</DCC_ExeOutput>

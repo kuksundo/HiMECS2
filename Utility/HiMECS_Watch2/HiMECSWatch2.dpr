@@ -7,7 +7,6 @@ uses
   Forms,
   UnitHiMECSWatch2 in '..\..\..\..\NoGitHub\RecordUnit2\HIMECS\UnitHiMECSWatch2.pas',
   WatchConfig2 in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\WatchConfig2.pas' {WatchConfigF},
-  HiMECSConst in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\HiMECSConst.pas',
   UnitAxisSelect in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\UnitAxisSelect.pas' {AxisSelectF},
   UnitAlarmConfig in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\UnitAlarmConfig.pas' {AlarmConfigF},
   UnitAlarmList in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\UnitAlarmList.pas',
@@ -26,7 +25,7 @@ uses
   UnitCopyModeMenu in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\UnitCopyModeMenu.pas' {CopyModeMenuF},
   WindowUtil in '..\..\..\..\..\..\..\project\common\WindowUtil.pas',
   IPCMonitorInterface in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\CommonFrame\IPCMonitorInterface.pas',
-  UnitSelectUser in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Source\Forms\UnitSelectUser.pas' {SelectUserF},
+  UnitSelectUser2 in '..\..\Form\UnitSelectUser2.pas' {SelectUserF},
   Generics.Legacy in '..\..\..\..\..\..\..\project\common\Generics.Legacy.pas',
   UnitEngineMasterData in '..\..\..\..\..\..\..\project\util\GSManage\VesselList\UnitEngineMasterData.pas',
   UnitModbusComConst in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModbusComConst.pas',
@@ -54,7 +53,8 @@ uses
   UnitBalloonConst2 in 'UnitBalloonConst2.pas',
   pjhBalloonCompIntf in '..\..\..\..\..\..\..\project\util\VisualComm\Component\pjhDelphiStandardComp\pjhBalloonCompIntf.pas',
   Delphi.Mocks.Helpers in '..\..\..\..\OpenSrc\lib\Delphi-Mocks-master\Source\Delphi.Mocks.Helpers.pas' {$R *.res},
-  JHP.BaseCommandLineOption in '..\..\..\..\Common\JHP.BaseCommandLineOption.pas';
+  JHP.BaseCommandLineOption in '..\..\..\..\Common\JHP.BaseCommandLineOption.pas',
+  HiMECSConst2 in '..\..\Source\Common\HiMECSConst2.pas';
 
 {$R *.res}
 

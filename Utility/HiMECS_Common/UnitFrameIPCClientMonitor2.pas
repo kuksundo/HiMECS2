@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  IPCThrdClient_Generic, IPC_HIC_Const, HiMECSConst,
+  IPCThrdClient_Generic, IPC_HIC_Const, HiMECSConst2,
   IPCThrdMonitor_Generic, IPC_ModbusComm_Const, UnitEngineParameterClass2,
   ModbusComConst_endurance;
 

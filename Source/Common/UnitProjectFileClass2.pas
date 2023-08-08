@@ -2,7 +2,7 @@ unit UnitProjectFileClass2;
 
 interface
 
-uses classes, JHP.BaseConfigCollect, HiMECSConst, UnitHiMECSConfigCollect2,
+uses classes, JHP.BaseConfigCollect, HiMECSConst2, UnitHiMECSConfigCollect2,
   UnitHiMECSMonitorListClass2, UnitAutoRunClass2;
 
 type

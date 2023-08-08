@@ -8,7 +8,7 @@ uses
   NxColumnClasses, NxColumns, NxScrollControl, NxCustomGridControl, NxCustomGrid, NxGrid,
   JvStatusBar, System.Types, StrUtils, NxCells, Vcl.ComCtrls, Clipbrd,
   TimerPool, DragDrop, DropSource, DragDropText, DropTarget,
-  UnitEngineParameterClass2, UnitFrameIPCMonitorAll2, HiMECSConst, UnitDragDropRecord2,
+  UnitEngineParameterClass2, UnitFrameIPCMonitorAll2, HiMECSConst2, UnitDragDropRecord2,
   CopyData, UnitParameterManager2, Vcl.ImgList, UnitSynLog2,
   mormot.core.log, mormot.core.base, mormot.core.os, mormot.core.unicode,
 {$IFDEF USE_YURIMATHPARSER}

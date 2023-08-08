@@ -13,7 +13,7 @@ uses
   DomSensorServices2,
   DomSensorTypes2,
   UnitEngineElecPartClass2,
-  UnitECUData2, HiMECSConst,
+  UnitECUData2, HiMECSConst2,
   UnitEngineParameterClass2
   ;
 

@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, Mask, JvExControls, JvComCtrls,
-  JvExMask, JvToolEdit, UnitHiMECSConfigCollect2, HiMECSConst;
+  JvExMask, JvToolEdit, UnitHiMECSConfigCollect2, HiMECSConst2;
 
 type
   TConfigF = class(TForm)

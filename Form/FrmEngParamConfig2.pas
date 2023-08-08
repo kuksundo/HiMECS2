@@ -6,8 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, AdvGlowButton, AdvOfficeSelectors, AdvOfficeButtons,
   AdvGroupBox, AdvPageControl, ComCtrls, ImgList, Buttons, ExtCtrls, Mask,
-  JvExMask, JvToolEdit, UnitEngineParameterClass2, HiMECSConst, AdvOfficePager,
-  NxEdit, UnitSelectUser, UnitEnumHelper;
+  JvExMask, JvToolEdit, UnitEngineParameterClass2, HiMECSConst2, AdvOfficePager,
+  NxEdit, UnitSelectUser2, UnitEnumHelper;
 
 type
   TEngParamItemConfigForm2 = class(TForm)

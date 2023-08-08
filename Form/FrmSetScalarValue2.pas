@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, AdvEdit,
-  UnitFrameIPCClientMonitor2, ModbusComConst_endurance, IPC_ModbusComm_Const, HiMECSConst,
+  UnitFrameIPCClientMonitor2, ModbusComConst_endurance, IPC_ModbusComm_Const, HiMECSConst2,
   IPC_HIC_Const,
   iComponent, iVCLComponent,
   iCustomComponent, iSwitchLed, Vcl.ComCtrls, Vcl.ToolWin, Vcl.ImgList, NxEdit;

@@ -2,7 +2,7 @@ unit HiMECSWatchCommon2;
 
 interface
 
-uses HiMECSConst, UnitEngineParameterClass2;
+uses HiMECSConst2, UnitEngineParameterClass2;
 
 procedure AdjustComponentByUserLevel;
 

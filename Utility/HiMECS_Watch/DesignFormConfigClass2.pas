@@ -2,7 +2,7 @@ unit DesignFormConfigClass2;
 
 interface
 
-uses classes, JHP.BaseConfigCollect, HiMECSConst;
+uses classes, JHP.BaseConfigCollect, HiMECSConst2;
 
 type
   TDesignFormConfigCollect = class;

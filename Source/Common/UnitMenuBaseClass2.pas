@@ -4,7 +4,7 @@ interface
 
 uses classes, SysUtils, Menus, Vcl.ComCtrls, Rtti,
   mormot.core.rtti, mormot.core.variants, mormot.core.text,
-  HiMECSConst, JHP.BaseConfigCollect, UnitpjhTypes;
+  HiMECSConst2, JHP.BaseConfigCollect, UnitpjhTypes;
 
 type
   THiMECSMenuCollect = class;

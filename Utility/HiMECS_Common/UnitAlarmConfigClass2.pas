@@ -3,7 +3,7 @@ unit UnitAlarmConfigClass2;
 interface
 
 uses classes, SysUtils, Vcl.Graphics,
-  INIPersist, HiMECSConst, UnitEngineParameterClass2, JHP.BaseConfigCollect;
+  INIPersist, HiMECSConst2, UnitEngineParameterClass2, JHP.BaseConfigCollect;
 
 type
   TAlarmConfigCollect = class;

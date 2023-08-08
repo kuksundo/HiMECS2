@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.StdCtrls, AdvSmoothPanel, AdvEdit, AdvSmoothExpanderPanel, Vcl.Grids,
   AdvObj, BaseGrid, AdvGrid, Vcl.Buttons,
-  IPCThrdClient_Generic, UnitFrameIPCClientAll2, IPC_HIC_Const, HiMECSConst,
+  IPCThrdClient_Generic, UnitFrameIPCClientAll2, IPC_HIC_Const, HiMECSConst2,
   IPCThrdMonitor_Generic, IPC_ModbusComm_Const, UnitEngineParameterClass2, ModbusComConst_HIC,
   NxEdit, Vcl.ToolWin, Vcl.ImgList, AdvOfficeButtons,
   NxCollection, iComponent, iVCLComponent, iCustomComponent, iSwitchLed,

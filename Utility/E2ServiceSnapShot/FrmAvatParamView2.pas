@@ -11,7 +11,7 @@ uses
   JvExControls, Vcl.Grids, AdvObj, BaseGrid, AdvGrid,
   Vcl.Menus, JvgLabel, AdvSmoothLabel, Vcl.StdCtrls, TimerPool,
   mormot.core.text, mormot.core.variants, mormot.rest.sqlite3, mormot.orm.core,
-  UnitE2SRecord2, HiMECSConst, UnitEngineParamRecord2, UnitEngineParameterClass2;
+  UnitE2SRecord2, HiMECSConst2, UnitEngineParamRecord2, UnitEngineParameterClass2;
 
 type
   TAvatParamViewF = class(TForm)

@@ -4,7 +4,7 @@ interface
 
 uses System.SysUtils, Classes, Vcl.ComCtrls, Generics.Legacy, JHP.BaseConfigCollect,
   mormot.core.base, mormot.core.variants, mormot.rest.sqlite3, mormot.orm.core, mormot.rest.Client,
-  HiMECSConst, UnitHiMECSManualRecord2, UnitEngineMasterData;
+  HiMECSConst2, UnitHiMECSManualRecord2, UnitEngineMasterData;
 
 type
   TManualItemKind = (mikNull, mikOpManual, mikMaintenance, mikDrawings, mikSvcLetter, mikFinal);

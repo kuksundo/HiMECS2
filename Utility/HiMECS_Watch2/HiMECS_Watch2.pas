@@ -59,7 +59,7 @@ uses
   //IPCThrd_MT210, IPCThrdMonitor_MT210, IPCThrd_FlowMeter, IPCThrdMonitor_FlowMeter,
   //IPCThrd_DYNAMO, IPCThrdMonitor_DYNAMO, IPCThrd_ECS_AVAT, IPCThrdMonitor_ECS_AVAT,
   //IPCThrd_GasCalc, IPCThrdMonitor_GasCalc,
-  ModbusComStruct, ConfigOptionClass2, UnitDragDropRecord2, HiMECSConst,
+  ModbusComStruct, ConfigOptionClass2, UnitDragDropRecord2, HiMECSConst2,
   Cromis.Comm.IPC, Cromis.Threading, IPCThrd_HiMECS_MDI, JvExExtCtrls, JvExtComponent,
   JvItemsPanel, UnitParameterManager2, NxCollection, cyResizer,
   UnitSTOMPClass, UnitWorker4OmniMsgQ, UnitMQConst, UnitSynLog2,

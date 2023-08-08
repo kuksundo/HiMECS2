@@ -4,7 +4,7 @@ interface
 
 uses System.Classes,
   IniPersist, UnitConfigIniClass2,
-  UnitEnumHelper, UnitRttiUtil2, UnitECUData2, HiMECSConst,
+  UnitEnumHelper, UnitRttiUtil2, UnitECUData2, HiMECSConst2,
   mormot.core.data;
 
 type

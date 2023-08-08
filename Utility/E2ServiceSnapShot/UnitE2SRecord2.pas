@@ -16,7 +16,7 @@ uses System.Classes, System.SysUtils, Dialogs, System.Zip, Winapi.Windows,
   mormot.core.base, mormot.rest.sqlite3, mormot.orm.core, mormot.core.variants,
   mormot.core.data, mormot.core.unicode, mormot.core.text, mormot.core.os,
   mormot.core.json,
-  UnitEngineParameterClass2, HiMECSConst, UnitEngineParamRecord2;
+  UnitEngineParameterClass2, HiMECSConst2, UnitEngineParamRecord2;
 
 type
   TE2SUnit = packed record

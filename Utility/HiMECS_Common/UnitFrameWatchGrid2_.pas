@@ -1,4 +1,4 @@
-unit UnitFrameWatchGrid2;
+unit UnitFrameWatchGrid2_;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   NxColumnClasses, NxColumns, NxScrollControl, NxCustomGridControl, NxCustomGrid, NxGrid,
   JvStatusBar, System.Types, StrUtils, NxCells, Vcl.ComCtrls, Clipbrd,
   TimerPool, DragDrop, DropSource, DragDropText, DropTarget,
-  UnitEngineParameterClass2, UnitFrameIPCMonitorAll2, HiMECSConst, UnitDragDropRecord2,
+  UnitEngineParameterClass2, UnitFrameIPCMonitorAll2, HiMECSConst2, UnitDragDropRecord2,
   CopyData, UnitParameterManager2, Vcl.ImgList, UnitCopyWatchList, UnitSynLog2,
   mormot.core.log, mormot.core.base, mormot.core.os, mormot.core.unicode,
 {$IFDEF USE_YURIMATHPARSER}
@@ -26,7 +26,7 @@ type
                                 AEPIndex: integer) of object;
   TDisplayMessage = procedure(Msg: string; AIsSaveLog: Boolean = True; AMsgLevel: TSynLogInfo = sllInfo) of object;
 
-  TFrameWatchGrid2 = class(TFrame)
+  TFrameWatchGrid2_ = class(TFrame)
     NextGrid1: TNextGrid;
     SimpleDisplay: TNxImageColumn;
     TrendDisplay: TNxImageColumn;
@@ -226,7 +226,7 @@ uses FrmEngParamConfig, UnitCopyModeMenu, CommonUtil, WatchConst2,
 
 //AFromMenu: true = Add Calculated Menu를 클릭한 경우
 //           false = Drag Drop으로 CreateIPCMonitor 한 경우
-function TFrameWatchGrid2.AddCalculated2Grid(AFormula, ADesc: string;
+function TFrameWatchGrid2_.AddCalculated2Grid(AFormula, ADesc: string;
   AFromMenu: Boolean; AIdx: integer; AParam: TEngineParameterCollect): integer;
 var
   i: integer;
@@ -304,7 +304,7 @@ begin
 end;
 
 //Calculated Item이 있을 경우 삭제에 주의 해야 함.
-procedure TFrameWatchGrid2.AddCalculated2GridFromMenu;
+procedure TFrameWatchGrid2_.AddCalculated2GridFromMenu;
 var
   i,j: integer;
   Lstr, LStr2: string;
@@ -365,7 +365,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.AddEngineParameter2Grid(
+procedure TFrameWatchGrid2_.AddEngineParameter2Grid(
   AParam: TEngineParameterCollect; AParamItemKind: TEngParamListItemKind);
 var
   i: integer;
@@ -383,7 +383,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.AddEngineParameter2GridOnlyCreate(AIdx: integer;
+procedure TFrameWatchGrid2_.AddEngineParameter2GridOnlyCreate(AIdx: integer;
   AParamItemKind: TEngParamListItemKind);
 var
   j: integer;
@@ -437,7 +437,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.AddEngineParameter2Grid(AIdx: integer);
+procedure TFrameWatchGrid2_.AddEngineParameter2Grid(AIdx: integer);
 var
   j: integer;
   LStr: string;
@@ -507,7 +507,7 @@ begin
 //  end;
 end;
 
-procedure TFrameWatchGrid2.AppendEngineParameterFromFile(AFileName: string;
+procedure TFrameWatchGrid2_.AppendEngineParameterFromFile(AFileName: string;
   AEngParamFileFormat: integer; AEngParamEncrypt, AIsMDIChileMode: Boolean);
 var
   LEngineParam: TEngineParameter;
@@ -550,7 +550,7 @@ begin
   end;
 end;
 
-function TFrameWatchGrid2.CheckExistTagNameInEngParamCollect(AParameterSource: TParameterSource;
+function TFrameWatchGrid2_.CheckExistTagNameInEngParamCollect(AParameterSource: TParameterSource;
   ATagName: string): integer;
 var
   i: integer;
@@ -570,7 +570,7 @@ begin
   end;
 end;
 
-function TFrameWatchGrid2.CheckExistTagNameInGrid(ATagName: string): integer;
+function TFrameWatchGrid2_.CheckExistTagNameInGrid(ATagName: string): integer;
 var
   i: integer;
 begin
@@ -586,7 +586,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.ClearCompountList;
+procedure TFrameWatchGrid2_.ClearCompountList;
 var
   i,j: integer;
 begin
@@ -601,7 +601,7 @@ begin
   FCompoundItemList.Clear;
 end;
 
-procedure TFrameWatchGrid2.ConnectGridNParamItem(AGridRowIndex,
+procedure TFrameWatchGrid2_.ConnectGridNParamItem(AGridRowIndex,
   AItemIndex: integer; AParamCollect: TEngineParameterCollect);
 begin
   if not Assigned(AParamCollect) then
@@ -614,14 +614,14 @@ begin
   AParamCollect.Items[AItemIndex].NextGridRow := NextGrid1.Row[AGridRowIndex];
 end;
 
-constructor TFrameWatchGrid2.Create(AOwner: TComponent);
+constructor TFrameWatchGrid2_.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
   InitVar;
 end;
 
-function TFrameWatchGrid2.CreateIPCMonitor(AEP_DragDrop: TEngineParameterItemRecord;
+function TFrameWatchGrid2_.CreateIPCMonitor(AEP_DragDrop: TEngineParameterItemRecord;
   ADragCopyMode: TParamDragCopyMode): integer;
 var
   i, j: integer;
@@ -692,7 +692,7 @@ begin
   end;
 end;
 
-function TFrameWatchGrid2.CreateIPCMonitor_2(
+function TFrameWatchGrid2_.CreateIPCMonitor_2(
   AEP_DragDrop: TEngineParameterItemRecord;
   ADragCopyMode: TParamDragCopyMode): integer;
 var
@@ -736,13 +736,13 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.cyMathParser1CustomOperationParse(Sender: TObject;
+procedure TFrameWatchGrid2_.cyMathParser1CustomOperationParse(Sender: TObject;
   AStackInfo: TStackInfo; const Arguments: array of Extended; var Rslt: Extended);
 begin
 
 end;
 
-procedure TFrameWatchGrid2.DeleteEngParamPerEngine(AProjNo, AEngNo: string);
+procedure TFrameWatchGrid2_.DeleteEngParamPerEngine(AProjNo, AEngNo: string);
 var
   LEP: TEngineParameterCollect;
   i, LRow: integer;
@@ -772,7 +772,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.DeleteGridItem(ASkipDlg: Boolean);
+procedure TFrameWatchGrid2_.DeleteGridItem(ASkipDlg: Boolean);
 var
   i: integer;
   LStr: string;
@@ -839,14 +839,14 @@ begin
   end;
 end;
 
-destructor TFrameWatchGrid2.Destroy;
+destructor TFrameWatchGrid2_.Destroy;
 begin
   DestroyVar;
 
   inherited;
 end;
 
-procedure TFrameWatchGrid2.DestroyVar;
+procedure TFrameWatchGrid2_.DestroyVar;
 begin
   FreeStrListFromGrid;
   FinalizeAvgMode;
@@ -866,7 +866,7 @@ begin
   FCompoundItemList.Free;
 end;
 
-procedure TFrameWatchGrid2.DisplayMessage(AMsg: string);
+procedure TFrameWatchGrid2_.DisplayMessage(AMsg: string);
 begin
   if Assigned(FDisplayMessage) then
   begin
@@ -874,7 +874,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.DropTextTarget1Drop(Sender: TObject;
+procedure TFrameWatchGrid2_.DropTextTarget1Drop(Sender: TObject;
   ShiftState: TShiftState; APoint: TPoint; var Effect: Integer);
 begin
   // Determine if we got our custom format.
@@ -913,13 +913,13 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.ExcelRangeButtonClick(Sender: TObject);
+procedure TFrameWatchGrid2_.ExcelRangeButtonClick(Sender: TObject);
 begin
   NextGrid1.Columns[NextGrid1.SelectedColumn].Editor.AsString := Clipboard.AsText;
 end;
 
 //Grid.Data의 StringList 해제
-procedure TFrameWatchGrid2.FinalizeAvgMode;
+procedure TFrameWatchGrid2_.FinalizeAvgMode;
 var
   i: integer;
   LEngineParameterItem: TEngineParameterItem;
@@ -946,7 +946,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.FindGridFromIndex(AFromIndex: integer;
+procedure TFrameWatchGrid2_.FindGridFromIndex(AFromIndex: integer;
   AFindStr, AColName: string);
 var
   i: integer;
@@ -970,7 +970,7 @@ begin
 
 end;
 
-procedure TFrameWatchGrid2.FindGridFromOption(AOption: integer;
+procedure TFrameWatchGrid2_.FindGridFromOption(AOption: integer;
   AFindStr: string);
 var
   LStr: string;
@@ -995,12 +995,12 @@ begin
   FindGridFromIndex(FCurrentFindRowIdx, FCurrentFindStr, FCurrentColName);
 end;
 
-procedure TFrameWatchGrid2.FindNextGrid;
+procedure TFrameWatchGrid2_.FindNextGrid;
 begin
   FindGridFromIndex(FCurrentFindRowIdx+1, FCurrentFindStr, FCurrentColName);
 end;
 
-procedure TFrameWatchGrid2.FreeStrListFromGrid(AIndex: integer);
+procedure TFrameWatchGrid2_.FreeStrListFromGrid(AIndex: integer);
 var
   i,j: integer;
   LStr: string;
@@ -1029,12 +1029,12 @@ begin
   end;//for
 end;
 
-function TFrameWatchGrid2.GetEventName(AEPItem: TEngineParameterItem): string;
+function TFrameWatchGrid2_.GetEventName(AEPItem: TEngineParameterItem): string;
 begin
   Result := AEPItem.SharedName + '_' + ParameterSource2SharedMN(AEPItem.ParameterSource);
 end;
 
-function TFrameWatchGrid2.GetItemIndexFromGrid(ATagName: string): integer;
+function TFrameWatchGrid2_.GetItemIndexFromGrid(ATagName: string): integer;
 var
   i: integer;
 begin
@@ -1053,7 +1053,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.GetItemsFromParamFile2Collect(AFileName: string;
+procedure TFrameWatchGrid2_.GetItemsFromParamFile2Collect(AFileName: string;
   AEngParamFileFormat: integer; AEngParamEncrypt, AIsMDIChileMode: Boolean);
 begin
   if NextGrid1.RowCount > 0 then
@@ -1093,7 +1093,7 @@ begin
   FCurrentWatchListFileName := AFileName;
 end;
 
-function TFrameWatchGrid2.GetTagNameFromGrid(AIdx: integer): string;
+function TFrameWatchGrid2_.GetTagNameFromGrid(AIdx: integer): string;
 begin
   Result := '';
 
@@ -1101,19 +1101,19 @@ begin
     Result := TEngineParameterItem(NextGrid1.Row[AIdx].Data).TagName;
 end;
 
-procedure TFrameWatchGrid2.GridItemMoveDown;
+procedure TFrameWatchGrid2_.GridItemMoveDown;
 begin
   NextGrid1.MoveRow(NextGrid1.SelectedRow, NextGrid1.SelectedRow + 1);
   NextGrid1.SelectedRow := NextGrid1.SelectedRow + 1;
 end;
 
-procedure TFrameWatchGrid2.GridItemMoveUp;
+procedure TFrameWatchGrid2_.GridItemMoveUp;
 begin
   NextGrid1.MoveRow(NextGrid1.SelectedRow, NextGrid1.SelectedRow - 1);
   NextGrid1.SelectedRow := NextGrid1.SelectedRow - 1;
 end;
 
-procedure TFrameWatchGrid2.HideGraphSheet(AIndex: integer);
+procedure TFrameWatchGrid2_.HideGraphSheet(AIndex: integer);
 begin
   NextGrid1.CellByName['SimpleDisplay', AIndex].AsInteger := -1;
   NextGrid1.CellByName['TrendDisplay', AIndex].AsInteger := -1;
@@ -1121,7 +1121,7 @@ begin
   NextGrid1.CellByName['AlarmEnable', AIndex].AsInteger := -1;
 end;
 
-procedure TFrameWatchGrid2.InitAvgMode;
+procedure TFrameWatchGrid2_.InitAvgMode;
 var
   i,j: integer;
   LEngineParameterItem: TEngineParameterItem;
@@ -1157,7 +1157,7 @@ begin
 
 end;
 
-procedure TFrameWatchGrid2.InitVar;
+procedure TFrameWatchGrid2_.InitVar;
 begin
   FCompoundItemList := TList<integer>.Create;
   FEngineParameterTarget := TEngineParameterDataFormat.Create(DropTextTarget1);
@@ -1175,7 +1175,7 @@ begin
   FCurrentFindRowIdx := 0;
 end;
 
-procedure TFrameWatchGrid2.LoadGrid(AGrid: TNextGrid; AStm: TStream);
+procedure TFrameWatchGrid2_.LoadGrid(AGrid: TNextGrid; AStm: TStream);
 var
   i, j: integer;
   ACount: integer;
@@ -1231,7 +1231,7 @@ begin
 //  AGrid.EndUpdate;
 end;
 
-procedure TFrameWatchGrid2.NextGrid1CellDblClick(Sender: TObject; ACol,
+procedure TFrameWatchGrid2_.NextGrid1CellDblClick(Sender: TObject; ACol,
   ARow: Integer);
 var
   LRect: TRect;
@@ -1244,14 +1244,14 @@ begin
   ShowProperties;
 end;
 
-procedure TFrameWatchGrid2.NextGrid1CustomDrawCell(Sender: TObject; ACol,
+procedure TFrameWatchGrid2_.NextGrid1CustomDrawCell(Sender: TObject; ACol,
   ARow: Integer; CellRect: TRect; CellState: TCellState);
 begin
   //if (ARow mod 2) = 0 then
   //  FWG.NextGrid1.Cell[ACol, ARow].Color := $00E9FFD2;
 end;
 
-procedure TFrameWatchGrid2.NextGrid1KeyDown(Sender: TObject; var Key: Word;
+procedure TFrameWatchGrid2_.NextGrid1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   FKeyBdShiftState := Shift;
@@ -1275,7 +1275,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.NextGrid1KeyUp(Sender: TObject; var Key: Word;
+procedure TFrameWatchGrid2_.NextGrid1KeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   FKeyBdShiftState := Shift;
@@ -1287,7 +1287,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.NextGrid1MouseDown(Sender: TObject;
+procedure TFrameWatchGrid2_.NextGrid1MouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
   i: integer;
@@ -1331,14 +1331,14 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.NextGrid1MouseMove(Sender: TObject;
+procedure TFrameWatchGrid2_.NextGrid1MouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   FMousePoint.X := X;
   FMousePoint.Y := Y;
 end;
 
-procedure TFrameWatchGrid2.NextGrid1SelectCell(Sender: TObject; ACol,
+procedure TFrameWatchGrid2_.NextGrid1SelectCell(Sender: TObject; ACol,
   ARow: Integer);
 var
   LEngineParameterItem: TEngineParameterItem;
@@ -1358,7 +1358,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.OnAvgCalc(Sender: TObject; Handle: Integer;
+procedure TFrameWatchGrid2_.OnAvgCalc(Sender: TObject; Handle: Integer;
   Interval: Cardinal; ElapsedTime: Integer);
 var
   i, LRow: integer;
@@ -1406,7 +1406,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.OnDisplayCalculatedItemValue(Sender: TObject;
+procedure TFrameWatchGrid2_.OnDisplayCalculatedItemValue(Sender: TObject;
   Handle: Integer; Interval: Cardinal; ElapsedTime: Integer);
 var
   i,j,k,m,r: integer;
@@ -1534,13 +1534,13 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.OnDisplayElapsedTime4AvgCalc(Sender: TObject;
+procedure TFrameWatchGrid2_.OnDisplayElapsedTime4AvgCalc(Sender: TObject;
   Handle: Integer; Interval: Cardinal; ElapsedTime: Integer);
 begin
   FElapsedTimeOfAvgCalc := ElapsedTime div 1000;
 end;
 
-procedure TFrameWatchGrid2.PopupCopyMode(AShiftState: TShiftState;
+procedure TFrameWatchGrid2_.PopupCopyMode(AShiftState: TShiftState;
   APoint: TPoint);
 var
   LPoint: TPoint;
@@ -1575,14 +1575,14 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.ProcessCopyMode(AShiftState: TShiftState;
+procedure TFrameWatchGrid2_.ProcessCopyMode(AShiftState: TShiftState;
   APoint: TPoint);
 begin
   if FDragCopyMode <> dcmCopyCancel then
     ProcessItemsDrop(FDragCopyMode);
 end;
 
-procedure TFrameWatchGrid2.ProcessItemsDrop(ADragCopyMode: TParamDragCopyMode);
+procedure TFrameWatchGrid2_.ProcessItemsDrop(ADragCopyMode: TParamDragCopyMode);
 begin
   CreateIPCMonitor(FTempParamItemRecord, ADragCopyMode);
 end;
@@ -1598,7 +1598,7 @@ end;
 //          Prefix.Add(Current);
 //        end;
 
-function TFrameWatchGrid2.ReAssignFormulaValueList(AFormula: string;
+function TFrameWatchGrid2_.ReAssignFormulaValueList(AFormula: string;
   AIndex: integer): TStringList;
 var
   i,j: integer;
@@ -1634,7 +1634,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.RestartAvgCalc(AUseFinalize: Boolean;
+procedure TFrameWatchGrid2_.RestartAvgCalc(AUseFinalize: Boolean;
   AQSize: integer);
 begin
   StopAvgCalc;
@@ -1651,7 +1651,7 @@ begin
   StartAvgCalc;
 end;
 
-procedure TFrameWatchGrid2.SaveAvg2File(AFileName: string);
+procedure TFrameWatchGrid2_.SaveAvg2File(AFileName: string);
 var
   LCsv, LHeader: string;
   i: integer;
@@ -1669,7 +1669,7 @@ begin
     SaveData2FixedFile('CSVFile',AFileName, LHeader, soFromBeginning);
 end;
 
-procedure TFrameWatchGrid2.SaveGrid(AGrid: TNextGrid; AStm: TStream);
+procedure TFrameWatchGrid2_.SaveGrid(AGrid: TNextGrid; AStm: TStream);
 var
   i, j: integer;
   Len: integer;
@@ -1712,7 +1712,7 @@ begin
 //  end;
 end;
 
-procedure TFrameWatchGrid2.SelectAllItems4Avg;
+procedure TFrameWatchGrid2_.SelectAllItems4Avg;
 var
   i: integer;
 begin
@@ -1720,7 +1720,7 @@ begin
     NextGrid1.CellByName['IsAvg',i].AsBoolean := True;
 end;
 
-procedure TFrameWatchGrid2.SelectTagName4RunCondition(AUniqueEngName: string;
+procedure TFrameWatchGrid2_.SelectTagName4RunCondition(AUniqueEngName: string;
   ADestGrid: TNextGrid);
 var
   LTagInfoEditorDlg: TTagInfoEditorDlg;
@@ -1783,7 +1783,7 @@ begin
   end;
 end;
 
-function TFrameWatchGrid2.SendEngParam2HandleWindow(var AMultiWatchHandle: TpjhArrayHandle;
+function TFrameWatchGrid2_.SendEngParam2HandleWindow(var AMultiWatchHandle: TpjhArrayHandle;
   AProcessName: string; ADestHandle: Integer): THandle;
 var
   LHandle,LProcessID: THandle;
@@ -1821,7 +1821,7 @@ begin
   Result := LHandle;
 end;
 
-procedure TFrameWatchGrid2.SendFormCopyData(ToHandle: integer; AForm: TForm);
+procedure TFrameWatchGrid2_.SendFormCopyData(ToHandle: integer; AForm: TForm);
 var
   cd : TCopyDataStruct;
 begin
@@ -1835,7 +1835,7 @@ begin
   SendMessage(ToHandle, WM_COPYDATA, 0, LongInt(@cd));
 end;
 
-procedure TFrameWatchGrid2.SetConfigEngParamItemData(AIndex: Integer);
+procedure TFrameWatchGrid2_.SetConfigEngParamItemData(AIndex: Integer);
 var
   ConfigData: TEngParamItemConfigForm;
   LEngineParameterItem: TEngineParameterItem;
@@ -1876,50 +1876,50 @@ begin
     ShowMessage('Not assigned Grid''s row index:' + IntToStr(AIndex));
 end;
 
-procedure TFrameWatchGrid2.SetDeleteEngineParamterFromGrid(
+procedure TFrameWatchGrid2_.SetDeleteEngineParamterFromGrid(
   AFunc: TDeleteEngineParamterFromGrid);
 begin
   FDeleteEngineParamterFromGrid := AFunc;
 end;
 
-procedure TFrameWatchGrid2.SetEngParam2IPCMonitorAll(ASource: TEngineParameter);
+procedure TFrameWatchGrid2_.SetEngParam2IPCMonitorAll(ASource: TEngineParameter);
 begin
   FIPCMonitorAll.FEngineParameter.Assign(ASource);
 end;
 
-procedure TFrameWatchGrid2.SetEngParamCollect2IPCMonotorAll(
+procedure TFrameWatchGrid2_.SetEngParamCollect2IPCMonotorAll(
   ASource: TEngineParameterCollect);
 begin
   FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Assign(ASource);
 end;
 
-procedure TFrameWatchGrid2.SetIPCMonitorAll(AIPCMonitor: TFrameIPCMonitor2);
+procedure TFrameWatchGrid2_.SetIPCMonitorAll(AIPCMonitor: TFrameIPCMonitor2);
 begin
   FIPCMonitorAll := AIPCMonitor;
 end;
 
-procedure TFrameWatchGrid2.SetMainFormHandle(AHandle: THandle);
+procedure TFrameWatchGrid2_.SetMainFormHandle(AHandle: THandle);
 begin
   FHandle := AHandle;
 end;
 
-procedure TFrameWatchGrid2.SetProgramMode(AMode: TProgramMode);
+procedure TFrameWatchGrid2_.SetProgramMode(AMode: TProgramMode);
 begin
   FProgramMode := AMode;
 end;
 
-procedure TFrameWatchGrid2.SetStatusBar(AStatusBar: TJvStatusBar);
+procedure TFrameWatchGrid2_.SetStatusBar(AStatusBar: TJvStatusBar);
 begin
   FStatusBar := AStatusBar;
 end;
 
-procedure TFrameWatchGrid2.SetWatchValue2Screen_Analog(
+procedure TFrameWatchGrid2_.SetWatchValue2Screen_Analog(
   AFunc: TWatchValue2Screen_Analog);
 begin
   FWatchValue2Screen_Analog := AFunc;
 end;
 
-procedure TFrameWatchGrid2.ShowFindForm;
+procedure TFrameWatchGrid2_.ShowFindForm;
 var
   LFindWatchGridF: TFindWatchGridF;
 begin
@@ -1936,7 +1936,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.ShowProperties(AParamCollect: TEngineParameterCollect);
+procedure TFrameWatchGrid2_.ShowProperties(AParamCollect: TEngineParameterCollect);
 var
   Li: integer;
 begin
@@ -1967,7 +1967,7 @@ begin
   end;
 end;
 
-procedure TFrameWatchGrid2.ShowTagNameColumn;
+procedure TFrameWatchGrid2_.ShowTagNameColumn;
 var
   LColumn: TNxCustomColumn;
 begin
@@ -1975,7 +1975,7 @@ begin
   LColumn.Visible := not LColumn.Visible;
 end;
 
-procedure TFrameWatchGrid2.StartAvgCalc;
+procedure TFrameWatchGrid2_.StartAvgCalc;
 begin
   if FDisplayElapsedTimeHandle > 0 then
     FPJHTimerPool.Remove(FDisplayElapsedTimeHandle);
@@ -1992,7 +1992,7 @@ begin
   FAvgCalcTimerHandle := FPJHTimerPool.Add(OnAvgCalc, FAvgCalcInterval);
 end;
 
-function TFrameWatchGrid2.StopAvgCalc: Boolean;
+function TFrameWatchGrid2_.StopAvgCalc: Boolean;
 var
   i: integer;
 begin
@@ -2005,7 +2005,7 @@ begin
   Result := True;
 end;
 
-procedure TFrameWatchGrid2.UpdateGridFromEngParam2Index(AEPItem: TEngineParameterItem;
+procedure TFrameWatchGrid2_.UpdateGridFromEngParam2Index(AEPItem: TEngineParameterItem;
   AIdx: integer);
 begin
   if AEPItem.Description = '' then
@@ -2026,14 +2026,14 @@ begin
   NextGrid1.CellsByName['TagName', AIdx] := AEPItem.TagName;
 end;
 
-procedure TFrameWatchGrid2.WmChangeCopyMode(var Msg: TMessage);
+procedure TFrameWatchGrid2_.WmChangeCopyMode(var Msg: TMessage);
 begin
   FMultiDragOn := Msg.WParam;
 end;
 
 //Parameter를 DropTarget에 보낼때만 사용됨.
 //받을 경우에는 메인 폼에 WM_COPYDATA 함수를 생성 할 것
-procedure TFrameWatchGrid2.WMCopyData(var Msg: TMessage);
+procedure TFrameWatchGrid2_.WMCopyData(var Msg: TMessage);
 var
   i, LCopyMode, LHandle: integer;
   LWatchHandles : TpjhArrayHandle;
@@ -2083,12 +2083,12 @@ begin
   {$ENDIF}
 end;
 
-procedure TFrameWatchGrid2.WMMultiCopyBegin(var Msg: TMessage);
+procedure TFrameWatchGrid2_.WMMultiCopyBegin(var Msg: TMessage);
 begin
   FMultiDragOn := 1;
 end;
 
-procedure TFrameWatchGrid2.WMMultiCopyEnd(var Msg: TMessage);
+procedure TFrameWatchGrid2_.WMMultiCopyEnd(var Msg: TMessage);
 begin
   FMultiDragOn := 0;
 end;

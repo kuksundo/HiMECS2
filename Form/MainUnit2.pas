@@ -31,7 +31,7 @@ uses
   DragDrop, DropSource, DragDropFormats, DropTarget, DragDropText,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, NxCollection, NxToolBox, ExtCtrls, ImgList, AdvSplitter,
-  AdvNavBar, HiMECSInterface, UnitHiMECSFormCollect2, HiMECSConst, AdvToolBar,TypInfo,
+  AdvNavBar, HiMECSInterface, UnitHiMECSFormCollect2, HiMECSConst2, AdvToolBar,TypInfo,
   AdvSmoothTileList,AdvGDIP, Clipbrd,
   AdvSmoothTileListImageVisualizer, AdvSmoothTileListHTMLVisualizer,
   NxScrollControl, NxInspector, NxPropertyItems,

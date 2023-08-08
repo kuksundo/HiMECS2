@@ -10,7 +10,7 @@ uses
   Vcl.Imaging.jpeg, Vcl.ImgList,Vcl.Buttons, //Data.DBXJSON, Data.DBXJSONCommon,
   Vcl.StdCtrls, Vcl.Menus, CopyData, TimerPool,
 
-  HiMECSConst, JHP.BaseConfigCollect, UnitFrameTileList2, UnitProjectFileClass2,
+  HiMECSConst2, JHP.BaseConfigCollect, UnitFrameTileList2, UnitProjectFileClass2,
   UnitHiMECSMonitorListClass2, UnitHiMECSEquipListClass;
 
 type

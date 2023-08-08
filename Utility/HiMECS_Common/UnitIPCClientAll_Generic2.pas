@@ -17,7 +17,7 @@ uses
   IPC_MT210_Const, IPC_DYNAMO_Const, IPC_ECS_AVAT_Const, IPC_GasCalc_Const,
   IPC_Kral_Const, IPC_ECS_Woodward_Const, IPC_PLC_S7_Const, IPC_FlowMeter_Const,
   IPC_EngineParam_Const, IPC_HIC_Const, IPC_Modbus_Standard_Const, IPC_PMS_Const,
-  HiMECSConst, UnitEngineParameterClass2, IPCThrdClient_Generic;
+  HiMECSConst2, UnitEngineParameterClass2, IPCThrdClient_Generic;
 
 type
   TIPCClientAll<T> = class(TObject)

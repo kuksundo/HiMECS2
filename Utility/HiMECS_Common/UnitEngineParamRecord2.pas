@@ -3,7 +3,7 @@ unit UnitEngineParamRecord2;
 interface
 
 uses Classes, Messages,
-  HiMECSConst, UnitEngineParamConst, UnitEngineMasterData, UnitMultiStateRecord2,
+  HiMECSConst2, UnitEngineParamConst, UnitEngineMasterData, UnitMultiStateRecord2,
   mormot.orm.core, mormot.rest.client, mormot.core.base, mormot.rest.sqlite3,
   mormot.core.os, mormot.core.variants, mormot.core.data, mormot.orm.base;
 

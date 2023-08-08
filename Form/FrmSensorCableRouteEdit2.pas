@@ -18,7 +18,7 @@ uses
   DomSensorInterfaces2,
   DomSensorServices2,
   DomSensorTypes2,
-  UnitECUData2, HiMECSConst,
+  UnitECUData2, HiMECSConst2,
 
   InfraSensorTypes2, DropSource, DragDropText, DragDrop, DropTarget,
   UnitFrameEngParamDecTV2, UnitFrameElecPartEdit2;
