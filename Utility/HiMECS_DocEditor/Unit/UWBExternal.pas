@@ -34,7 +34,7 @@ type
   ///  <para>The methods a declared in the type library that is defined in
   ///  External.idl.</para>
   ///  </remarks>
-  TWBExternal = class(TAutoIntfObject, IWBExternal14, ISetNotifier)
+  TWBExternal = class(TAutoIntfObject, IWBExternal12, ISetNotifier)
   strict private
     var
       ///  <summary>Object used to call application code in response to
@@ -142,7 +142,7 @@ begin
   ExeName := TAppInfo.AppExeFilePath;
   OleCheck(LoadTypeLib(PWideChar(ExeName), TypeLib));
   // Create the object using type library
-  inherited Create(TypeLib, IWBExternal14);
+  inherited Create(TypeLib, IWBExternal12);
 end;
 
 procedure TWBExternal.DisplayCategory(const CatID: WideString;
