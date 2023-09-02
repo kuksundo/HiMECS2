@@ -23,7 +23,7 @@ uses
   Forms, ComCtrls, Menus, Classes, ActnList, Controls, StdCtrls, ImgList,
   StdActns,
   // Project
-  ActiveText.UMain;
+  ActiveText.UMain, System.Actions;
 
 
 type

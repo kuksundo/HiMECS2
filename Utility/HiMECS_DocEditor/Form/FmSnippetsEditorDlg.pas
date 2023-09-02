@@ -25,7 +25,7 @@ uses
   FrBrowserBase, FrFixedHTMLDlg, FrHTMLDlg, UBaseObjects, UCategoryListAdapter,
   UCompileMgr, UCompileResultsLBMgr, UCSSBuilder, UMemoCaretPosDisplayMgr,
   UMemoHelper, USnipKindListAdapter, USnippetsChkListMgr, UUnitsChkListMgr,
-  FmSnippetsEditorDlg.FrActiveTextEditor;
+  FmSnippetsEditorDlg.FrActiveTextEditor, System.Actions;
 
 
 type

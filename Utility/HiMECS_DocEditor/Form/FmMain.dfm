@@ -877,6 +877,12 @@ inherited MainForm: TMainForm
       OnExecute = actDeleteUserDatabaseExecute
       OnUpdate = ActNonEmptyUserDBUpdate
     end
+    object actNewExam: TAction
+      Category = 'Exam'
+      Caption = 'New Exam ...'
+      Hint = 'New exam|Create a new exam and add it to the user database'
+      OnExecute = actNewExamExecute
+    end
   end
   object mnuMain: TMainMenu
     Images = ilMain
@@ -1078,6 +1084,12 @@ inherited MainForm: TMainForm
         Action = actDeleteCategory
       end
     end
+    object Exam1: TMenuItem
+      Caption = 'Exam'
+      object NewExam1: TMenuItem
+        Action = actNewExam
+      end
+    end
     object miDatabase: TMenuItem
       Caption = 'Database'
       object miSaveDatabase: TMenuItem
@@ -1174,7 +1186,6 @@ inherited MainForm: TMainForm
     end
   end
   object appEvents: TApplicationEvents
-    OnHelp = appEventsHelp
     OnHint = appEventsHint
     Left = 291
     Top = 96

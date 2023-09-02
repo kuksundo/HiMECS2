@@ -10,8 +10,12 @@ inherited SnippetsEditorDlg: TSnippetsEditorDlg
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlBody: TPanel
+    Left = 8
+    Top = 8
     Width = 662
     Height = 504
+    ExplicitLeft = 8
+    ExplicitTop = 8
     ExplicitWidth = 662
     ExplicitHeight = 504
     object pcMain: TPageControl
@@ -24,8 +28,12 @@ inherited SnippetsEditorDlg: TSnippetsEditorDlg
       TabOrder = 0
       OnChange = pcMainChange
       OnMouseDown = pcMainMouseDown
+      ExplicitWidth = 222
+      ExplicitHeight = 328
       object tsCode: TTabSheet
         Caption = 'Code'
+        ExplicitWidth = 214
+        ExplicitHeight = 300
         object lblDescription: TLabel
           Left = 0
           Top = 73
@@ -195,8 +203,6 @@ inherited SnippetsEditorDlg: TSnippetsEditorDlg
         ImageIndex = 1
         ExplicitLeft = 0
         ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lblXRefs: TLabel
           Left = 3
           Top = 3
@@ -271,6 +277,8 @@ inherited SnippetsEditorDlg: TSnippetsEditorDlg
       object tsComments: TTabSheet
         Caption = 'Extra Information'
         ImageIndex = 2
+        ExplicitWidth = 214
+        ExplicitHeight = 300
         object lblExtra: TLabel
           Left = 3
           Top = 3
@@ -326,6 +334,8 @@ inherited SnippetsEditorDlg: TSnippetsEditorDlg
       object tsCompileResults: TTabSheet
         Caption = 'Compile Results'
         ImageIndex = 3
+        ExplicitWidth = 214
+        ExplicitHeight = 300
         object lblCompilers: TLabel
           Left = 3
           Top = 3
@@ -443,10 +453,10 @@ inherited SnippetsEditorDlg: TSnippetsEditorDlg
     ExplicitTop = 536
   end
   inherited btnOK: TButton
-    Left = 169
+    Left = 167
     Top = 536
     OnClick = btnOKClick
-    ExplicitLeft = 169
+    ExplicitLeft = 167
     ExplicitTop = 536
   end
   object alMain: TActionList

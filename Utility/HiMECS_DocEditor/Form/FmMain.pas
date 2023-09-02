@@ -241,6 +241,10 @@ type
     tbSpacer7: TToolButton;
     tbSpacer8: TToolButton;
     tbTestCompile: TToolButton;
+    //Add by pjh
+    Exam1: TMenuItem;
+    NewExam1: TMenuItem;
+    actNewExam: TAction;
     ///  <summary>Displays About Box.</summary>
     procedure actAboutExecute(Sender: TObject);
     ///  <summary>Gets a new category from user and adds to database.</summary>
@@ -501,6 +505,7 @@ type
     procedure splitVertCanResize(Sender: TObject; var NewSize: Integer;
       var Accept: Boolean);
     procedure ActNonEmptyUserDBUpdate(Sender: TObject);
+    procedure actNewExamExecute(Sender: TObject);
   strict private
     var
       ///  <summary>Object that notifies user-initiated events by triggering
@@ -924,6 +929,11 @@ end;
 procedure TMainForm.actNewDetailsTabExecute(Sender: TObject);
 begin
   fMainDisplayMgr.CreateNewDetailsTab;
+end;
+
+procedure TMainForm.actNewExamExecute(Sender: TObject);
+begin
+  TUserDBMgr.AddExam;
 end;
 
 procedure TMainForm.actNextTabExecute(Sender: TObject);

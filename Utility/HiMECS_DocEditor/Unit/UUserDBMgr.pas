@@ -83,6 +83,9 @@ type
     ///  <summary>Checks if it is possible for any categories to be deleted.
     ///  </summary>
     class function CanDeleteACategory: Boolean;
+    ///  <summary>Enables user to adds a new user defined exam to the
+    ///  database using the exam editor.</summary>
+    class procedure AddExam;
     ///  <summary>Saves the current user database to disk.</summary>
     class procedure Save(ParentCtrl: TComponent);
     ///  <summary>Checks if the user database can be saved.</summary>
@@ -118,7 +121,8 @@ uses
   UAppInfo,
   UConsts, UExceptions, UIStringList, UMessageBox, UOpenDialogEx,
   UOpenDialogHelper, UReservedCategories, USaveDialogEx, USnippetIDs,
-  UUserDBBackup, UWaitForThreadUI;
+  UUserDBBackup, UWaitForThreadUI,
+  FmFormDesignerBase;
 
 type
   ///  <summary>Base class for classes that execute a user database management
@@ -239,6 +243,11 @@ class procedure TUserDBMgr.AddCategory;
 begin
   // all work takes place in dialog box
   TAddCategoryDlg.Execute(nil);
+end;
+
+class procedure TUserDBMgr.AddExam;
+begin
+  TFormDesignerBaseF.Execute(nil)
 end;
 
 class procedure TUserDBMgr.AddSnippet;

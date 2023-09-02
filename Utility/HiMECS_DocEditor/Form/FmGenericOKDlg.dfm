@@ -1,10 +1,16 @@
 inherited GenericOKDlg: TGenericOKDlg
   Caption = 'GenericOKDlg'
+  ExplicitWidth = 474
+  ExplicitHeight = 375
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlBody: TPanel
+    Left = 32
+    Top = -7
     Width = 369
     Height = 305
+    ExplicitLeft = 32
+    ExplicitTop = -7
     ExplicitWidth = 369
     ExplicitHeight = 305
   end

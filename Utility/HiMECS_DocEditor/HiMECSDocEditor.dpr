@@ -374,7 +374,9 @@ uses
   PJSysInfo in '3rdParty\PJSysInfo.pas',
   PJVersionInfo in '3rdParty\PJVersionInfo.pas',
   PJWdwState in '3rdParty\PJWdwState.pas',
-  UEncrypt in '3rdParty\UEncrypt.pas';
+  UEncrypt in '3rdParty\UEncrypt.pas',
+  FmFormDesignerBase in 'Form\FmFormDesignerBase.pas' {FormDesignerBaseF},
+  FmFormDesigner4CindyComp in 'Form\FmFormDesigner4CindyComp.pas' {FormDesigner4CindyComp};
 
 // Include resources
 {$Resource ExternalObj.tlb}       // Type library file
@@ -399,7 +401,7 @@ begin
   SplashForm.Show;
   Application.ModalPopupMode := pmAuto;
   Application.ProcessMessages;
-  AApplication.CreateForm(TMainForm, MainForm);
-  pplication.Run;
+  Application.CreateForm(TMainForm, MainForm);
+  Application.Run;
 end.
 
