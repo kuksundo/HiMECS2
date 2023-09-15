@@ -4,11 +4,11 @@ uses
   RunOne,
   mormot.db.raw.sqlite3.static,
   Forms,
-  FrmModbusCom_main in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\FrmModbusCom_main.pas' {ModbusComF},
-  UnitModBusTCPWagoThread in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModBusTCPWagoThread.pas',
-  UnitModBusComThread in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModBusComThread.pas',
-  UnitModBusTCPThread in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModBusTCPThread.pas',
-  FrmModbusConfig in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\FrmModbusConfig.pas' {ModbusConfigF},
+  FrmModbusCom_main2 in 'FrmModbusCom_main2.pas' {ModbusComF},
+  UnitModBusTCPWagoThread2 in 'UnitModBusTCPWagoThread2.pas',
+  UnitModBusComThread2 in 'UnitModBusComThread2.pas',
+  UnitModBusTCPThread2 in 'UnitModBusTCPThread2.pas',
+  FrmModbusConfig2 in 'FrmModbusConfig2.pas' {ModbusConfigF},
   HiMECSConst2 in '..\..\Source\Common\HiMECSConst2.pas',
   IPCThreadEvent in '..\..\..\..\..\..\..\project\common\IPCThreadEvent.pas',
   IPCThrdClient_Generic in '..\..\..\..\..\..\..\project\common\IPCThrdClient_Generic.pas',
@@ -23,7 +23,6 @@ uses
   UnitWorker4OmniMsgQ in '..\..\..\..\..\..\..\project\common\UnitWorker4OmniMsgQ.pas',
   UnitModbusComConst in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\UnitModbusComConst.pas',
   EngineConst in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Source\Common\EngineConst.pas',
-  VarRecUtils in '..\..\..\..\..\..\..\project\common\openarr\source\VarRecUtils.pas',
   IPC_ECS_AVAT2_Const in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\Watch2\common\IPC_ECS_AVAT2_Const.pas',
   FrmDisplaySingleValue in '..\..\..\..\..\..\..\project\util\HiMECS\Application\Utility\ModbusCommunication\FrmDisplaySingleValue.pas' {DispSingleValueF},
   SCrypt in '..\..\..\..\..\..\..\project\OpenSrc\lib\scrypt-for-delphi-master\SCrypt.pas',
@@ -35,6 +34,6 @@ uses
 
 begin
   Application.Initialize;
-  AApplication.CreateForm(TModbusComF, ModbusComF);
-  pplication.Run;
+  Application.CreateForm(TModbusComF, ModbusComF);
+  Application.Run;
 end.

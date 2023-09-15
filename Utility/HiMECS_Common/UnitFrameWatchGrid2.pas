@@ -80,8 +80,10 @@ type
     procedure SetConfigEngParamItemData(AIndex: Integer);
     function ReAssignFormulaValueList(AFormula: string; AIndex: integer = -1): TStringList;
     procedure SendFormCopyData(ToHandle: integer; AForm:TForm);
-    procedure cyMathParser1CustomOperationParse(Sender: TObject; AStackInfo: TStackInfo;
-      const Arguments: array of Extended; var Rslt: Extended);
+//    procedure cyMathParser1CustomOperationParse(Sender: TObject; AStackInfo: TStackInfo;
+//      const Arguments: array of Extended; var Rslt: Extended);
+    procedure cyMathParser1CustomOperationParse(Sender: TObject; Name: String; const Arguments:
+      Array of Extended; var Rslt: Extended);
   protected
     procedure WMMultiCopyBegin(var Msg: TMessage); message WM_MULTICOPY_BEGIN;
     procedure WMMultiCopyEnd(var Msg: TMessage); message WM_MULTICOPY_END;
@@ -746,7 +748,7 @@ begin
 end;
 
 procedure TFrameWatchGrid2.cyMathParser1CustomOperationParse(Sender: TObject;
-  AStackInfo: TStackInfo; const Arguments: array of Extended; var Rslt: Extended);
+  Name: String; const Arguments: array of Extended; var Rslt: Extended);
 begin
 
 end;

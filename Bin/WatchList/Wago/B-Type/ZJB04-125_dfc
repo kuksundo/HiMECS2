@@ -1,0 +1,14 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhIOCompStdPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\Wago\B-Type\ZJB04-125__5</DesignFormFileName>
+			<DesignFormCaption>B-Type</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>LP-SCR for MAN</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>

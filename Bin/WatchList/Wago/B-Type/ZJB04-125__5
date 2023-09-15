@@ -16,7 +16,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_OVERSPEEDALARM'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -25,7 +25,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DI_OVERSPEEDALARM'
     pjhTagInfo.Description = 'Overspeed Alarm from safety'
     pjhTagInfo.ParamIndex = 1
-    pjhValue = '0'
+    pjhValue = '256'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton2: TpjhTShadowButton
@@ -34,7 +34,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_LOPRESSALARM'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -52,7 +52,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_HTTEMPALARM'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -70,7 +70,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_EMERGENCYSTOP'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -88,7 +88,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_LOCALSHUTDOWN'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -106,7 +106,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_POWERFAIL'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -124,7 +124,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_CABLEFAIL'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -133,7 +133,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DI_CABLEFAIL'
     pjhTagInfo.Description = 'Cable Fail from safety '
     pjhTagInfo.ParamIndex = 7
-    pjhValue = '0'
+    pjhValue = '16384'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton8: TpjhTShadowButton
@@ -142,7 +142,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_TACHOFAILFORSAFETY'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -160,7 +160,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_TURNGEARDISENGAGED'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -178,7 +178,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_FUELLEAKAGENOHIGH'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -196,7 +196,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_PRELUBPRESSHIGH'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -214,7 +214,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_REMOTESTART'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -232,7 +232,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_REMOTESTOP'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -241,7 +241,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DI_REMOTESTOP'
     pjhTagInfo.Description = 'Remote Stop'
     pjhTagInfo.ParamIndex = 13
-    pjhValue = '0'
+    pjhValue = '16'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton14: TpjhTShadowButton
@@ -250,7 +250,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_REMOTERESET'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -259,7 +259,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DI_REMOTERESET'
     pjhTagInfo.Description = 'Remote Reset'
     pjhTagInfo.ParamIndex = 14
-    pjhValue = '0'
+    pjhValue = '32'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton15: TpjhTShadowButton
@@ -268,7 +268,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_BASELUBLOW'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -286,7 +286,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DI_BASELUBHIGH'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -304,7 +304,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_SHUTDOWNRESET'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -313,7 +313,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_SHUTDOWNRESET'
     pjhTagInfo.Description = 'Shutdown Reset '
     pjhTagInfo.ParamIndex = 17
-    pjhValue = '0'
+    pjhValue = '256'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton18: TpjhTShadowButton
@@ -322,7 +322,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_SHUTDOWN'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -331,7 +331,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_SHUTDOWN'
     pjhTagInfo.Description = 'Shudtown '
     pjhTagInfo.ParamIndex = 18
-    pjhValue = '0'
+    pjhValue = '512'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton19: TpjhTShadowButton
@@ -340,7 +340,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_STOP'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -358,7 +358,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_OPREMOTE'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -367,7 +367,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_OPREMOTE'
     pjhTagInfo.Description = 'Remote Mode '
     pjhTagInfo.ParamIndex = 20
-    pjhValue = '0'
+    pjhValue = '2048'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton21: TpjhTShadowButton
@@ -376,7 +376,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_ENGINESTOPPING'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -385,7 +385,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_ENGINESTOPPING'
     pjhTagInfo.Description = 'Engine Stopping'
     pjhTagInfo.ParamIndex = 21
-    pjhValue = '0'
+    pjhValue = '4096'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton22: TpjhTShadowButton
@@ -394,7 +394,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_READYTOSTART'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -412,7 +412,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_ENGINERUNNING'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -421,7 +421,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_ENGINERUNNING'
     pjhTagInfo.Description = 'Engine Running'
     pjhTagInfo.ParamIndex = 23
-    pjhValue = '0'
+    pjhValue = '16384'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton24: TpjhTShadowButton
@@ -430,7 +430,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_PRELUBSTART'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -448,7 +448,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_COMMONALARM'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -457,7 +457,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_COMMONALARM'
     pjhTagInfo.Description = 'Common Alarm'
     pjhTagInfo.ParamIndex = 25
-    pjhValue = '0'
+    pjhValue = '1'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton26: TpjhTShadowButton
@@ -466,7 +466,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_FUELLIMIT'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -484,7 +484,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_STARTVV'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -502,7 +502,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_STOPVV'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -511,7 +511,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_STOPVV'
     pjhTagInfo.Description = 'Stop solenoid valve'
     pjhTagInfo.ParamIndex = 28
-    pjhValue = '0'
+    pjhValue = '8'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton29: TpjhTShadowButton
@@ -520,7 +520,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_GENTRIP'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -529,7 +529,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_GENTRIP'
     pjhTagInfo.Description = 'Generator Trip '
     pjhTagInfo.ParamIndex = 29
-    pjhValue = '0'
+    pjhValue = '16'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton30: TpjhTShadowButton
@@ -538,7 +538,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_PREHEATERON1'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -556,7 +556,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_PREHEATERON2'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -589,7 +589,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_DRAINLEVELHIGH'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -607,7 +607,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_SYSTEMPOWERFAIL'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -616,7 +616,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_SYSTEMPOWERFAIL'
     pjhTagInfo.Description = 'System & Power fail'
     pjhTagInfo.ParamIndex = 34
-    pjhValue = '0'
+    pjhValue = '512'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton35: TpjhTShadowButton
@@ -625,7 +625,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_HTPRESSLOW'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -634,7 +634,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_HTPRESSLOW'
     pjhTagInfo.Description = 'H.T. Press. Inlet low'
     pjhTagInfo.ParamIndex = 35
-    pjhValue = '0'
+    pjhValue = '1024'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton36: TpjhTShadowButton
@@ -643,7 +643,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_COMMONSHUTDOWN'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -661,7 +661,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_STARTAIRPRESSLOW'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -670,7 +670,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_STARTAIRPRESSLOW'
     pjhTagInfo.Description = 'Start Air press. Low'
     pjhTagInfo.ParamIndex = 37
-    pjhValue = '0'
+    pjhValue = '4096'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton38: TpjhTShadowButton
@@ -679,7 +679,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_LODIFFPRESSHIGH'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -697,7 +697,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_LOINLETPRESSLOW'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -706,7 +706,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_LOINLETPRESSLOW'
     pjhTagInfo.Description = 'Lub. oil press. Inlet low'
     pjhTagInfo.ParamIndex = 39
-    pjhValue = '0'
+    pjhValue = '16384'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton40: TpjhTShadowButton
@@ -730,7 +730,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_HTTEMPHIGH'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -748,7 +748,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_LOTEMPINLETHIGH'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -757,7 +757,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_LOTEMPINLETHIGH'
     pjhTagInfo.Description = 'Lub. oil temp. inlet high'
     pjhTagInfo.ParamIndex = 42
-    pjhValue = '0'
+    pjhValue = '2'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton43: TpjhTShadowButton
@@ -766,7 +766,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_BASELOLEVELLOW'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -784,7 +784,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_BASELOLEVELHIGH'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -793,7 +793,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_BASELOLEVELHIGH'
     pjhTagInfo.Description = 'Base frame L.O. Level High'
     pjhTagInfo.ParamIndex = 44
-    pjhValue = '0'
+    pjhValue = '8'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton45: TpjhTShadowButton
@@ -802,7 +802,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_TURNGEARDISENGAGED'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -820,7 +820,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_OVERSPEEDALARM'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -853,7 +853,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_TCTEMPOUTLETHIGH'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -871,7 +871,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_TCTEMPINLETHIGH'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -889,7 +889,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_STARTFAIL'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -907,7 +907,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_STOPFAIL'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -925,7 +925,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_OPLOCAL'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -943,7 +943,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_LTPRESSLOW'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -952,7 +952,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_LTPRESSLOW'
     pjhTagInfo.Description = 'L.T. water press. Inlet low '
     pjhTagInfo.ParamIndex = 53
-    pjhValue = '0'
+    pjhValue = '4096'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton54: TpjhTShadowButton
@@ -961,7 +961,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_TCLOPRESLOW'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -970,7 +970,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_TCLOPRESLOW'
     pjhTagInfo.Description = 'T/C L.O. press. Inlet low'
     pjhTagInfo.ParamIndex = 54
-    pjhValue = '0'
+    pjhValue = '8192'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton55: TpjhTShadowButton
@@ -979,7 +979,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_SAFETYPICKUPFAIL'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -988,7 +988,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_SAFETYPICKUPFAIL'
     pjhTagInfo.Description = 'Safety Pick-up Failure'
     pjhTagInfo.ParamIndex = 55
-    pjhValue = '0'
+    pjhValue = '16384'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton56: TpjhTShadowButton
@@ -997,7 +997,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_CONTROLTACHOFAIL'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -1015,7 +1015,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_CABLEFAIL'
-    Color = 12441823
+    Color = clLime
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -1024,7 +1024,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'DO_CABLEFAIL'
     pjhTagInfo.Description = 'Cable Fail '
     pjhTagInfo.ParamIndex = 57
-    pjhValue = '0'
+    pjhValue = '1'
     pjhBplFileName = 'pjhDelphiStandardPkg.bpl'
   end
   object pjhTShadowButton58: TpjhTShadowButton
@@ -1033,7 +1033,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_BOTHPICKFAIL'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -1051,7 +1051,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_OPBLOCK'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -1069,7 +1069,7 @@ object TpjhPanel
     Width = 177
     Height = 33
     Caption = 'DO_PRELUBPRESSLOW'
-    Color = 12441823
+    Color = clRed
     Shadow = True
     Shape = stRoundRect
     Border = True
@@ -1403,7 +1403,7 @@ object TpjhPanel
     Alignment = taLeftJustify
     BevelOuter = bvNone
     BorderStyle = bsSingle
-    Caption = '-'
+    Caption = 'RPM'
     Color = 14671839
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -1450,6 +1450,7 @@ object TpjhPanel
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     TabOrder = 17
+    Value = 1.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -1461,7 +1462,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'AI_466_1'
     pjhTagInfo.Description = 'H.T. Water press. Inlet'
     pjhTagInfo.ParamIndex = 61
-    pjhValue = '0'
+    pjhValue = '1'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogOutPut2: TpjhiAnalogOutPut
@@ -1477,6 +1478,7 @@ object TpjhPanel
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     TabOrder = 18
+    Value = 1.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -1488,7 +1490,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'AI_466_2'
     pjhTagInfo.Description = 'L.T. Water Press. Air Cooler Inlet'
     pjhTagInfo.ParamIndex = 62
-    pjhValue = '0'
+    pjhValue = '1'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogOutPut3: TpjhiAnalogOutPut
@@ -1558,6 +1560,7 @@ object TpjhPanel
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     TabOrder = 21
+    Value = 1.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -1569,7 +1572,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'AI_466_5'
     pjhTagInfo.Description = 'Lub. Oil Press. T/C Inlet'
     pjhTagInfo.ParamIndex = 65
-    pjhValue = '0'
+    pjhValue = '1'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogOutPut6: TpjhiAnalogOutPut
@@ -1612,6 +1615,7 @@ object TpjhPanel
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     TabOrder = 23
+    Value = 1.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -1623,7 +1627,7 @@ object TpjhPanel
     pjhTagInfo.TagName = 'AI_466_7'
     pjhTagInfo.Description = 'Charger Air Press. Cooler Outlet '
     pjhTagInfo.ParamIndex = 67
-    pjhValue = '0'
+    pjhValue = '1'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogOutPut8: TpjhiAnalogOutPut
@@ -1676,7 +1680,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AI_461_1'
     pjhTagInfo.Description = 'H.T. Water Temp. Outlet Engine '
-    pjhTagInfo.ParamIndex = 81
+    pjhTagInfo.ParamIndex = 79
     pjhValue = '0'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
@@ -1685,6 +1689,7 @@ object TpjhPanel
     Top = 369
     Width = 89
     Height = 32
+    Cursor = crIBeam
     MaxLength = 0
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -1702,7 +1707,7 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AI_461_2'
     pjhTagInfo.Description = 'L.T. Water Temp. Air Cooler Inlet'
-    pjhTagInfo.ParamIndex = 82
+    pjhTagInfo.ParamIndex = 80
     pjhValue = '0'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
@@ -1718,6 +1723,7 @@ object TpjhPanel
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     TabOrder = 27
+    Value = 850.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -1728,8 +1734,8 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AI_461_3'
     pjhTagInfo.Description = 'Lub. Oil Temp. Inlet Engine '
-    pjhTagInfo.ParamIndex = 83
-    pjhValue = '0'
+    pjhTagInfo.ParamIndex = 81
+    pjhValue = '850'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogOutPut12: TpjhiAnalogOutPut
@@ -1737,6 +1743,7 @@ object TpjhPanel
     Top = 433
     Width = 89
     Height = 32
+    Cursor = crIBeam
     MaxLength = 0
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -1744,6 +1751,7 @@ object TpjhPanel
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     TabOrder = 28
+    Value = 850.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -1754,8 +1762,8 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AI_461_4'
     pjhTagInfo.Description = 'Fuel Oil Temp. Inlet Engine'
-    pjhTagInfo.ParamIndex = 84
-    pjhValue = '0'
+    pjhTagInfo.ParamIndex = 82
+    pjhValue = '850'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogOutPut13: TpjhiAnalogOutPut
@@ -1763,6 +1771,7 @@ object TpjhPanel
     Top = 464
     Width = 89
     Height = 30
+    Cursor = crIBeam
     MaxLength = 0
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -1770,6 +1779,7 @@ object TpjhPanel
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     TabOrder = 29
+    Value = 850.000000000000000000
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET
@@ -1780,8 +1790,8 @@ object TpjhPanel
     ErrorBackGroundColor = clBlack
     pjhTagInfo.TagName = 'AI_461_5'
     pjhTagInfo.Description = 'Charge Air Temp. Cooler Outlet'
-    pjhTagInfo.ParamIndex = 85
-    pjhValue = '0'
+    pjhTagInfo.ParamIndex = 83
+    pjhValue = '850'
     pjhBplFileName = 'pjhIOCompStdPkg.bpl'
   end
   object pjhiAnalogOutPut14: TpjhiAnalogOutPut
@@ -1821,6 +1831,7 @@ object TpjhPanel
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     TabOrder = 31
+    Precision = 0
     ErrorActive = False
     ErrorText = 'Error'
     ErrorFont.Charset = DEFAULT_CHARSET

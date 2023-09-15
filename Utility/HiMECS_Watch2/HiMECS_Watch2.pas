@@ -639,8 +639,9 @@ type
     procedure SendShortCut2DesignScreen4ShowBalloon;
 
     procedure OnGetHandlingKeyInfo(Sender: TObject; Key: Word; ShiftState: TShiftState; KeyDown: Boolean; var Job: TKeyJob);
-    procedure OnPostProcessMouseInfo(aPoint: TPoint; var aControl: TControl;
-      var ControlRect, HandlerRect: TRect; var Job: TControlJob);
+//    procedure OnPostProcessMouseInfo(aPoint: TPoint; var aControl: TControl;
+    procedure OnGetHandlingMouseInfo(Sender: TObject; aPoint: TPoint; var aControl: TControl; var ControlRect, HandlerRect: TRect; var Job: TMouseJob);
+//      var ControlRect, HandlerRect: TRect; var Job: TControlJob);
     //HiMECS.exe에서 Shift + Paramter Drag하여 Watch2 화면의 Component에 Drop하면 pjhTag에 해당 Parameter가 할달됨
     procedure SetTagInfo2ComponentUsingMouse(APoint: Tpoint);
     function CreatepjhSelector: TCyResizer;
@@ -864,7 +865,7 @@ type
     procedure SetSourceComponent(aControl: TControl);
     procedure SetDestinationConnect(aControl: TControl);
     procedure ClearXStep(aControl: TControl);
-    procedure SetMultiSelectConnect(aControl: TControl; Job: TControlJob);
+    procedure SetMultiSelectConnect(aControl: TControl; Job: TMouseJob);
     //마우스로 선택된 Component의 NextStep Property Value에서 AWillDeleteControl이
     //할당 되어 있다면 nil로 변경함
     procedure DeleteNextRef(AWillDeleteControl: TWinControl);
@@ -881,9 +882,9 @@ type
     procedure SetRevSourceComponent(aControl: TControl);
     procedure SetRevSrcCheckComp(aControl: TControl);
     procedure SetRevDestinationConnect(aControl: TControl);
-    procedure SetRevMultiSelectConnect(aControl: TControl; Job: TControlJob);
+    procedure SetRevMultiSelectConnect(aControl: TControl; Job: TMouseJob);
 
-    procedure SetCreateItem4SelectedComponent(aControl: TControl; Job: TControlJob);
+    procedure SetCreateItem4SelectedComponent(aControl: TControl; Job: TMouseJob);
     procedure CreateItem4SelectedComponent(ApjhDCI: IpjhDesignCompInterface);
     procedure CreateNewItem(AEngParamItem: TEngineParameterItem=nil);
     procedure CreateNewItemSelected();
@@ -892,13 +893,13 @@ type
     procedure ProcessKeyEvent4NextStep(AShiftState: TShiftState; ACharCode: word);
     procedure ProcessKeyEvent4CreateItem(AShiftState: TShiftState; ACharCode: word);
     procedure ProcessMouseEventFrompjhSelector(aPoint: TPoint; aControl: TControl;
-      ControlRect, HandlerRect: TRect; Job: TControlJob);
+      ControlRect, HandlerRect: TRect; Job: TMouseJob);
     procedure ProcessMouseEvent4NextStep(aPoint: TPoint; aControl: TControl;
-      ControlRect, HandlerRect: TRect; Job: TControlJob);
+      ControlRect, HandlerRect: TRect; Job: TMouseJob);
     procedure ProcessMouseEvent4CreateItem(aPoint: TPoint; aControl: TControl;
-      ControlRect, HandlerRect: TRect; Job: TControlJob);
+      ControlRect, HandlerRect: TRect; Job: TMouseJob);
     procedure ProcessMouseEvent4CheckCircularNextStep(aPoint: TPoint; aControl: TControl;
-      ControlRect, HandlerRect: TRect; Job: TControlJob);
+      ControlRect, HandlerRect: TRect; Job: TMouseJob);
 
     property WatchListFileName: string read FWatchListFileName write SetWatchListFileName;
   published
@@ -3144,7 +3145,7 @@ begin
 end;
 
 procedure TWatchF2.SetCreateItem4SelectedComponent(aControl: TControl;
-  Job: TControlJob);
+  Job: TMouseJob);
 var
   LControl: TControl;
   IpjhDI: IpjhDesignCompInterface;
@@ -3159,7 +3160,7 @@ begin
   begin
     if Supports(LControl, IpjhDesignCompInterface, IpjhDI) then
     begin
-      if Job = cjInserted then
+//      if Job = cjInserted then
       begin
         if FpjhSelector.HandlingControlList.Count = 1 then
         begin
@@ -3167,11 +3168,11 @@ begin
 //          Caption := 'Source : ' + LControl.Name;
         end
       end
-      else
-      if Job = cjRemoved then
-      begin
-
-      end;
+//      else
+//      if Job = cjRemoved then
+//      begin
+//
+//      end;
     end;
   end;
 end;
@@ -3245,7 +3246,7 @@ begin
   end;
 end;
 
-procedure TWatchF2.SetMultiSelectConnect(aControl: TControl; Job: TControlJob);
+procedure TWatchF2.SetMultiSelectConnect(aControl: TControl; Job: TMouseJob);
 var
   LSelectedControl, LSrcControl: TWinControl;
   LPFI, LPFI2: IpjhPipeFlowInterface;
@@ -3268,7 +3269,7 @@ begin
 //        begin
       LStr := '';
 
-      if Job = cjInserted then
+//      if Job = cjInserted then
       begin
         LSrcControl := FSrcComponent4NextStep;
 
@@ -3312,12 +3313,11 @@ begin
           //FSimulateCompValuesJson4ConnectNextStep에 추가함
           AddCompValue2Json(LSrcControl.Name, 'NextStep', LSelectedControl.Name, 7, FSimulateCompValuesJson4ConnectNextStep);
       end
-      else
-      if Job = cjRemoved then
-      begin
-//        FpjhSelector.HandlingControlList.RemoveControl(LControl);
-        DeleteNextRef(LSelectedControl);
-      end;
+//      else
+//      if Job = cjRemoved then
+//      begin
+//        DeleteNextRef(LSelectedControl);
+//      end;
 //        end;
 //      end
 //      else//기 선택된게 있으면 삭제
@@ -3396,7 +3396,7 @@ begin
 end;
 
 procedure TWatchF2.SetRevMultiSelectConnect(aControl: TControl;
-  Job: TControlJob);
+  Job: TMouseJob);
 begin
 
 end;
@@ -6164,7 +6164,8 @@ begin
   //TcyResizer.HandlingSingleControlChanged내 ScreenToClient에서 Control.parant가 필요함
   Result := TCyResizer.Create(Self);
   Result.OnGetHandlingKeyInformation := OnGetHandlingKeyInfo;
-  Result.OnPostProcessMouseInformation := OnPostProcessMouseInfo;
+//  Result.OnPostProcessMouseInformation := OnPostProcessMouseInfo;
+  Result.OnGetHandlingMouseInformation := OnGetHandlingMouseInfo;
   Result.Options := [roMouseSelect, roMouseMultiSelect, roMouseUnselectAll,
              roKeySelect, roKeyMultiSelect, roKeyUnselectAll, roOutsideParentRect];
 end;
@@ -6671,12 +6672,19 @@ begin
   ProcessKeyEventFrompjhSelector(ShiftState, Key);
 end;
 
-procedure TWatchF2.OnPostProcessMouseInfo(aPoint: TPoint;
+procedure TWatchF2.OnGetHandlingMouseInfo(Sender: TObject; aPoint: TPoint;
   var aControl: TControl; var ControlRect, HandlerRect: TRect;
-  var Job: TControlJob);
+  var Job: TMouseJob);
 begin
   ProcessMouseEventFrompjhSelector(aPoint, aControl, ControlRect, HandlerRect, Job);
 end;
+
+//procedure TWatchF2.OnPostProcessMouseInfo(aPoint: TPoint;
+//  var aControl: TControl; var ControlRect, HandlerRect: TRect;
+//  var Job: TControlJob);
+//begin
+//  ProcessMouseEventFrompjhSelector(aPoint, aControl, ControlRect, HandlerRect, Job);
+//end;
 
 {//Memory Leak 때문에 Calc32 Component 사용 불가함->cyMathparser로 대체 함 => 2013.9.11
 procedure TWatchF2.OnDisplayCalculatedItemValue(Sender: TObject;
@@ -7061,7 +7069,7 @@ begin
 end;
 
 procedure TWatchF2.ProcessMouseEvent4CheckCircularNextStep(aPoint: TPoint;
-  aControl: TControl; ControlRect, HandlerRect: TRect; Job: TControlJob);
+  aControl: TControl; ControlRect, HandlerRect: TRect; Job: TMouseJob);
 begin
   FPipeFlowTreeList.Clear;
   CheckCirculationOfNextStep(aControl);
@@ -7069,7 +7077,7 @@ begin
 end;
 
 procedure TWatchF2.ProcessMouseEvent4CreateItem(aPoint: TPoint;
-  aControl: TControl; ControlRect, HandlerRect: TRect; Job: TControlJob);
+  aControl: TControl; ControlRect, HandlerRect: TRect; Job: TMouseJob);
 begin
   if FCreateTagItemWhenAltKeyDown then //Alt Key 버튼을 누르는 동안(Button Up 후 0.1초 후 리셋됨)
   begin
@@ -7078,7 +7086,7 @@ begin
 end;
 
 procedure TWatchF2.ProcessMouseEvent4NextStep(aPoint: TPoint;
-  aControl: TControl; ControlRect, HandlerRect: TRect; Job: TControlJob);
+  aControl: TControl; ControlRect, HandlerRect: TRect; Job: TMouseJob);
 begin
   if FSrcCompConnectMode then //Alt+1 버튼을 누르는 동안(Button Up 후 1초 후 리셋됨)
   begin
@@ -7117,7 +7125,7 @@ begin
 end;
 
 procedure TWatchF2.ProcessMouseEventFrompjhSelector(aPoint: TPoint; aControl: TControl;
-  ControlRect, HandlerRect: TRect; Job: TControlJob);
+  ControlRect, HandlerRect: TRect; Job: TMouseJob);
 begin
   //PopUp Menu에서 "Set ComponentConnectMode"를 Check 상태로 변경
   if FComponentConnectMode then
