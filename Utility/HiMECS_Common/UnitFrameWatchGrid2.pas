@@ -1485,10 +1485,13 @@ end;
 procedure TFrameWatchGrid2.OnDisplayCalculatedItemValue(Sender: TObject;
   Handle: Integer; Interval: Cardinal; ElapsedTime: Integer);
 var
-  i,j,k,m,r: integer;
+  i,j,k,m: integer;
   LStrList: TStringList;
   LValue: Double;
   LCalcResult: Double;
+  LEngParamItem, LEngParamItem2: TEngineParameterItem;
+  LCustomOp: Boolean;//Custom 함수이면 True
+  LCustomResult: string;
 {$IFDEF USE_YURIMATHPARSER}
   Script: TScript;
 {$ENDIF}
@@ -1498,6 +1501,7 @@ begin
     for m := FCompoundItemList.Count - 1 downto 0 do
     begin
       i := FCompoundItemList.Items[m];
+      LEngParamItem := FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i];
 
       if i > (FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Count - 1) then
       begin
@@ -1505,19 +1509,18 @@ begin
         exit;
       end;
 
-      if FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].SharedName = '' then
+      if LEngParamItem.SharedName = '' then
       begin
-        DisplayMessage('TFrameWatchGrid.OnDisplayCalculatedItemValue => if FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].SharedName = '' then exit');
+        DisplayMessage('TFrameWatchGrid.OnDisplayCalculatedItemValue => if LEngParamItem.SharedName = '' then exit');
         exit;
       end;
 
-      LStrList := FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].FormulaValueStringList;
+      LStrList := LEngParamItem.FormulaValueStringList;
 
       if Assigned(LStrList) then
       begin
 //{$IFNDEF USE_YURIMATHPARSER}
-        FcyMathParser1.Expression :=
-          FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].SharedName;
+        FcyMathParser1.Expression := LEngParamItem.SharedName;
 //{$ENDIF}
 
         //TagName=3 형식으로 저장됨
@@ -1527,80 +1530,71 @@ begin
           //k가 Collect 범위 내에 존재 하면
           if k < FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Count then
           begin
-            LValue := StrToFloatDef(
-              FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[k].Value,0.0);
+            LEngParamItem2 := FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[k];
 
+            //기본 operation의 parametertype은 숫자형 임
+            //문자열 연결함수(concat) 인경우 custom operation임
+            LCustomOp := LEngParamItem2.ParameterType = TParameterType.ptString;
+
+            if LCustomOp then
+            begin
+              LValue := $FFFF;
+              LCustomResult := LCustomResult + LEngParamItem2.Value;
+            end
+            else
+            begin
+              LValue := StrToFloatDef(LEngParamItem2.Value,0.0);
 //{$IFDEF USE_YURIMATHPARSER}
 //          FyuriParser.AddConstant(LStrList.Names[j], LValue);
 //{$ELSE}
             FcyMathParser1.Variables.SetValue(LStrList.Names[j], LValue);
 //{$ENDIF}
-
-//          {$IFDEF USECODESITE}
-//          CodeSite.EnterMethod('FcyMathParser1.Variables.SetValue ===>');
-//          try
-//            CodeSite.Send('LStrList.Names[j]', LStrList.Names[j]);
-//            CodeSite.Send('LValue', LValue);
-//          {$ENDIF}
-//
-//          {$IFDEF USECODESITE}
-//          finally
-//            CodeSite.ExitMethod('FcyMathParser1.Variables.SetValue <===');
-//          end;
-//          {$ENDIF}
+            end;
           end;//if
         end;//for
       end;//if
 
-{$IFDEF USE_YURIMATHPARSER}
-      try
-        FyuriParser.StringToScript(FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].SharedName, Script);
+      if LCustomOp then
+      begin
+        LEngParamItem.Value := LCustomResult;
+      end
+      else
+      begin
+        {$IFDEF USE_YURIMATHPARSER}
         try
-          LCalcResult :=  FyuriParser.Execute(Script)^;
+          FyuriParser.StringToScript(LEngParamItem.SharedName, Script);
+          try
+            LCalcResult :=  FyuriParser.Execute(Script)^;
+          except
+            LCalcResult := 0;
+          end;
+        finally
+          Script := nil;
+        end;
+        {$ELSE}
+        try
+          FcyMathParser1.Parse;
+
+          if FcyMathParser1.GetLastError = 0 then
+          begin
+            LCalcResult := FcyMathParser1.ParserResult;
+          end
+          else
+          begin
+            LCalcResult := 0;
+          end;
         except
           LCalcResult := 0;
         end;
-      finally
-        Script := nil;
-      end;
-{$ELSE}
-      try
-        FcyMathParser1.Parse;
+        {$ENDIF}
 
-        if FcyMathParser1.GetLastError = 0 then
-        begin
-          LCalcResult := FcyMathParser1.ParserResult;
-
-//          {$IFDEF USECODESITE}
-//          CodeSite.EnterMethod('FcyMathParser1.Expression ===>');
-//          try
-//            CodeSite.Send('FcyMathParser1.Expression', FcyMathParser1.Expression);
-//            CodeSite.Send('FcyMathParser1.ParserResult', FcyMathParser1.ParserResult);
-//          {$ENDIF}
-//
-//          {$IFDEF USECODESITE}
-//          finally
-//            CodeSite.ExitMethod('FcyMathParser1.Expression <===');
-//          end;
-//          {$ENDIF}
-        end
-        else
-        begin
-          LCalcResult := 0;
-        end;
-      except
-        LCalcResult := 0;
-      end;
-{$ENDIF}
-
-      FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].Value :=
-        FormatFloat(FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].DisplayFormat, LCalcResult);
+        LEngParamItem.Value :=
+          FormatFloat(LEngParamItem.DisplayFormat, LCalcResult);
 //        Format('%.2f', [LCalcResult]);
-      r := FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].RadixPosition;
 
-      if r = 0 then
-        FIPCMonitorAll.FEngineParameter.EngineParameterCollect.Items[i].Value :=
-          Format('%d', [Round(LCalcResult)]);
+        if LEngParamItem.RadixPosition = 0 then
+            LEngParamItem.Value := Format('%d', [Round(LCalcResult)]);
+      end;
 
       if Assigned(FWatchValue2Screen_Analog) then
         FWatchValue2Screen_Analog('', '', i);
