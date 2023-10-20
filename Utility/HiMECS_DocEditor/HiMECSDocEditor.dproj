@@ -46,7 +46,9 @@
         <DCC_E>false</DCC_E>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <DCC_UnitSearchPath>E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_DocEditor\bin;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_ExeOutput>..\..\Bin\Applications</DCC_ExeOutput>
+        <DCC_DcuOutput>Y:\pjh\Dcu\Win32\$(MSBuildProjectName)</DCC_DcuOutput>
+        <DCC_UnitSearchPath>E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_DocEditor\bin;E:\pjh\Dev\Lang\Delphi\Template\Dabbler\Form;E:\pjh\Dev\Lang\Delphi\Template\Dabbler\Frame;E:\pjh\Dev\Lang\Delphi\Template\Dabbler\Unit;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Debugger_RunParams>-localhost</Debugger_RunParams>
@@ -120,7 +122,7 @@
         <DCCReference Include="Form\FmAddCategoryDlg.pas">
             <Form>AddCategoryDlg</Form>
         </DCCReference>
-        <DCCReference Include="Form\FmBase.pas">
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Form\FmBase.pas">
             <Form>BaseForm</Form>
         </DCCReference>
         <DCCReference Include="Form\FmBugReportBaseDlg.pas">
@@ -209,7 +211,7 @@
         <DCCReference Include="Form\FmGenericViewDlg.pas">
             <Form>GenericViewDlg</Form>
         </DCCReference>
-        <DCCReference Include="Form\FmHelpAware.pas">
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Form\FmHelpAware.pas">
             <Form>HelpAwareForm</Form>
         </DCCReference>
         <DCCReference Include="Form\FmMain.pas">
@@ -391,8 +393,8 @@
         <DCCReference Include="Unit\Hiliter.UPasLexer.pas"/>
         <DCCReference Include="Unit\Hiliter.UPasParser.pas"/>
         <DCCReference Include="Unit\Hiliter.UPersist.pas"/>
-        <DCCReference Include="Unit\IntfAligner.pas"/>
-        <DCCReference Include="Unit\IntfCommon.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\IntfAligner.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\IntfCommon.pas"/>
         <DCCReference Include="Unit\IntfFrameMgrs.pas"/>
         <DCCReference Include="Unit\IntfNotifier.pas"/>
         <DCCReference Include="Unit\IntfPreview.pas"/>
@@ -405,13 +407,13 @@
         <DCCReference Include="Unit\UActionFactory.pas"/>
         <DCCReference Include="Unit\UAnchors.pas"/>
         <DCCReference Include="Unit\UAppInfo.pas"/>
-        <DCCReference Include="Unit\UBaseObjects.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UBaseObjects.pas"/>
         <DCCReference Include="Unit\UBox.pas"/>
         <DCCReference Include="Unit\UBrowseForFolderDlg.pas"/>
         <DCCReference Include="Unit\UBrowseProtocol.pas"/>
         <DCCReference Include="Unit\UCategoryAction.pas"/>
         <DCCReference Include="Unit\UCategoryListAdapter.pas"/>
-        <DCCReference Include="Unit\UClassHelpers.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UClassHelpers.pas"/>
         <DCCReference Include="Unit\UClipboardHelper.pas"/>
         <DCCReference Include="Unit\UCodeImportExport.pas"/>
         <DCCReference Include="Unit\UCodeImportMgr.pas"/>
@@ -426,9 +428,9 @@
         <DCCReference Include="Unit\UCompileResultsLBMgr.pas"/>
         <DCCReference Include="Unit\UCompResHTML.pas"/>
         <DCCReference Include="Unit\UConsoleApp.pas"/>
-        <DCCReference Include="Unit\UConsts.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UConsts.pas"/>
         <DCCReference Include="Unit\UContainers.pas"/>
-        <DCCReference Include="Unit\UControlStateMgr.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UControlStateMgr.pas"/>
         <DCCReference Include="Unit\UCopyInfoMgr.pas"/>
         <DCCReference Include="Unit\UCopySourceMgr.pas"/>
         <DCCReference Include="Unit\UCopyViewMgr.pas"/>
@@ -452,15 +454,15 @@
         <DCCReference Include="Unit\UEditSnippetAction.pas"/>
         <DCCReference Include="Unit\UEmailHelper.pas"/>
         <DCCReference Include="Unit\UEncodings.pas"/>
-        <DCCReference Include="Unit\UExceptions.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UExceptions.pas"/>
         <DCCReference Include="Unit\UExeFileType.pas"/>
         <DCCReference Include="Unit\UFileProtocol.pas"/>
         <DCCReference Include="Unit\UFileUpdater.pas"/>
         <DCCReference Include="Unit\UFolderBackup.pas"/>
-        <DCCReference Include="Unit\UFontHelper.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UFontHelper.pas"/>
         <DCCReference Include="Unit\UFormAligner.pas"/>
         <DCCReference Include="Unit\UGIFImageList.pas"/>
-        <DCCReference Include="Unit\UGraphicUtils.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UGraphicUtils.pas"/>
         <DCCReference Include="Unit\UGroups.pas"/>
         <DCCReference Include="Unit\UHelpMgr.pas"/>
         <DCCReference Include="Unit\UHelpProtocol.pas"/>
@@ -480,7 +482,7 @@
         <DCCReference Include="Unit\UIniDataLoader.pas"/>
         <DCCReference Include="Unit\UInitialLetter.pas"/>
         <DCCReference Include="Unit\UIOUtils.pas"/>
-        <DCCReference Include="Unit\UIStringList.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UIStringList.pas"/>
         <DCCReference Include="Unit\UJavaScriptUtils.pas"/>
         <DCCReference Include="Unit\UKeysHelper.pas"/>
         <DCCReference Include="Unit\ULEDImageList.pas"/>
@@ -552,8 +554,8 @@
         <DCCReference Include="Unit\UStartUp.pas"/>
         <DCCReference Include="Unit\UStatusBarMgr.pas"/>
         <DCCReference Include="Unit\UStringReader.pas"/>
-        <DCCReference Include="Unit\UStructs.pas"/>
-        <DCCReference Include="Unit\UStrUtils.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UStructs.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UStrUtils.pas"/>
         <DCCReference Include="Unit\USystemInfo.pas"/>
         <DCCReference Include="Unit\UTaggedTextLexer.pas"/>
         <DCCReference Include="Unit\UTestCompile.pas"/>
@@ -574,7 +576,7 @@
         <DCCReference Include="Unit\UUserDBBackup.pas"/>
         <DCCReference Include="Unit\UUserDBMgr.pas"/>
         <DCCReference Include="Unit\UUserDBMove.pas"/>
-        <DCCReference Include="Unit\UUtils.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\Unit\UUtils.pas"/>
         <DCCReference Include="Unit\UVersionInfo.pas"/>
         <DCCReference Include="Unit\UView.pas"/>
         <DCCReference Include="Unit\UViewItemAction.pas"/>
@@ -596,15 +598,15 @@
         <DCCReference Include="Form\FmRegisterCompilersDlg.pas">
             <Form>RegisterCompilersDlg</Form>
         </DCCReference>
-        <DCCReference Include="3rdParty\GIFImage.pas"/>
-        <DCCReference Include="3rdParty\LVEx.pas"/>
-        <DCCReference Include="3rdParty\PJMD5.pas"/>
-        <DCCReference Include="3rdParty\PJShellFolders.pas"/>
-        <DCCReference Include="3rdParty\PJStreamWrapper.pas"/>
-        <DCCReference Include="3rdParty\PJSysInfo.pas"/>
-        <DCCReference Include="3rdParty\PJVersionInfo.pas"/>
-        <DCCReference Include="3rdParty\PJWdwState.pas"/>
-        <DCCReference Include="3rdParty\UEncrypt.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\GIFImage.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\LVEx.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\PJMD5.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\PJShellFolders.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\PJStreamWrapper.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\PJSysInfo.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\PJVersionInfo.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\PJWdwState.pas"/>
+        <DCCReference Include="..\..\..\..\Template\Dabbler\3rdParty\UEncrypt.pas"/>
         <DCCReference Include="Form\FmFormDesignerBase.pas">
             <Form>FormDesignerBaseF</Form>
             <FormType>dfm</FormType>
@@ -660,6 +662,8 @@
                 </VersionInfoKeys>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclIPIndyImpl190.bpl">IP Abstraction Indy Implementation Design Time</Excluded_Packages>
+                    <Excluded_Packages Name="E:\pjh\project\util\VisualComm\Component\bpl\pjhIOCompProPkg.bpl">(untitled)</Excluded_Packages>
+                    <Excluded_Packages Name="E:\pjh\project\util\VisualComm\Component\bpl\pjhDelphiStandardPkg.bpl">(untitled)</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k190.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp190.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
