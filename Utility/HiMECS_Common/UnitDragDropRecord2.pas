@@ -10,13 +10,12 @@ uses
   DropSource,
   Classes,
   ActiveX,
-  UnitEngineParameterClass2,
-  HiMECSConst2;
+  UnitEngineParameterClass2;
 
 type
   TEngineParameter_DragDrop = record
     FEPItem: TEngineParameterItemRecord;
-    FDragDataType: TDragDropDataType; //DragDrop시에 record 가 복수개인지 여부
+    FDragDataType: integer; //DragDrop시에 record 가 복수개인지 여부(TDragDropDataType)
     //Drag시 누른 키 값은 HiMECS_Watch2(다른 Propcess이므로)에 전달되지 않기 때문에 따로 전해줌
     //Ctrl + MouseDrag 이벤트가 안 잡혀서 실패함
     FShiftState: TShiftState; //DragDrop시에 Ctrl/Shift/Alt 키 상태 여부

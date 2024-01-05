@@ -121,6 +121,7 @@ type
     FParameterSubCatetory4AVAT2: TParameterSubCategory4AVAT2;
     FParameterType: TParameterType;
     FParameterSource: TParameterSource;
+    FParameterSource2: integer;//Stock Monitor에 사용함
     FDFAlarmKind: TDFAlarmKind; //알람 발생했을 경우 어떤 알람인지 구분함
     FEngineUsage: TEngineUsage;
     FDFCommissioningItem: TDFCommissioningItem;
