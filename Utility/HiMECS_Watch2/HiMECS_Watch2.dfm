@@ -500,18 +500,18 @@ object WatchF2: TWatchF2
         Align = alClient
         TabOrder = 1
         ExplicitLeft = 2
-        ExplicitTop = 20
+        ExplicitTop = 58
         ExplicitWidth = 572
-        ExplicitHeight = 334
+        ExplicitHeight = 296
         inherited NextGrid1: TNextGrid
           Width = 572
           Height = 296
           ExplicitWidth = 572
-          ExplicitHeight = 334
+          ExplicitHeight = 296
         end
         inherited ImageList1: TImageList
           Bitmap = {
-            494C010106000900000410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+            494C010106000900280410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
             0000000000003600000028000000400000002000000001002000000000000020
             0000000000000000000000000000000000000000000000000000000000000000
             000040B0C00040C0C00030B0C00030B0C00030B0C00030B0B00030A8B00030A8

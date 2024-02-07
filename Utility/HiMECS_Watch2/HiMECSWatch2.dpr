@@ -59,7 +59,6 @@ uses
 {$R *.res}
 
 begin
-  //system.ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   {$IFDEF USECODESITE}
     //CodeSite.Enabled := True;
@@ -77,6 +76,7 @@ begin
 //    end;
   {$ENDIF}
   //Application.ShowMainForm := False;
+  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TWatchF2, WatchF2);
   Application.Run;

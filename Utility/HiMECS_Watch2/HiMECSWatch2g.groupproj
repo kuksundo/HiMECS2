@@ -1,0 +1,96 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B5DF6F94-6B0B-4794-9A70-7AECFCC784AA}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="HiMECSWatch2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="HiMECSWatch2_NoBpl.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\VisualComm2\Component\DesignManagerDock2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\HiMECS_FormListEditor\FormListEditorp2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\HiMECS_ComponentListEditor\ComponentListEditorp2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\VisualComm2\Component\pjhOIPackage2.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="HiMECSWatch2">
+        <MSBuild Projects="HiMECSWatch2.dproj"/>
+    </Target>
+    <Target Name="HiMECSWatch2:Clean">
+        <MSBuild Projects="HiMECSWatch2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="HiMECSWatch2:Make">
+        <MSBuild Projects="HiMECSWatch2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="HiMECSWatch2_NoBpl">
+        <MSBuild Projects="HiMECSWatch2_NoBpl.dproj"/>
+    </Target>
+    <Target Name="HiMECSWatch2_NoBpl:Clean">
+        <MSBuild Projects="HiMECSWatch2_NoBpl.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="HiMECSWatch2_NoBpl:Make">
+        <MSBuild Projects="HiMECSWatch2_NoBpl.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DesignManagerDock2">
+        <MSBuild Projects="..\..\..\VisualComm2\Component\DesignManagerDock2.dproj"/>
+    </Target>
+    <Target Name="DesignManagerDock2:Clean">
+        <MSBuild Projects="..\..\..\VisualComm2\Component\DesignManagerDock2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DesignManagerDock2:Make">
+        <MSBuild Projects="..\..\..\VisualComm2\Component\DesignManagerDock2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FormListEditorp2">
+        <MSBuild Projects="..\HiMECS_FormListEditor\FormListEditorp2.dproj"/>
+    </Target>
+    <Target Name="FormListEditorp2:Clean">
+        <MSBuild Projects="..\HiMECS_FormListEditor\FormListEditorp2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FormListEditorp2:Make">
+        <MSBuild Projects="..\HiMECS_FormListEditor\FormListEditorp2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ComponentListEditorp2">
+        <MSBuild Projects="..\HiMECS_ComponentListEditor\ComponentListEditorp2.dproj"/>
+    </Target>
+    <Target Name="ComponentListEditorp2:Clean">
+        <MSBuild Projects="..\HiMECS_ComponentListEditor\ComponentListEditorp2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ComponentListEditorp2:Make">
+        <MSBuild Projects="..\HiMECS_ComponentListEditor\ComponentListEditorp2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="pjhOIPackage2">
+        <MSBuild Projects="..\..\..\VisualComm2\Component\pjhOIPackage2.dproj"/>
+    </Target>
+    <Target Name="pjhOIPackage2:Clean">
+        <MSBuild Projects="..\..\..\VisualComm2\Component\pjhOIPackage2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="pjhOIPackage2:Make">
+        <MSBuild Projects="..\..\..\VisualComm2\Component\pjhOIPackage2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="HiMECSWatch2;HiMECSWatch2_NoBpl;DesignManagerDock2;FormListEditorp2;ComponentListEditorp2;pjhOIPackage2"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="HiMECSWatch2:Clean;HiMECSWatch2_NoBpl:Clean;DesignManagerDock2:Clean;FormListEditorp2:Clean;ComponentListEditorp2:Clean;pjhOIPackage2:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="HiMECSWatch2:Make;HiMECSWatch2_NoBpl:Make;DesignManagerDock2:Make;FormListEditorp2:Make;ComponentListEditorp2:Make;pjhOIPackage2:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

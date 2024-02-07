@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.385,E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\UnitFormListEditor.pas=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_FormListEditor\FrmFormListEditor.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.529,E:\pjh\project\util\HiMECS\Application\Source\Common\HiMECSFormCollect.pas=</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.pas,E:\vclbackup\dpk\공개Pack\Jedi\jvcl\examples\JvFileListBox\FileListBoxMainFormU.pas=E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\UnitBPLListEditor.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.dproj,E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\BPLListEditorp.dproj=E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\FormListEditorp.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.dfm,E:\vclbackup\dpk\공개Pack\Jedi\jvcl\examples\JvFileListBox\FileListBoxMainFormU.dfm=E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\UnitBPLListEditor.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.294,E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\FormListEditorp.dproj=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_FormListEditor\FormListEditorp2.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.351,E:\pjh\project\util\HiMECS\Application\Source\Common\BaseConfigCollect.pas=</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.385,E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\UnitFormListEditor.dfm=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_FormListEditor\FrmFormListEditor.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.dproj,E:\vclbackup\dpk\공개Pack\Jedi\jvcl\examples\JvFileListBox\FileDirDemo.dproj=E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\BPLListEditorp.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.dfm,E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\UnitBPLListEditor.dfm=E:\pjh\project\util\HiMECS\Application\Utility\BPLListEditor\UnitFormListEditor.dfm</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="-1" SortType="1"/>
+</BorlandProject>

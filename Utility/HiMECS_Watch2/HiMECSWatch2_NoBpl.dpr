@@ -54,7 +54,10 @@ uses
   pjhBalloonCompIntf in '..\..\..\..\..\..\..\project\util\VisualComm\Component\pjhDelphiStandardComp\pjhBalloonCompIntf.pas',
   Delphi.Mocks.Helpers in '..\..\..\..\OpenSrc\lib\Delphi-Mocks-master\Source\Delphi.Mocks.Helpers.pas' {$R *.res},
   JHP.BaseCommandLineOption in '..\..\..\..\Common\JHP.BaseCommandLineOption.pas',
-  HiMECSConst2 in '..\..\Source\Common\HiMECSConst2.pas';
+  HiMECSConst2 in '..\..\Source\Common\HiMECSConst2.pas',
+  frmDesignManagerDockUnit2 in '..\..\..\VisualComm2\frmDesignManagerDockUnit2.pas' {frmDesignManagerDock},
+  frmDocBplUnit in '..\..\..\..\..\..\..\project\util\VisualComm\frmDocBplUnit.pas' {frmDoc},
+  FrmpjhObjectInspector2 in '..\..\..\VisualComm2\FrmpjhObjectInspector2.pas' {frmProps};
 
 {$R *.res}
 
@@ -77,6 +80,7 @@ begin
 //    end;
   {$ENDIF}
   //Application.ShowMainForm := False;
+  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TWatchF2, WatchF2);
   Application.Run;

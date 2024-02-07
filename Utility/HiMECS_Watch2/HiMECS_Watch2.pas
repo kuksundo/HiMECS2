@@ -31,7 +31,7 @@ unit HiMECS_Watch2;
 }
 //{$DEFINE USE_PACKAGE}//HiMECS.inc file로 대체함
 //HiMECS_Watch2_Nobpl.exe 실행시에는 HiMECS.inc 내용 중에  {$DEFINE USE_PACKAGE}를 Comment 처리 한 후 실행 해야 함
-{$I HiMECS.inc}
+//{$I HiMECS.inc}
 
 interface
 
@@ -72,10 +72,12 @@ uses
 
 {$IFDEF NOUSE_PACKAGE} //NoBpl.exe Compile시 필요함(Class not found 해결책)
   //for pjhDelphiStandard
+  ,pjhDelphiStandardCompList
   ,pjhDelphiStandardCompConst, pjhTPanel, pjhTImage, pjhTBevel, pjhTGridPanel,
   pjhTLedPanel, pjhTShadowButton,
 
   //for pjhIOCompStd
+  pjhIOCompStdList,
   pjhIOCompStdConst, pjhiAnalogDisplay, pjhiAnalogOutPut, pjhiAngularGauge,
   pjhiEdit, pjhiGradient, pjhiIntegerOutput, pjhiKnob, pjhiLabel, pjhiLedBar,
   pjhiLedRectangle, pjhiLedRound, pjhiLedSpiral, pjhiLinearGauge, pjhiOdometer,
@@ -84,15 +86,18 @@ uses
   pjhiSwitchRotary, pjhiSwitchSlider, pjhiSwitchToggle, pjhiThermoMeter,
 
   //for IOCompPro
+  pjhIOCompProList,
   pjhIOCompProConst, pjhiAngularLogGauge, pjhiCompass, pjhiDualCompass,
   pjhiLCDMatrix, pjhiLedArrow, pjhiLedDiamond, pjhiLogGauge, pjhiMotor,
   pjhiPanel, pjhiPipe, pjhiPipeJoint, pjhiRotationDisplay, pjhiSlidingScale,
   pjhiSwitchLever, pjhiSwitchRocker, pjhiTank, pjhiValve,
 
   //for pjhTMSComp
+  pjhTMSCompList,
   pjhTMSCompConst, pjhadvProgressBar, pjhadvCircularProgress,
 
   //for pjhTMSSmoothComp
+  pjhTMSSmoothCompList,
   pjhTMSSmoothCompConst, pjhadvSmoothGauge, pjhadvSmoothLabel, pjhadvSmoothPanel,
   pjhadvSmoothTrackBar, pjhadvSmoothStatusIndicator, pjhadvSmoothProgressBar,
   pjhadvSmoothToggleButton, pjhadvSmoothLedLabel, pjhadvSmoothExpanderPanel,
@@ -100,21 +105,25 @@ uses
   pjhadvSmoothCalculatorDropDown,
 
   //for pjhJvComp
-  pjhJvCompConst, JvGIFCtrl, pjhTJvLabel, pjhTJvTransparentButton,
+  pjhJvCompList, pjhJvCompConst, JvGIFCtrl, pjhTJvLabel, pjhTJvTransparentButton,
 
   //for pjhxIOComp
+  pjhxIOCompList,
   pjhxIOCompConst, pjhiLedArrow_pjh, pjhiMotor_pjh, pjhiPipe_pjh,
   pjhiPipeJoint_pjh, pjhiTank_pjh, pjhiValve_pjh, pjhjvGIFAnimator_pjh,
   pjhiPanel_jvGIFAni_pjh, pjhiValve2_pjh, pjhiTank2_pjh, pjhiPipeJoint2_pjh,
   pjhiPipe2_pjh
+
+  ,frmDesignManagerDockUnit2, pjhObjectInspectorBpl
+
 {$ENDIF}
 
-// {$IFDEF USE_PACKAGE}
-  //, pjhFlowChartCompnents
-// {$ELSE}
-//  ,frmDesignManagerDockUnit, CalcExpress, pjhTShadowButton,
-// {$ENDIF}
-  , UnitFrameWatchGrid2, UnitFrameIPCMonitorAll2, pjhDesignCompIntf
+{$IFDEF USE_PACKAGE}
+  , pjhFlowChartCompnents
+{$ELSE}
+{$ENDIF}
+  ,pjhDesignCompIntf, UnitFrameWatchGrid2, UnitFrameIPCMonitorAll2, CalcExpress,
+  iAnalogDisplay
  ;
 
 Const
@@ -538,6 +547,8 @@ type
 
     FIgnorePageCloseConfirm: Boolean;//True: Design Form Close시 확인 창 팝업 방지
     FIsLoadingDFC: Boolean;
+    //Normal Stop 시 WMClose() 두번 실행되어 Runtime Error 발생하는 것 방지하기 위함 -> UnloadAddInPackage() 실행 막아서 해결함
+//    FWatchFormClosed: Boolean;
 //    FgpSharedMM: TGpSharedMemory;
 //    FGpSharedEventProducer: TGpSharedEventProducer;
 //    FGpSharedEventListener: TGpSharedEventListener;
@@ -1102,7 +1113,10 @@ begin
   FMonitorStart := False;
   FFirst := True;
 
+{$IFDEF USE_PACKAGE}
   LoadDesignComponentPackageAll;
+{$ELSE}
+{$ENDIF}
 
   FCurrentAryIndex := 0;
   FCurrentEPIndex4Watch := -1;
@@ -1836,7 +1850,7 @@ var
 begin
   if FPackageModules[0] = 0 then
 {$IFDEF USE_PACKAGE}
-    FPackageModules[0] := LoadPackage('..\Forms\DesignManagerDock.bpl');
+    FPackageModules[0] := LoadPackage('..\Forms\DesignManagerDock2.bpl');
 {$ELSE}
     FPackageModules[0] := 1;
 {$ENDIF};
@@ -4102,6 +4116,9 @@ begin
   Timer1.Enabled := False;
   SendMessage(FOwnerHandle, WM_WATCHFORM_CLOSE, FOwnerListIndex, 0);
 
+  if Assigned(FDesignManagerForm) then //Design Form에 Watch2 Close를 알려서 메모리 해제를 하기 위함
+    SendMessage(FDesignManagerForm.Handle, WM_WATCHFORM_CLOSE, FOwnerListIndex, 0);
+
   FTopologicalSortItemList.Free;
   FPipeFlowTreeList.Free;
   FCommandLine.Free;
@@ -4213,20 +4230,24 @@ begin
 
   if Assigned(FPackageModules) then
   begin
-    for i := Low(FPackageModules) to High(FPackageModules) do
-      if FPackageModules[i] <> 0 then
-        UnloadAddInPackage(TComponent(Self), HMODULE(FPackageModules[i]));
-        //UnloadPackage(FPackageModules[i]);
+{$IFDEF USE_PACKAGE}
+//아래 루틴 실행하면 종료시 runtime error 발생함
+//    for i := Low(FPackageModules) to High(FPackageModules) do
+//      if FPackageModules[i] <> 0 then
+//        UnloadAddInPackage(TComponent(Self), HMODULE(FPackageModules[i]));
+{$ENDIF}
 
     FPackageModules := nil;
   end;
 
   if Assigned(FPackageHandles) then
   begin
-    for i := Low(FPackageHandles) to High(FPackageHandles) do
-      if FPackageHandles[i] <> 0 then
-        UnloadAddInPackage(TComponent(Self), HMODULE(FPackageHandles[i]));
-        //UnloadPackage(FPackageModules[i]);
+{$IFDEF USE_PACKAGE}
+//아래 루틴 실행하면 종료시 runtime error 발생함
+//    for i := Low(FPackageHandles) to High(FPackageHandles) do
+//      if FPackageHandles[i] <> 0 then
+//        UnloadAddInPackage(TComponent(Self), HMODULE(FPackageHandles[i]));
+{$ENDIF}
     FPackageHandles := nil;
   end;
 
@@ -5352,7 +5373,11 @@ end;
 
 procedure TWatchF2.WMClose(var Msg: TMessage);
 begin
-  Close;
+//  if not FWatchFormClosed then
+//  begin
+//    FWatchFormClosed := True;
+    Close;
+//  end;
 end;
 
 procedure TWatchF2.WMCopyData(var Msg: TMessage);

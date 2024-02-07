@@ -1,1 +1,17 @@
-b¿–`çéED‰6ÚUÇ?‹ jj•%ZW3lÑLÖ·ÓâÆCÆo™EŞ­êGp»	)ùøŠ§©ÇÚı‘Arä¿‚(&kPnJó»Û^8Å|¢©˜ã«(ãÿÕá{#²’ê1nå·¤¹­´0`{9ğE`€¢bò²Ê=Ô#ÿ‘ÿXRò4IwÿÅšK®Áù6Í6H‚_;¼`RmSˆÎ‚ã-«‡UŞÕ¸Oz«1=ØBñd+-¥ª¹«2q¼>íÁ%qªÏây¢O4„zM =×“Fú!ã—²Úæª KfBÏ^Äà,ˆ~cŒ¥]¨ßÔ•ı©<¡†İF‰(iv°~š0¾¸+ÿšñÉMğÕpÉŸŞ\ÀKS|8L qëMc±¢ ¤óóúßrX÷·
+
+<THiMECSForms>
+	<PackageCollect>
+		<THiMECSFormItem>
+			<AllowLevel>0</AllowLevel>
+			<PackageName>DesignManagerDock2.bpl</PackageName>
+			<FilePath></FilePath>
+			<CreateFuncName>Create_DesignManagerDock2</CreateFuncName>
+		</THiMECSFormItem>
+		<THiMECSFormItem>
+			<AllowLevel>0</AllowLevel>
+			<PackageName>pjhOIPackage2.bpl</PackageName>
+			<FilePath></FilePath>
+			<CreateFuncName>Create_pjhOIPackage2</CreateFuncName>
+		</THiMECSFormItem>
+	</PackageCollect>
+</THiMECSForms>

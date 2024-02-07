@@ -1,0 +1,6 @@
+ExtLib_D_DXE5_2.bpl
+F1_pjhPackageUnits2.bpl
+F2_pjhPackageUnits2.bpl
+xIOComp2.bpl
+DesignManagerDock2.bpl
+pjhOIPackage2.bpl
