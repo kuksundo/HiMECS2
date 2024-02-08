@@ -331,6 +331,9 @@ type
     FindComponentByName1: TMenuItem;
     FindComponentByTagName1: TMenuItem;
     N26: TMenuItem;
+    SaveWatchListtoZipFile1: TMenuItem;
+    N27: TMenuItem;
+    LoadWatchListFromZipFile1: TMenuItem;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -464,6 +467,8 @@ type
     procedure FindComponentByName1Click(Sender: TObject);
     procedure CheckCircularofNextStep1Click(Sender: TObject);
     procedure FindComponentByTagName1Click(Sender: TObject);
+    procedure SaveWatchListtoZipFile1Click(Sender: TObject);
+    procedure LoadWatchListFromZipFile1Click(Sender: TObject);
   private
     FFilePath: string;      //파일을 저장할 경로
     FProgramMode: TProgramMode;
@@ -605,7 +610,7 @@ type
             Interval : Cardinal; ElapsedTime : LongInt);
 
     procedure GetEngineParameterFromSavedWatchListFile(AFileName: string;
-      AAutoStart, AOnlyOneFormOpen: Boolean);
+      AAutoStart, AOnlyOneFormOpen: Boolean; AIsZipFile: Boolean=False);
     function GetTagNameFromDescriptor(ADescriptor: string): string;
     procedure DeleteEngineParamterFromGrid(AIndex: integer);
 
@@ -840,13 +845,17 @@ type
     procedure SetAlarm4OriginalOption(AValue: double; AEPIndex: integer);
     procedure SetAlarm4ThisOption(AValue: double);
     procedure SaveWatchList(AFileName: string; ASaveRelativeFolder: Boolean;
+      AIsOneFormMode: Boolean; AIsZipFile: Boolean=False);
+    procedure SaveWatchList2Zip(AZipFileName: string; ASaveRelativeFolder: Boolean;
       AIsOneFormMode: Boolean);
     procedure SetWatchFormState2Param(AParam: TEngineParameter);
     procedure GetWatchFormStateFromParam2Form(AParam: TEngineParameter);
-    procedure SaveDesignForm(AFileName: string; AIsOnlyOneForm: Boolean=False);
+    procedure SaveDesignForm(AFileName: string; AIsOnlyOneForm: Boolean=False; AIsZipFile: Boolean=False);
     procedure SaveOnlyDFMofCurPage(AFileName: string);
-    procedure SaveItemsToFile(AFileName: string=''; APropmtSaveConfirm: Boolean=False);
-    procedure LoadDesignForm(const AFileName: string; AOnlyOneFormOpen: Boolean);
+    procedure SaveItemsToFile(AFileName: string=''; APropmtSaveConfirm: Boolean=False; AIsZipFile: Boolean=False);
+    procedure SaveDFM2Zip(const AZipFileName, ADfmFileName: string; const AControl: TWinControl);
+    procedure LoadDesignForm(const AFileName: string; AOnlyOneFormOpen: Boolean; AIsZipFile: Boolean=False);
+    procedure LoadDesignFormFromZipFile(const AFileName: string);
     procedure LoadDesignFormFromMenu(AFileName: string; AIsFromdfc: Boolean);
     procedure LoadDesignFormFromDFM(AFileName: string);
     procedure LoadDesignFormFromDFCByPageIndex(APageIndex: integer);//*_dfc파일에서 PageIndex를 이용하여 DFM Load 함
@@ -932,7 +941,7 @@ uses CommonUtil, UnitAxisSelect, UnitCopyWatchList2, frmMainInterface, FrmInputE
   UnitVesselData2, UnitBase64Util2, UnitRevFlowInterface,
   UnitSimulateParamCommandLineOption2, UnitRttiUtil2, UnitDFMUtil, XSuperObject,
   FrmStringsEdit, UnitSimulateCommonData, sndkey32, UnitTransparentBtnInterface,
-  JHP.Util.Bit, UnitJHCustomComponent, pjhBalloonCompIntf;
+  JHP.Util.Bit, UnitJHCustomComponent, pjhBalloonCompIntf, UnitZipFileUtil;
 
 {$R *.dfm}
 
@@ -1545,7 +1554,8 @@ end;
 
 //동적으로 생성한 디자인 폼을 파일로부터 읽어들임
 //AFileName: Watchlist 파일 이름임. + _pageIndex 를 붙여서 파일을 읽어 들임
-procedure TWatchF2.LoadDesignForm(const AFileName: string; AOnlyOneFormOpen: Boolean);
+procedure TWatchF2.LoadDesignForm(const AFileName: string;
+  AOnlyOneFormOpen: Boolean; AIsZipFile: Boolean);
 var
   i,j: integer;
   LStr, LFileName, LDFName, LOriginalFilePath, LFilePath: string;
@@ -1676,6 +1686,11 @@ begin
     LoadDesignForm(AFileName, False)
   else
     ;
+end;
+
+procedure TWatchF2.LoadDesignFormFromZipFile(const AFileName: string);
+begin
+
 end;
 
 procedure TWatchF2.LoadDesignFormFromDFCByPageIndex(APageIndex: integer);
@@ -2094,6 +2109,22 @@ begin
   end;
 end;
 
+procedure TWatchF2.LoadWatchListFromZipFile1Click(Sender: TObject);
+begin
+  JvOpenDialog1.InitialDir := RelToAbs(WatchListPath, FFilePath);
+  JvOpenDialog1.Filter := '*.*';
+
+  if JvOpenDialog1.Execute then
+  begin
+    if jvOpenDialog1.FileName <> '' then
+    begin
+      WatchListFileName := ExtractFileName(jvOpenDialog1.FileName);
+      FCommandLine.IsOnlyOneForm := False;
+      GetEngineParameterFromSavedWatchListFile(jvOpenDialog1.FileName, False, FCommandLine.IsOnlyOneForm, True);
+    end;
+  end;
+end;
+
 procedure TWatchF2.LockUnLockValue2Screen(AIsLock: Boolean);
 begin
   FEnterWatchValue2Screen := AIsLock;
@@ -2189,7 +2220,8 @@ end;
 
 //동적으로 생성한 디자인 폼을 저장함
 //AFileName: Watchlist 파일 이름임. + _pageIndex 를 붙여서 저장함
-procedure TWatchF2.SaveDesignForm(AFileName: string; AIsOnlyOneForm: Boolean);
+procedure TWatchF2.SaveDesignForm(AFileName: string; AIsOnlyOneForm: Boolean;
+  AIsZipFile: Boolean);
 var
   i,j: integer;
   LPanel: TpjhPanel;
@@ -2236,7 +2268,10 @@ begin
         //1이면 Design Mode임을 뜻합. 저장시에는 0으로 초기화 함. LoadDFM 실행 시 Tag도 Update 되기 때문임
         //LPanel은 DFM File에 저장되기 때문에 TDesignPanel에 Active여부 저장하는 걸로 수정함 : 2022.10.22
         //        LPanel.Tag := 0;
-        SaveToDFM2(LStr, TWinControl(LPanel));//Change by pjh 2021.11.3 Text Format으로 저장함
+        if AIsZipFile then
+          SaveDFM2Zip(AFileName, LStr, TWinControl(LPanel))
+        else
+          SaveToDFM2(LStr, TWinControl(LPanel));//Change by pjh 2021.11.3 Text Format으로 저장함
 //          SaveComponentToFile(TComponent(LPanel), LStr);
 
         if not AIsOnlyOneForm then
@@ -2264,7 +2299,8 @@ begin
         FDesignFormConfig.BorderStyle := ord(BorderStyle);
         FDesignFormConfig.TabHeight := PageControl1.TabSettings.Height;
 
-        FDesignFormConfig.SaveToFile(AFileName + DESIGNFORM_FILENAME);
+        FDesignFormConfig.SaveToZipFile(AFileName, AFileName + DESIGNFORM_FILENAME);
+//        FDesignFormConfig.SaveToFile(AFileName + DESIGNFORM_FILENAME);
       end;
     finally
       FreeAndNil(LBplFileNameList);
@@ -2372,7 +2408,7 @@ begin
   end;
 end;
 
-procedure TWatchF2.SaveItemsToFile(AFileName: string; APropmtSaveConfirm: Boolean);
+procedure TWatchF2.SaveItemsToFile(AFileName: string; APropmtSaveConfirm: Boolean; AIsZipFile: Boolean);
 begin
 //  SetCurrentDir(FFilePath);
 //  JvSaveDialog1.InitialDir := RelToAbs(WatchListPath, FFilePath);
@@ -2397,6 +2433,10 @@ begin
   if not FIsMDIChileMode then
     SetWatchFormState2Param(IPCMonitorAll1.FEngineParameter);
 
+  if AIsZipFile then
+    IPCMonitorAll1.FEngineParameter.SaveToZipFile(AFileName, AFileName,
+              ExtractFileName(AFileName),FConfigOption.EngParamEncrypt)
+  else
   if FConfigOption.EngParamFileFormat = 0 then //JSON format
     IPCMonitorAll1.FEngineParameter.SaveToJSONFile(AFileName,
               ExtractFileName(AFileName),FConfigOption.EngParamEncrypt)
@@ -2515,7 +2555,7 @@ begin
 end;
 
 procedure TWatchF2.SaveWatchList(AFileName: string; ASaveRelativeFolder: Boolean;
-  AIsOneFormMode: Boolean);
+  AIsOneFormMode: Boolean; AIsZipFile: Boolean=False);
 var
   i, LChCount: integer;
   LStr, LWatchListPath: string;
@@ -2612,12 +2652,114 @@ begin
   else
     LStr := LWatchListPath+AFileName;
 
-  SaveItemsToFile(LStr);
+  SaveItemsToFile(LStr, False, AIsZipFile);
 
   if not AIsOneFormMode then
     SaveWatchListFileOfSummary(LStr);
 
-  SaveDesignForm(LStr, AIsOneFormMode);
+  SaveDesignForm(LStr, AIsOneFormMode, AIsZipFile);
+end;
+
+procedure TWatchF2.SaveWatchList2Zip(AZipFileName: string; ASaveRelativeFolder,
+  AIsOneFormMode: Boolean);
+var
+  i, LChCount: integer;
+  LStr, LWatchListPath: string;
+  LUser, LUser2: THiMECSUserLevel;
+  LDeleteFileList : TStringList;
+begin
+  if ASaveRelativeFolder then
+  begin
+    LWatchListPath := ExtractFilePath(ExtractRelativePathBaseApplication(FFilePath, AZipFileName));//WatchListPath;
+    AZipFileName := ExtractFileName(AZipFileName);
+  end
+  else
+    LWatchListPath := '';
+
+  //Administrator 이상의 권한만 저장 가능함
+  if (IPCMonitorAll1.FCurrentUserLevel <= HUL_Administrator) and
+      (AllowUserlevelCB.Enabled) and (AllowUserlevelCB.Text <> '') then
+  begin
+    i := Length(AZipFileName);
+    LStr := System.Copy(AZipFileName,i,1);
+
+    if LStr <> '' then
+    begin
+      i := StrToIntDef(LStr,-1);
+      //사용자 지정 파일 이름이면 끝문자가 숫자가 아닐 수 있음
+      if i <> -1 then
+      begin
+        LUser := THiMECSUserLevel(i);
+        LUser2 := String2UserLevel(AllowUserlevelCB.Text);
+
+        if LUser2 <> LUser then  //ComboBox User Level과 filename의 user level 비교
+        begin
+          if FileExists(LWatchListPath+AZipFileName) then
+          begin
+            if MessageDlg('ComboBox User and FileName user level are different.'+#13#10+'Change file name to ComboBox User Level?',
+                                        mtConfirmation, [mbYes, mbNo], 0)= mrYes then
+            begin
+              LDeleteFileList := TStringList.Create;
+              try
+                GetFiles(LDeleteFileList, LWatchListPath+AZipFileName);
+                for i := 0 to LDeleteFileList.Count - 1 do
+                  ;//DeleteFile(LDeleteFileList.Strings[i]);
+              finally
+                LDeleteFileList.Free;
+              end;
+
+              //DeleteFile(LWatchListPath+AFileName);
+              AZipFileName := formatDateTime('yyyymmddhhnnsszz',now)+
+              IntToStr(FConfigOption.EngParamFileFormat) + IntToStr(Ord(LUser2));
+            end;
+          end;
+        end;
+      end;//if LUser <> -1
+    end;
+
+    IPCMonitorAll1.FEngineParameter.AllowUserLevelWatchList := String2UserLevel(AllowUserlevelCB.Text);
+  end
+  else
+    IPCMonitorAll1.FEngineParameter.AllowUserLevelWatchList := IPCMonitorAll1.FCurrentUserLevel;
+
+  IPCMonitorAll1.FEngineParameter.ExeName := ExtractFileName(Application.ExeName);
+
+  LChCount := 0;
+
+  for i := 0 to IPCMonitorAll1.FEngineParameter.EngineParameterCollect.Count - 1 do
+  begin
+    if IPCMonitorAll1.FEngineParameter.EngineParameterCollect.Items[i].IsDisplayTrend then
+    begin
+      IPCMonitorAll1.FEngineParameter.EngineParameterCollect.Items[i].YAxesMinValue :=
+            iPlot1.YAxis[LChCount].Min;
+      IPCMonitorAll1.FEngineParameter.EngineParameterCollect.Items[i].YAxesSpanValue :=
+            iPlot1.YAxis[LChCount].Span;
+      Inc(LChCount);
+    end;
+  end;
+
+  if LWatchListPath <> '' then
+  begin
+    SetCurrentDir(FFilePath);
+    if not setcurrentdir(LWatchListPath) then
+      createdir(LWatchListPath);
+  end;
+
+  SetCurrentDir(FFilePath);
+
+  if AZipFileName = '' then //file name 앞에 프로그램명(1=HiMECS_Watch2.exe) 붙임
+    LStr := LWatchListPath+formatDateTime('1yyyymmddhhnnsszz',now)+
+      IntToStr(FConfigOption.EngParamFileFormat) +
+      IntToStr(Ord(IPCMonitorAll1.FEngineParameter.AllowUserLevelWatchList))
+  else
+    LStr := LWatchListPath+AZipFileName;
+
+  SaveItemsToFile(LStr, False, True);
+
+  if not AIsOneFormMode then
+    SaveWatchListFileOfSummary(LStr);
+
+  SaveDesignForm(LStr, AIsOneFormMode, True);
 end;
 
 procedure TWatchF2.SaveWatchListFileOfSummary(AFileName: string);
@@ -2636,6 +2778,28 @@ begin
 //    FreeAndNil(LFSI);
 //    LFS.Free;
 //  end;
+end;
+
+procedure TWatchF2.SaveWatchListtoZipFile1Click(Sender: TObject);
+var
+  LFileName: string;
+begin
+//  SetCurrentDir(FFilePath);
+  JvSaveDialog1.InitialDir := RelToAbs(WatchListPath, FFilePath);
+
+  if JvSaveDialog1.Execute then
+  begin
+    LFileName := JvSaveDialog1.FileName;
+
+    if FileExists(LFileName) then
+    begin
+      if MessageDlg('File is already existed. Are you overwrite? if No press, then the data is not saved!.',
+      mtConfirmation, [mbYes, mbNo], 0)= mrNo then
+        exit;
+    end;
+  end;
+
+  SaveWatchList(LFileName, True, FCommandLine.IsOnlyOneForm, True);
 end;
 
 procedure TWatchF2.SaveWatchLittoNewName1Click(Sender: TObject);
@@ -4179,8 +4343,6 @@ begin
 
   FWatchHandles := nil;
 
-  IPCAll_Final;
-
   FCriticalSection.Free;
 
   ObjFree(FAddressMap);
@@ -4258,6 +4420,7 @@ begin
 
 //  FTaskPool.Finalize;
 //  FTaskPool.Free;
+  IPCAll_Final;
 
   if FIsAutoFree then
     Action := caFree;
@@ -9033,7 +9196,7 @@ end;
 //AAutoStart: True = 프로그램 시작시에 watch file name을 parameter로 입력받는 경우
 //            False = LoadFromFile 메뉴로 실행되는 경우
 procedure TWatchF2.GetEngineParameterFromSavedWatchListFile(AFileName: string;
-  AAutoStart, AOnlyOneFormOpen: Boolean);
+  AAutoStart, AOnlyOneFormOpen: Boolean; AIsZipFile: Boolean);
 var
   i,j,k: integer;
   LStr: string;
@@ -9053,7 +9216,7 @@ begin
     SetWatchListFileName(AFileName);
 
     FWG.GetItemsFromParamFile2Collect(AFileName, FConfigOption.EngParamFileFormat,
-                FConfigOption.EngParamEncrypt, FIsMDIChileMode);
+                FConfigOption.EngParamEncrypt, FIsMDIChileMode, nil, AIsZipFile);
 
     FWG.NextGrid1.ClearRows;
     iPlot1.RemoveAllChannels;
@@ -9083,7 +9246,10 @@ begin
     //아래 루틴을 GetEngineParameterFromSavedWatchListFile 함수 call 위치로 옮김
 //      FCommandLine.IsOnlyOneForm := AOnlyOneFormOpen;
 
-    LoadDesignForm(AFileName+DESIGNFORM_FILENAME, AOnlyOneFormOpen);
+    if AIsZipFile then
+      LoadDesignFormFromZipFile(AFileName+DESIGNFORM_FILENAME)
+    else
+      LoadDesignForm(AFileName+DESIGNFORM_FILENAME, AOnlyOneFormOpen);
 
     FWG.NextGrid1.BeginUpdate;
     FIsLoadingDFC := True;
@@ -9642,8 +9808,19 @@ begin
   SaveTextDFM2BinDFM(LTextFileName, LBinFileName, TWincontrol(LPanel));
 end;
 
+procedure TWatchF2.SaveDFM2Zip(const AZipFileName, ADfmFileName: string;
+  const AControl: TWinControl);
+var
+  LDFMStream: TStringStream;
+begin
+//  LDFMStream := TStringStream.Create;
+  try
+    LDFMStream := GetStringStreamFromControl(AControl);
+    AddStream2Zip(AZipFileName, ADfmFileName, LDFMStream);
+  finally
+    LDFMStream.Free;
+  end;
+end;
+
 end.
-
-
-
-
+

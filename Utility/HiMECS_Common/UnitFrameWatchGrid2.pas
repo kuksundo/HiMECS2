@@ -165,7 +165,8 @@ type
     procedure UpdateGridFromEngParam2Index(AEPItem: TEngineParameterItem; AIdx: integer);
     procedure GetItemsFromParamFile2Collect(AFileName: string; AEngParamFileFormat: integer;
                           AEngParamEncrypt: Boolean; AIsMDIChileMode: Boolean = False;
-                          AEngParam: TEngineParameter=nil);
+                          AEngParam: TEngineParameter=nil;
+                          AIsZipFile: Boolean=False);
     function GetTagNameFromGrid(AIdx: integer): string;
     function GetItemIndexFromGrid(ATagName: string): integer;
     function GetItemIndexFromFindNext(ATagName: string; AIgnoreCase: Boolean=True): integer;
@@ -1111,7 +1112,7 @@ end;
 
 procedure TFrameWatchGrid2.GetItemsFromParamFile2Collect(AFileName: string;
   AEngParamFileFormat: integer; AEngParamEncrypt, AIsMDIChileMode: Boolean;
-  AEngParam: TEngineParameter);
+  AEngParam: TEngineParameter; AIsZipFile: Boolean);
 begin
   if AEngParam = nil then
     AEngParam := FIPCMonitorAll.FEngineParameter;
@@ -1149,6 +1150,10 @@ begin
   end
   else
   begin
+    if AIsZipFile then
+      AEngParam.LoadFromZipFile(AFileName, AFileName,
+        ExtractFileName(AFileName),AEngParamEncrypt)
+    else
     if AEngParamFileFormat = 0 then //JSON format
       AEngParam.LoadFromJSONFile(AFileName,
         ExtractFileName(AFileName),AEngParamEncrypt)

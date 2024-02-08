@@ -511,7 +511,7 @@ object WatchF2: TWatchF2
         end
         inherited ImageList1: TImageList
           Bitmap = {
-            494C010106000900280410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+            494C010106000900300410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
             0000000000003600000028000000400000002000000001002000000000000020
             0000000000000000000000000000000000000000000000000000000000000000
             000040B0C00040C0C00030B0C00030B0C00030B0C00030B0B00030A8B00030A8
@@ -2344,9 +2344,20 @@ object WatchF2: TWatchF2
       Hint = 'Watch List'#50640#49436' '#54620#44060#51032' '#54268#47564' Load'#54632
       OnClick = LoadOneFormFromWatchList1Click
     end
+    object LoadWatchListFromZipFile1: TMenuItem
+      Caption = 'Load Watch List From Zip File'
+      OnClick = LoadWatchListFromZipFile1Click
+    end
+    object N27: TMenuItem
+      Caption = '-'
+    end
     object SaveWatchLittoNewName1: TMenuItem
       Caption = 'Save Watch List to New Name'
       OnClick = SaveWatchLittoNewName1Click
+    end
+    object SaveWatchListtoZipFile1: TMenuItem
+      Caption = 'Save Watch List to ZipFile'
+      OnClick = SaveWatchListtoZipFile1Click
     end
     object N17: TMenuItem
       Caption = '-'
