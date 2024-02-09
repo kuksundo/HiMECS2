@@ -1,0 +1,1 @@
+ShellExecute(".\HiMECSWatch2_NoBpl.exe", "/skipReg /DecKind=123 /Masterpw:7beAJ75XB5nPZWDD714cJQ== /IsZip /OneForm /p:.\HiMECS-LOP-A2")

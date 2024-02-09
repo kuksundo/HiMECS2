@@ -15,7 +15,8 @@ type
     : string;
 
     FSkipRegCheck, //Reg check skip을 위해서는 Master Passwd를 전달해 주어야 함
-    FDeleteRegInfo
+    FDeleteRegInfo,
+    FIsZip //dfc 파일이 zip 파일 내에 존재한 경우 True
     : Boolean;
 
     FDecryptKind4SkipRegCheck //Skip Reg Check 시 암호를 Decrypt하는 방법 선택
@@ -70,6 +71,9 @@ type
     property DeleteRegInfo: boolean read FDeleteRegInfo write FDeleteRegInfo;
     [CLPName('DecKind'), CLPDescription('Decrypt Method for master passwd of Skip Reg Check'), CLPDefault('0')]
     property DecryptKind4SkipRegCheck: integer read FDecryptKind4SkipRegCheck write FDecryptKind4SkipRegCheck;
+
+    [CLPLongName('IsZip', 'IsFromZipFile'), CLPDescription('Load form from zip file')]
+    property IsZip: boolean read FIsZip write FIsZip;
   end;
 
   TConfigOptionCollect = class;

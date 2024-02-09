@@ -37,7 +37,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  system.Generics.Collections,
+  system.Generics.Collections, System.Zip,
   Dialogs, ComCtrls, iComponent, iVCLComponent, iCustomComponent, Vcl.AppEvnts,
   iPlotComponent, iPlot, StdCtrls, ExtCtrls,SyncObjs, iniFiles, DeCALIO,
   Menus, iProgressComponent, iLedBar, ShadowButton, SuperStream,//janSQL,
@@ -334,6 +334,7 @@ type
     SaveWatchListtoZipFile1: TMenuItem;
     N27: TMenuItem;
     LoadWatchListFromZipFile1: TMenuItem;
+    LoadOneFormFromZipFile1: TMenuItem;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -469,6 +470,7 @@ type
     procedure FindComponentByTagName1Click(Sender: TObject);
     procedure SaveWatchListtoZipFile1Click(Sender: TObject);
     procedure LoadWatchListFromZipFile1Click(Sender: TObject);
+    procedure LoadOneFormFromZipFile1Click(Sender: TObject);
   private
     FFilePath: string;      //파일을 저장할 경로
     FProgramMode: TProgramMode;
@@ -837,11 +839,13 @@ type
     procedure CreateIPCMonitor(AEP_DragDrop: TEngineParameterItemRecord; ADragCopyMode: TParamDragCopyMode = dcmCopyOnlyNonExist);
 
     function GetFileNameFromWatchList: string;
-    procedure LoadConfigDataXml2Var(AFileName: string = '');
+    function Make_Dfc_FileName(var AFileName: string): boolean;
+    procedure LoadConfigData2Var(AFileName: string = '');
     procedure LoadConfigDataVar2Form(AMonitorConfigF : TWatchConfigF);
     procedure SaveConfigData2Xml;
     procedure SaveConfigDataForm2Xml(AMonitorConfigF : TWatchConfigF);
     procedure SetConfigData;
+
     procedure SetAlarm4OriginalOption(AValue: double; AEPIndex: integer);
     procedure SetAlarm4ThisOption(AValue: double);
     procedure SaveWatchList(AFileName: string; ASaveRelativeFolder: Boolean;
@@ -850,21 +854,27 @@ type
       AIsOneFormMode: Boolean);
     procedure SetWatchFormState2Param(AParam: TEngineParameter);
     procedure GetWatchFormStateFromParam2Form(AParam: TEngineParameter);
+
     procedure SaveDesignForm(AFileName: string; AIsOnlyOneForm: Boolean=False; AIsZipFile: Boolean=False);
     procedure SaveOnlyDFMofCurPage(AFileName: string);
     procedure SaveItemsToFile(AFileName: string=''; APropmtSaveConfirm: Boolean=False; AIsZipFile: Boolean=False);
     procedure SaveDFM2Zip(const AZipFileName, ADfmFileName: string; const AControl: TWinControl);
-    procedure LoadDesignForm(const AFileName: string; AOnlyOneFormOpen: Boolean; AIsZipFile: Boolean=False);
-    procedure LoadDesignFormFromZipFile(const AFileName: string);
+    procedure LoadDesignForm(const AFileName: string; AOnlyOneFormOpen: Boolean);
+    procedure LoadDesignFormAllFromZipFile(const AZipFileName: string; const AOnlyOneFormOpen: Boolean);
+    procedure LoadDesignFormFromZipFile(const AZipFileName, ADfmFileName: string);
+    procedure LoadDesignFormFromOpenedZipFile(AZipFile: TZipFile);
     procedure LoadDesignFormFromMenu(AFileName: string; AIsFromdfc: Boolean);
     procedure LoadDesignFormFromDFM(AFileName: string);
+    procedure LoadDesignFormFromStream(AStream: TStream; const AHint: string);
     procedure LoadDesignFormFromDFCByPageIndex(APageIndex: integer);//*_dfc파일에서 PageIndex를 이용하여 DFM Load 함
     procedure LoadDesignComponentPackage;
     procedure LoadDesignComponentPackageFromOnlyComp(ADfc: TDesignFormConfig);
     procedure LoadDesignComponentPackageAll;
+
     procedure AddBpllist2DFConfig(ABplist: TStringList;ADfc: TDesignFormConfig);
     procedure GetBplNamesFromDesignPanel(ABplNameList: TStringList;
                                         AAdvOfficePage: TAdvOfficePage);
+    procedure AddDesignPanel2PageControl(const ACaption: string);
     procedure IPCAll_Final;
 
     procedure SaveWatchListFileOfSummary(AFileName: string);
@@ -1135,13 +1145,13 @@ begin
   FXYDataIndex[1] := -1;
 
   CommandLineParse(LStr);
-  LoadConfigDataXml2Var(FCommandLine.ConfigFileName);
+  LoadConfigData2Var(FCommandLine.ConfigFileName);
   ApplyOption;
   ApplyCommandLineOption; //Config file load 후 실행해야 Command line option이 적용 됨
 
   if FConfigOption.WatchListFileName <> '' then
   begin
-    GetEngineParameterFromSavedWatchListFile(FConfigOption.WatchListFileName, True, FCommandLine.FIsOnlyOneForm);
+    GetEngineParameterFromSavedWatchListFile(FConfigOption.WatchListFileName, True, FCommandLine.FIsOnlyOneForm, FCommandLine.FIsZip);
     FProgramMode := pmWatchList;
   end;
 
@@ -1350,7 +1360,7 @@ begin
   end;
 end;
 
-procedure TWatchF2.LoadConfigDataXml2Var(AFileName: string);
+procedure TWatchF2.LoadConfigData2Var(AFileName: string);
 var
   LOption: TConfigOption;
 begin
@@ -1555,50 +1565,23 @@ end;
 //동적으로 생성한 디자인 폼을 파일로부터 읽어들임
 //AFileName: Watchlist 파일 이름임. + _pageIndex 를 붙여서 파일을 읽어 들임
 procedure TWatchF2.LoadDesignForm(const AFileName: string;
-  AOnlyOneFormOpen: Boolean; AIsZipFile: Boolean);
+  AOnlyOneFormOpen: Boolean);
 var
   i,j: integer;
-  LStr, LFileName, LDFName, LOriginalFilePath, LFilePath: string;
   LPage: TAdvOfficePage;
   LPanel: TpjhPanel;
+  LDfcFileName, LDFName, LFilePath, LStr: string;
   LIsLoadFrom_dfc: boolean;
 begin
   if FCommandLine.IsOnlyOneForm then
     PageControl1.TabSettings.Height := PageControl1.TabSettings.Height - 1;
 
-  LFileName := AFileName;
-
-  //AFileName의 끝부분에  _dfc가 없으면  추가함
-  LStr := Copy(LFileName, Length(LFileName) - 3, 4);
-  LIsLoadFrom_dfc := Pos(DESIGNFORM_FILENAME, LStr) > 0;
-
-  if not LIsLoadFrom_dfc then
-  begin
-    i := PosRev('_', LFileName);
-
-    if i > 0 then
-      LFileName := Copy(LFileName, 1, i-1);
-
-    LFileName := LFileName + DESIGNFORM_FILENAME;
-  end;
-
-  if not FileExists(LFileName) then
-  begin
-    //ShowMessage(AFileName + ' file not found.');
-    exit;
-  end;
-
-//  LOriginalFilePath := GetCurrentDir();
-  LFileName := RelToAbs(LFIleName, FFilePath);
-//  LFilePath := ExtractFilePath(LFileName);
-//  LFileName := ExtractFileName(LFileName);
-
-//  if LFilePath <> '' then
-//    SetCurrentDir(LFilePath);
+  LDfcFileName := AFileName;
+  LIsLoadFrom_dfc := Make_Dfc_FileName(LDfcFileName);
 
   FDesignFormConfig.DesignFormConfigCollect.Clear;
-  FDesignFormConfig.LoadFromFile(LFileName,'',False);
-  LFilePath := ExtractFilePath(LFileName);
+  FDesignFormConfig.LoadFromFile(LDfcFileName,'',False);
+  LFilePath := ExtractFilePath(LDfcFileName);
 
   for i := 0 to FDesignFormConfig.DesignFormConfigCollect.Count - 1 do
   begin
@@ -1606,7 +1589,7 @@ begin
     LDFName := FDesignFormConfig.DesignFormConfigCollect.Items[i].DesignFormFileName;
     LDFName := ExtractFileName(LDFName);
 
-    if (not LIsLoadFrom_dfc) and (ExtractFileName(LFileName) <> LDFName)then
+    if (not LIsLoadFrom_dfc) and (ExtractFileName(LDfcFileName) <> LDFName)then
       continue;
 
     LStr := FDesignFormConfig.DesignFormConfigCollect.Items[i].DesignFormCaption;
@@ -1616,12 +1599,7 @@ begin
 
     if LIsLoadFrom_dfc then
     begin
-      //PageControl1.RemoveAdvPage(PageControl1.ActivePage);
-      j := PageControl1.AddAdvPage(LStr);
-      PageControl1.ActivePageIndex := j;
-//      LPage := PageControl1.ActivePage;
-//      LPage := PageControl1.AdvPages[j];
-      PageControl1InsertPage(Self, PageControl1.ActivePage); //Design Panel 생성
+      AddDesignPanel2PageControl(LStr);
     end;
 //    else
 //    begin
@@ -1688,9 +1666,136 @@ begin
     ;
 end;
 
-procedure TWatchF2.LoadDesignFormFromZipFile(const AFileName: string);
+procedure TWatchF2.LoadDesignFormFromOpenedZipFile(AZipFile: TZipFile);
 begin
 
+end;
+
+procedure TWatchF2.LoadDesignFormFromStream(AStream: TStream; const AHint: string);
+var
+  LPage: TAdvOfficePage;
+  LPanel: TpjhPanel;
+  LDesignFormConfig: TDesignFormConfig;
+begin
+  LPage := PageControl1.ActivePage;
+  LPanel := TpjhPanel(GetDesignControl(LPage));
+
+  if LPanel.ComponentCount > 0 then
+  begin
+    ShowMessage('This action should be on empty form.'+#13#10+'Try again on new page');
+    exit;
+  end;
+
+  try
+//    LPanel.Hide;
+    LoadDFMFromStream(AStream, TWinControl(LPanel), ReadComponentsProc);
+
+    if FCommandLine.IsOnlyOneForm then
+      //Design Form의 모든 TransparentBtn2의 pjhBtnActionKind = tbakLoadDFMFromFile 로 변경함
+      SetpjhBtnActionKind4TransparentBtn(tbakLoadDFMFromFile, FCommandLine.IsOnlyOneForm);
+
+    LPage.Hint := AHint;//dfm 파일 이름을 sheet의 hint에 저장 함
+  finally
+  end;
+end;
+
+procedure TWatchF2.LoadDesignFormFromZipFile(const AZipFileName,
+  ADfmFileName: string);
+var
+  LZip: TZipFile;
+  LDfcStream, LDfmStream: TStringStream;
+begin
+  if not FileExists(AZipFileName) then
+    exit;
+
+  LZip := TZipFile.Create;
+  try
+    LZip.Open(AZipFileName, zmRead);
+    LDfmStream := ExtractFile2StreamByNameFromOpenedZipFile(LZip, ADfmFileName);
+    try
+      LoadDesignFormFromStream(LDfmStream, ADfmFileName);
+    finally
+      LDfmStream.Free;
+    end;
+
+    LZip.Close;
+  finally
+    LZip.Free;
+  end;
+end;
+
+procedure TWatchF2.LoadDesignFormAllFromZipFile(const AZipFileName: string;
+  const AOnlyOneFormOpen: Boolean);
+var
+  LZip: TZipFile;
+  LZipIndex, i: integer;
+  LZipListName, LDfcFileName, LDFName, LStr, LFilePath: string;
+  LDfcStream, LDfmStream: TStringStream;
+  LIsLoadFrom_dfc: boolean;
+begin
+  if not FileExists(AZipFileName) then
+    exit;
+
+  LDfcFileName := AZipFileName;
+  LIsLoadFrom_dfc := Make_Dfc_FileName(LDfcFileName);
+
+  LZip := TZipFile.Create;
+  try
+    LZip.Open(AZipFileName, zmRead);
+
+    LDfcStream := ExtractFile2StreamByNameFromOpenedZipFile(LZip, LDfcFileName);
+
+    if not Assigned(LDfcStream) then
+      exit;
+
+    FDesignFormConfig.DesignFormConfigCollect.Clear;
+    FDesignFormConfig.LoadFromStream(TStream(LDfcStream),'',False);
+    LFilePath := ExtractFilePath(LDfcFileName);
+
+    try
+      for i := 0 to FDesignFormConfig.DesignFormConfigCollect.Count - 1 do
+      begin
+        //DesignFormFileName에는 상대경로 + FileName이 저장됨
+        LDFName := FDesignFormConfig.DesignFormConfigCollect.Items[i].DesignFormFileName;
+        LDFName := ExtractFileName(LDFName);
+
+//        if (not LIsLoadFrom_dfc) and (ExtractFileName(LDfcFileName) <> LDFName)then
+//          continue;
+
+        LStr := FDesignFormConfig.DesignFormConfigCollect.Items[i].DesignFormCaption;
+
+        if LStr = '' then
+          LStr := 'DefaultName';
+
+//        if LIsLoadFrom_dfc then
+//        begin
+          AddDesignPanel2PageControl(LStr);
+//        end;
+        try
+          LDfmStream := ExtractFile2StreamByNameFromOpenedZipFile(LZip, LDFName);
+          LoadDesignFormFromStream(LDfmStream, LDFName);
+        finally
+          LDfmStream.Free;
+        end;
+
+        //첫번째 DFM 파일만 Load함
+        if AOnlyOneFormOpen and (i = 0) then
+        begin
+          //팝업 메뉴에서 "Load One Form From Watch List"를 선택하면
+          //현재 Page에서 TpjhTJvTransparentButton2 컴포넌트를 찾아서
+          //pjhBtnActionKind 필드를 tbakLoadDFMFromFile로 변경함
+          SetpjhBtnActionKind4TransparentBtn(tbakLoadDFMFromFile, True);
+          Break;
+        end;
+      end;//for
+    finally
+      LDfcStream.Free;
+    end;
+
+    LZip.Close;
+  finally
+    LZip.Free;
+  end;
 end;
 
 procedure TWatchF2.LoadDesignFormFromDFCByPageIndex(APageIndex: integer);
@@ -1743,9 +1848,10 @@ begin
       LPanel := TpjhPanel(GetDesignControl(LPage));
 
       try
-        LoadDesignFormFromDFM(LFilePath+LDFMName);
-//        LoadFromDFM(LDFMName, TWinControl(LPanel), ReadComponentsProc);
-//        SetpjhBtnActionKind4TransparentBtn(tbakLoadDFMFromFile, True, j);
+        if FCommandLine.IsZip then
+          LoadDesignFormFromZipFile(FWG.FCurrentWatchListFileName, LDFMName)
+        else
+          LoadDesignFormFromDFM(LFilePath+LDFMName);
       except
 
       end;
@@ -1903,7 +2009,6 @@ end;
 
 procedure TWatchF2.LoadOneFormFromWatchList1Click(Sender: TObject);
 begin
-//  SetCurrentDir(FFilePath);
   JvOpenDialog1.InitialDir := RelToAbs(WatchListPath, FFilePath);
   JvOpenDialog1.Filter := '*.*';
 
@@ -1918,10 +2023,26 @@ begin
   end;
 end;
 
-//파일의 첫줄은 반드시 헤더가 있어야 함.
+procedure TWatchF2.LoadOneFormFromZipFile1Click(Sender: TObject);
+begin
+  JvOpenDialog1.InitialDir := RelToAbs(WatchListPath, FFilePath);
+  JvOpenDialog1.Filter := '*.*';
+
+  if JvOpenDialog1.Execute then
+  begin
+    if jvOpenDialog1.FileName <> '' then
+    begin
+      WatchListFileName := ExtractFileName(jvOpenDialog1.FileName);
+      FCommandLine.IsOnlyOneForm := True;
+      FCommandLine.IsZip := True;
+      GetEngineParameterFromSavedWatchListFile(jvOpenDialog1.FileName, False, FCommandLine.IsOnlyOneForm, FCommandLine.IsZip);
+    end;
+  end;
+end;
+
 procedure TWatchF2.LoadTrendDataFromFile(AFileName: string;
   AIsFirstFile: Boolean; AIsUseWatchList: Boolean);
-var
+var//파일의 첫줄은 반드시 헤더가 있어야 함.
   LStr, LIndexList: TStringList;
   LStr2,LStr3,LStr4: string;
   tmpdouble2, tmpdouble: double;
@@ -2120,7 +2241,8 @@ begin
     begin
       WatchListFileName := ExtractFileName(jvOpenDialog1.FileName);
       FCommandLine.IsOnlyOneForm := False;
-      GetEngineParameterFromSavedWatchListFile(jvOpenDialog1.FileName, False, FCommandLine.IsOnlyOneForm, True);
+      FCommandLine.IsZip := True;
+      GetEngineParameterFromSavedWatchListFile(jvOpenDialog1.FileName, False, FCommandLine.IsOnlyOneForm, FCommandLine.IsZip);
     end;
   end;
 end;
@@ -2299,8 +2421,13 @@ begin
         FDesignFormConfig.BorderStyle := ord(BorderStyle);
         FDesignFormConfig.TabHeight := PageControl1.TabSettings.Height;
 
-        FDesignFormConfig.SaveToZipFile(AFileName, AFileName + DESIGNFORM_FILENAME);
-//        FDesignFormConfig.SaveToFile(AFileName + DESIGNFORM_FILENAME);
+        if AIsZipFile then
+        begin
+          if FDesignFormConfig.SaveToZipFile(AFileName, AFileName + DESIGNFORM_FILENAME) = -1 then
+            ShowMessage('Faile save to zip file : ' + AFileName)
+        end
+        else
+          FDesignFormConfig.SaveToFile(AFileName + DESIGNFORM_FILENAME);
       end;
     finally
       FreeAndNil(LBplFileNameList);
@@ -3297,7 +3424,7 @@ begin
       if ShowModal = mrOK then
       begin
         SaveConfigDataForm2Xml(EngMonitorConfigF);
-        LoadConfigDataXml2Var;
+        LoadConfigData2Var;
         //FExhTempAvg_A.Size := FConfigOption.AverageSize;
         ApplyAvgSize;
         ApplyOption;
@@ -7777,6 +7904,38 @@ begin
   end;
 end;
 
+function TWatchF2.Make_Dfc_FileName(var AFileName: string): boolean;
+var
+  LStr: string;
+  i: integer;
+begin
+  //AFileName의 끝부분에  _dfc가 없으면  추가함
+  LStr := Copy(AFileName, Length(AFileName) - 3, 4);
+  Result := Pos(DESIGNFORM_FILENAME, LStr) > 0;
+
+  if not Result then
+  begin
+    i := PosRev('_', AFileName);
+
+    if i > 0 then
+      AFileName := Copy(AFileName, 1, i-1);
+
+    AFileName := AFileName + DESIGNFORM_FILENAME;
+  end;
+
+  if not FileExists(AFileName) then
+  begin
+    //ShowMessage(AFileName + ' file not found.');
+    exit;
+  end;
+
+//  LOriginalFilePath := GetCurrentDir();
+  AFileName := RelToAbs(AFileName, FFilePath);
+
+//  if LFilePath <> '' then
+//    SetCurrentDir(LFilePath);
+end;
+
 procedure TWatchF2.MaxValue1Click(Sender: TObject);
 begin
   FIsMaxValueGraph := True;
@@ -8115,6 +8274,12 @@ begin
 
     FXYDataMap.putPair([LStr, LArray]);
   end;
+end;
+
+procedure TWatchF2.AddDesignPanel2PageControl(const ACaption: string);
+begin
+  PageControl1.ActivePageIndex := PageControl1.AddAdvPage(ACaption);
+  PageControl1InsertPage(Self, PageControl1.ActivePage); //Design Panel 생성
 end;
 
 procedure TWatchF2.AddJsonCompValue4Simulate(ARecToPass: TRecToPass2; var ADestJson: string);
@@ -9243,11 +9408,8 @@ begin
     end;
 
     //Form을 Refresh할때 필요함
-    //아래 루틴을 GetEngineParameterFromSavedWatchListFile 함수 call 위치로 옮김
-//      FCommandLine.IsOnlyOneForm := AOnlyOneFormOpen;
-
     if AIsZipFile then
-      LoadDesignFormFromZipFile(AFileName+DESIGNFORM_FILENAME)
+      LoadDesignFormAllFromZipFile(AFileName, AOnlyOneFormOpen)
     else
       LoadDesignForm(AFileName+DESIGNFORM_FILENAME, AOnlyOneFormOpen);
 

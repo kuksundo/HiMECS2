@@ -511,7 +511,7 @@ object WatchF2: TWatchF2
         end
         inherited ImageList1: TImageList
           Bitmap = {
-            494C010106000900300410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+            494C0101060009003C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
             0000000000003600000028000000400000002000000001002000000000000020
             0000000000000000000000000000000000000000000000000000000000000000
             000040B0C00040C0C00030B0C00030B0C00030B0C00030B0B00030A8B00030A8
@@ -2348,6 +2348,10 @@ object WatchF2: TWatchF2
       Caption = 'Load Watch List From Zip File'
       OnClick = LoadWatchListFromZipFile1Click
     end
+    object LoadOneFormFromZipFile1: TMenuItem
+      Caption = 'Load One Form From Zip File'
+      OnClick = LoadOneFormFromZipFile1Click
+    end
     object N27: TMenuItem
       Caption = '-'
     end
@@ -2391,6 +2395,10 @@ object WatchF2: TWatchF2
     end
     object N20: TMenuItem
       Caption = '-'
+    end
+    object ResetAvgValue1: TMenuItem
+      Caption = 'Reset Avg Value'
+      OnClick = ResetAvgValue1Click
     end
     object LoadMultiStatValuesfromDB1: TMenuItem
       Caption = 'Load Multi-State from Simulate DB'
@@ -2456,10 +2464,6 @@ object WatchF2: TWatchF2
     object UnCheckedAvgAllSelected1: TMenuItem
       Caption = 'UnChecked Avg All Selected'
       OnClick = UnCheckedAvgAllSelected1Click
-    end
-    object ResetAvgValue1: TMenuItem
-      Caption = 'Reset Avg Value'
-      OnClick = ResetAvgValue1Click
     end
     object N16: TMenuItem
       Caption = '-'
