@@ -76,7 +76,7 @@ type
     [CLPLongName('IsZip', 'IsFromZipFile'), CLPDescription('Load form from zip file')]
     property IsZip: boolean read FIsZip write FIsZip;
 
-    [CLPLongName('smn'), CLPDescription('gpShared Memory Name')]
+    [CLPLongName('smn'), CLPDescription('gpShared Memory Name'), CLPDefault('')]
     property SharedMMName: string read FSharedMMName write FSharedMMName;
   end;
 
