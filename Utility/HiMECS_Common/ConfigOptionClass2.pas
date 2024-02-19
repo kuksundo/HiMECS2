@@ -24,7 +24,8 @@ type
 
     FConfigFileName,
     FWatchListFileName,
-    FDummyFormHandle
+    FDummyFormHandle,
+    FSharedMMName //Auto 실행시 gpShared MM Name을 지정함
     : string;
     FAutoExecute,
     FAlarmMode,
@@ -74,6 +75,9 @@ type
 
     [CLPLongName('IsZip', 'IsFromZipFile'), CLPDescription('Load form from zip file')]
     property IsZip: boolean read FIsZip write FIsZip;
+
+    [CLPLongName('smn'), CLPDescription('gpShared Memory Name')]
+    property SharedMMName: string read FSharedMMName write FSharedMMName;
   end;
 
   TConfigOptionCollect = class;
