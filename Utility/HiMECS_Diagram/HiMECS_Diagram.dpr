@@ -60,14 +60,14 @@ begin
   CreateGlobalCEFApp;
 
   if GlobalCEFApp.StartMainProcess then
-    begin
-      //ReportMemoryLeaksOnShutdown := True;
+  begin
+    ReportMemoryLeaksOnShutdown := DebugHook <> 0;
 
-      Application.Initialize;
-      Application.MainFormOnTaskbar := True;
-      AApplication.CreateForm(TDOMVisitorFrm, DOMVisitorFrm);
-  pplication.Run;
-    end;
+    Application.Initialize;
+    Application.MainFormOnTaskbar := True;
+    Application.CreateForm(TDOMVisitorFrm, DOMVisitorFrm);
+    Application.Run;
+  end;
 
   // This is not really necessary to fix the bug #89 but if you free GlobalCEFApp in a different unit
   // then you can call 'FreeAndNil' without adding SysUtils to this DPR.
