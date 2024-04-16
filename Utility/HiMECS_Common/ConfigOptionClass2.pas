@@ -25,7 +25,8 @@ type
     FConfigFileName,
     FWatchListFileName,
     FDummyFormHandle,
-    FSharedMMName //Auto 실행시 gpShared MM Name을 지정함
+    FSharedMMName, //Auto 실행시 gpShared MM Name을 지정함
+    FCaption //WatchForm Caption
     : string;
     FAutoExecute,
     FAlarmMode,
@@ -78,6 +79,8 @@ type
 
     [CLPLongName('smn'), CLPDescription('gpShared Memory Name'), CLPDefault('')]
     property SharedMMName: string read FSharedMMName write FSharedMMName;
+    [CLPLongName('caption'), CLPDescription('Form Caption'), CLPDefault('')]
+    property FormCaption: string read FCaption write FCaption;
   end;
 
   TConfigOptionCollect = class;
