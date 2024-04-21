@@ -173,7 +173,7 @@ object frmBPLListeditor: TfrmBPLListeditor
     TabOrder = 3
     object Button4: TButton
       Left = 12
-      Top = 8
+      Top = 3
       Width = 85
       Height = 33
       Caption = 'XML '#51069#50612#50724#44592
@@ -196,6 +196,24 @@ object frmBPLListeditor: TfrmBPLListeditor
       Height = 17
       Caption = 'Encrypt'
       TabOrder = 2
+    end
+    object Button5: TButton
+      Left = 200
+      Top = 8
+      Width = 86
+      Height = 33
+      Caption = 'Json '#51069#50612#50724#44592
+      TabOrder = 3
+      OnClick = Button5Click
+    end
+    object Button6: TButton
+      Left = 292
+      Top = 3
+      Width = 73
+      Height = 33
+      Caption = 'Json '#51200#51109
+      TabOrder = 4
+      OnClick = Button6Click
     end
   end
   object Panel3: TPanel
@@ -274,8 +292,8 @@ object frmBPLListeditor: TfrmBPLListeditor
     OnPaste = DropSource1Paste
     Images = ImageListMultiFile
     ShowImage = True
-    Left = 264
-    Top = 16
+    Left = 280
+    Top = 224
   end
   object ImageListMultiFile: TImageList
     BkColor = clWhite
@@ -284,7 +302,7 @@ object frmBPLListeditor: TfrmBPLListeditor
     Left = 328
     Top = 56
     Bitmap = {
-      494C010101000400180020002000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
+      494C0101010004001C0020002000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       000000000000000000000000000000000000FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
@@ -821,8 +839,8 @@ object frmBPLListeditor: TfrmBPLListeditor
   end
   object PopupMenu1: TPopupMenu
     OnPopup = PopupMenu1Popup
-    Left = 304
-    Top = 16
+    Left = 288
+    Top = 128
     object MenuCopy: TMenuItem
       Caption = 'Delete'
       OnClick = MenuCopyClick
@@ -837,27 +855,27 @@ object frmBPLListeditor: TfrmBPLListeditor
   object DataFormatAdapterFile: TDataFormatAdapter
     DragDropComponent = DropTextTarget1
     DataFormatName = 'TFileDataFormat'
-    Left = 180
-    Top = 16
+    Left = 228
+    Top = 288
   end
   object DropTextTarget1: TDropTextTarget
     DragTypes = [dtCopy, dtMove, dtLink]
     OnDrop = DropTextTarget1Drop
     WinTarget = 0
     MultiTarget = True
-    Left = 224
-    Top = 16
+    Left = 288
+    Top = 280
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = 'himecs'
     Filter = '*.form'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
-    Left = 344
-    Top = 16
+    Left = 320
+    Top = 160
   end
   object OpenDialog1: TOpenDialog
     Filter = '*.form|*.form'
-    Left = 384
-    Top = 16
+    Left = 240
+    Top = 96
   end
 end

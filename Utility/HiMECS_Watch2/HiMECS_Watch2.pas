@@ -119,8 +119,8 @@ uses
 {$ENDIF}
 
 {$IFDEF USE_PACKAGE}
-  , pjhFlowChartCompnents
 {$ELSE}
+  , pjhFlowChartCompnents
 {$ENDIF}
   ,pjhDesignCompIntf, UnitFrameWatchGrid2, UnitFrameIPCMonitorAll2, CalcExpress,
   iAnalogDisplay
@@ -684,6 +684,8 @@ type
 
     procedure FindItemByTagName(const ATagName: string; AIgnoreCase : boolean=true);
     procedure MakeModbusCommandFromGrid(AType: TOfficeFileType);
+
+    procedure SetFormsPath2EnvirontalVar();
   public
     //FOnExit: Boolean; //프로그램 종료시 True
     FStartTrend: Boolean;
@@ -951,7 +953,8 @@ uses CommonUtil, UnitAxisSelect, UnitCopyWatchList2, frmMainInterface, FrmInputE
   UnitVesselData2, UnitBase64Util2, UnitRevFlowInterface,
   UnitSimulateParamCommandLineOption2, UnitRttiUtil2, UnitDFMUtil, XSuperObject,
   FrmStringsEdit, UnitSimulateCommonData, sndkey32, UnitTransparentBtnInterface,
-  JHP.Util.Bit, UnitJHCustomComponent, pjhBalloonCompIntf, UnitZipFileUtil;
+  JHP.Util.Bit, UnitJHCustomComponent, pjhBalloonCompIntf, UnitZipFileUtil,
+  UnitRegistryUtil;
 
 {$R *.dfm}
 
@@ -1177,6 +1180,9 @@ begin
   InitJsonCompValue4Simulate();
   FTopologicalSortItemList := TStringList.Create;
   FPipeFlowTreeList := TStringList.Create;
+
+  //..\Forms\ 경로를 환경변수 Path에 추가 함 : LoadPackage() 실행시 필요함
+  SetFormsPath2EnvirontalVar();
 end;
 
 procedure TWatchF2.AssignPanel2Designer(AForm: TForm);
@@ -1968,10 +1974,18 @@ end;
 function TWatchF2.LoadNCreateOrShowDM: Boolean;
 var
   IbMI : IbplMainInterface;
+  LStr: string;
 begin
+  SetCurrentDir('..\Forms\');
+
+  LStr := '..\Forms\DesignManagerDock2.bpl';
+
   if FPackageModules[0] = 0 then
 {$IFDEF USE_PACKAGE}
-    FPackageModules[0] := LoadPackage('..\Forms\DesignManagerDock2.bpl');
+    if FileExists(LStr) then
+      FPackageModules[0] := LoadPackage(LStr)
+    else
+      ShowMessage('File Not Found : "' + LStr + '"');
 {$ELSE}
     FPackageModules[0] := 1;
 {$ENDIF};
@@ -3421,6 +3435,7 @@ begin
   begin
     try
       LoadConfigDataVar2Form(EngMonitorConfigF);
+
       if ShowModal = mrOK then
       begin
         SaveConfigDataForm2Xml(EngMonitorConfigF);
@@ -3509,6 +3524,18 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TWatchF2.SetFormsPath2EnvirontalVar;
+var
+  LStr: string;
+begin
+  LStr := GetGlobalEnvironment('PATH');
+
+  if LStr <> '' then
+    LStr := LStr + ';';
+    
+  SetGlobalEnvironment('PATH', LStr + FFilePath + 'SystemBpl');
 end;
 
 procedure TWatchF2.SetMatrix;

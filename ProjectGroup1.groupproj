@@ -12,6 +12,15 @@
         <Projects Include="..\..\NoGitHub\RegCodeManager2\RegCodeServer2.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Utility\HiMECS_Watch2\HiMECSWatch2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Utility\HiMECS_Watch2\HiMECSWatch2_NoBpl.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\VisualComm2\Component\DesignManagerDock2.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +56,41 @@
     <Target Name="RegCodeServer2:Make">
         <MSBuild Projects="..\..\NoGitHub\RegCodeManager2\RegCodeServer2.dproj" Targets="Make"/>
     </Target>
+    <Target Name="HiMECSWatch2">
+        <MSBuild Projects="Utility\HiMECS_Watch2\HiMECSWatch2.dproj"/>
+    </Target>
+    <Target Name="HiMECSWatch2:Clean">
+        <MSBuild Projects="Utility\HiMECS_Watch2\HiMECSWatch2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="HiMECSWatch2:Make">
+        <MSBuild Projects="Utility\HiMECS_Watch2\HiMECSWatch2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="HiMECSWatch2_NoBpl">
+        <MSBuild Projects="Utility\HiMECS_Watch2\HiMECSWatch2_NoBpl.dproj"/>
+    </Target>
+    <Target Name="HiMECSWatch2_NoBpl:Clean">
+        <MSBuild Projects="Utility\HiMECS_Watch2\HiMECSWatch2_NoBpl.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="HiMECSWatch2_NoBpl:Make">
+        <MSBuild Projects="Utility\HiMECS_Watch2\HiMECSWatch2_NoBpl.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DesignManagerDock2">
+        <MSBuild Projects="..\VisualComm2\Component\DesignManagerDock2.dproj"/>
+    </Target>
+    <Target Name="DesignManagerDock2:Clean">
+        <MSBuild Projects="..\VisualComm2\Component\DesignManagerDock2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DesignManagerDock2:Make">
+        <MSBuild Projects="..\VisualComm2\Component\DesignManagerDock2.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="CertManageR2;HiMECS2;RegCodeServer2"/>
+        <CallTarget Targets="CertManageR2;HiMECS2;RegCodeServer2;HiMECSWatch2;HiMECSWatch2_NoBpl;DesignManagerDock2"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="CertManageR2:Clean;HiMECS2:Clean;RegCodeServer2:Clean"/>
+        <CallTarget Targets="CertManageR2:Clean;HiMECS2:Clean;RegCodeServer2:Clean;HiMECSWatch2:Clean;HiMECSWatch2_NoBpl:Clean;DesignManagerDock2:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="CertManageR2:Make;HiMECS2:Make;RegCodeServer2:Make"/>
+        <CallTarget Targets="CertManageR2:Make;HiMECS2:Make;RegCodeServer2:Make;HiMECSWatch2:Make;HiMECSWatch2_NoBpl:Make;DesignManagerDock2:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

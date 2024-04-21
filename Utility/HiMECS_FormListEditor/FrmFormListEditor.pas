@@ -56,6 +56,8 @@ type
     Button2: TButton;
     Splitter2: TSplitter;
     EncryptCB: TCheckBox;
+    Button5: TButton;
+    Button6: TButton;
     procedure ListView1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure FormCreate(Sender: TObject);
@@ -78,6 +80,8 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure NextGrid1Change(Sender: TObject; ACol, ARow: Integer);
+    procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
   private
     FTargetPath: string;
     FIsEXEfile: boolean;
@@ -93,6 +97,9 @@ type
             AFolder: TShellFolder; var CanAdd: Boolean);
     procedure ChangeClick(Sender: TObject);
   public
+    procedure LoadHiMECSConfig2Grid();
+    procedure SaveHiMECSConfigFromGrid();
+
     property TargetPath: string read FTargetPath;
     property SourcePath: string read GetSourcePath;
     property IsEXEfile: boolean read FIsEXEfile;
@@ -191,6 +198,22 @@ begin
   end;
 
   ShellTreeView1.Path := ExtractFilePath(Application.ExeName);
+end;
+
+procedure TfrmBPLListeditor.LoadHiMECSConfig2Grid;
+var
+  i: integer;
+begin
+  NextGrid1.ClearRows;
+
+  for i := 0 to FHiMECSConfig.FPackageCollect.Count - 1 do
+  begin
+    NextGrid1.AddRow;
+    NextGrid1.Cell[0, i].AsBoolean := True;
+    NextGrid1.Cell[1, i].AsString := FHiMECSConfig.FPackageCollect.Items[i].PackageName;
+    NextGrid1.Cell[2, i].AsString := FHiMECSConfig.FPackageCollect.Items[i].CreateFuncName;
+    NextGrid1.Cell[3, i].AsInteger := FHiMECSConfig.FPackageCollect.Items[i].AllowLevel;
+  end;
 end;
 
 procedure TfrmBPLListeditor.MenuCopyClick(Sender: TObject);
@@ -352,6 +375,27 @@ begin
   //MenuPaste.Enabled := DropFileTarget1.CanPasteFromClipboard;
 end;
 
+procedure TfrmBPLListeditor.SaveHiMECSConfigFromGrid;
+var
+  i: integer;
+begin
+  for i := 0 to NextGrid1.RowCount - 1 do
+  begin
+    if NextGrid1.CellByName['Select',i].AsBoolean then
+    begin
+      with FHiMECSConfig.FPackageCollect.Add do
+      begin
+        AllowLevel := NextGrid1.Cell[3,i].AsInteger;
+        PackageName := NextGrid1.Cell[1,i].AsString;
+        if NextGrid1.Cell[2,i].AsString = '' then
+          CreateFuncName := 'Create_' +  Copy(PackageName,1,pos('.',PackageName)-1)
+        else
+          CreateFuncName := NextGrid1.Cell[2,i].AsString;
+      end;
+    end;
+  end;
+end;
+
 //--------------------------
 // SOURCE events...
 //--------------------------
@@ -411,7 +455,6 @@ end;
 
 procedure TfrmBPLListeditor.Button3Click(Sender: TObject);
 var
-  i: integer;
   LStr: string;
 begin
   if SaveDialog1.Execute then
@@ -420,21 +463,7 @@ begin
     begin
       FHiMECSConfig.FPackageCollect.Clear;
 
-      for i := 0 to NextGrid1.RowCount - 1 do
-      begin
-        if NextGrid1.CellByName['Select',i].AsBoolean then
-        begin
-          with FHiMECSConfig.FPackageCollect.Add do
-          begin
-            AllowLevel := NextGrid1.Cell[3,i].AsInteger;
-            PackageName := NextGrid1.Cell[1,i].AsString;
-            if NextGrid1.Cell[2,i].AsString = '' then
-              CreateFuncName := 'Create_' +  Copy(PackageName,1,pos('.',PackageName)-1)
-            else
-              CreateFuncName := NextGrid1.Cell[2,i].AsString;
-          end;
-        end;
-      end;
+      SaveHimecsConfigFromGrid();
 
       LStr := ExtractFileName(SaveDialog1.FileName);
       FHiMECSConfig.SaveToFile(SaveDialog1.FileName,LStr, EncryptCB.Checked);
@@ -445,7 +474,6 @@ end;
 
 procedure TfrmBPLListeditor.Button4Click(Sender: TObject);
 var
-  i: integer;
   LStr: string;
 begin
   if OpenDialog1.Execute then
@@ -455,19 +483,51 @@ begin
       FHiMECSConfig.FPackageCollect.Clear;
       LStr := ExtractFileName(OpenDialog1.FileName);
       FHiMECSConfig.LoadFromFile(OpenDialog1.FileName,LStr,EncryptCB.Checked);
-      NextGrid1.ClearRows;
-      for i := 0 to FHiMECSConfig.FPackageCollect.Count - 1 do
-      begin
-        NextGrid1.AddRow;
-        NextGrid1.Cell[0, i].AsBoolean := True;
-        NextGrid1.Cell[1, i].AsString := FHiMECSConfig.FPackageCollect.Items[i].PackageName;
-        NextGrid1.Cell[2, i].AsString := FHiMECSConfig.FPackageCollect.Items[i].CreateFuncName;
-        NextGrid1.Cell[3, i].AsInteger := FHiMECSConfig.FPackageCollect.Items[i].AllowLevel;
-      end;
+
+      LoadHiMECSConfig2Grid();
 
       if FHiMECSConfig.FPackageCollect.Count > 0 then
         FItemChanged := False;
     end;
+  end;
+end;
+
+procedure TfrmBPLListeditor.Button5Click(Sender: TObject);
+var
+  LStr: string;
+begin
+  if OpenDialog1.Execute then
+  begin
+    if OpenDialog1.FileName <> '' then
+    begin
+      FHiMECSConfig.FPackageCollect.Clear;
+      LStr := ExtractFileName(OpenDialog1.FileName);
+      FHiMECSConfig.LoadFromJSONFile2(OpenDialog1.FileName,LStr,EncryptCB.Checked);
+
+      LoadHiMECSConfig2Grid();
+
+      if FHiMECSConfig.FPackageCollect.Count > 0 then
+        FItemChanged := False;
+    end;
+  end;
+end;
+
+procedure TfrmBPLListeditor.Button6Click(Sender: TObject);
+var
+  LStr: string;
+begin
+  if SaveDialog1.Execute then
+  begin
+    if SaveDialog1.FileName <> '' then
+    begin
+      FHiMECSConfig.FPackageCollect.Clear;
+
+      SaveHimecsConfigFromGrid();
+
+      LStr := ExtractFileName(SaveDialog1.FileName);
+      FHiMECSConfig.SaveToJSONFile2(SaveDialog1.FileName,LStr, EncryptCB.Checked);
+      FItemChanged := False;
+    end
   end;
 end;
 
