@@ -1436,6 +1436,11 @@ begin
   end;
 end;
 
+procedure TModbusComF.MakeDataASCIIWago(RecvData: string);
+begin
+
+end;
+
 //수신한 데이타를  공유메모리에 전송하기 위해 코디
 //ADataMode: CM_DATA_READ, CM_CONFIG_READ, CM_DATA_WRITE, CM_CONFIG_WRITE
 procedure TModbusComF.MakeDataRTU(ASlaveNo, ADataMode: integer);
