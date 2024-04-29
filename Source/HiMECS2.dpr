@@ -89,6 +89,7 @@ begin
   //system.ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
