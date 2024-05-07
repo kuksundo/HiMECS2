@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.295,=C:\Users\jhp\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024-05-04 09:09:25.904,=C:\Users\jhp\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024-05-04 09:10:49.706,E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\Proxy\FrmProxyMain.dfm=C:\Users\jhp\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2024-05-04 09:10:49.706,E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\Proxy\FrmProxyMain.pas=C:\Users\jhp\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024-05-04 09:10:56.172,E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\Proxy\ProxyServer.dproj=C:\Users\jhp\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2024-05-04 09:11:47.274,=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\Proxy\Unit1.pas</Transaction>
+    <Transaction>2024-05-04 09:12:08.241,E:\pjh\Dev\Lang\Delphi\Common\UnitIndyUtil.pas=E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\Proxy\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>
