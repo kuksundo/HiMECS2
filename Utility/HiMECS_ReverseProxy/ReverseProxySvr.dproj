@@ -96,6 +96,8 @@
         </DCCReference>
         <DCCReference Include="UProxyType.pas"/>
         <DCCReference Include="UProxyClass.pas"/>
+        <DCCReference Include="UProxyWorkerThrd.pas"/>
+        <DCCReference Include="UProyConfig.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

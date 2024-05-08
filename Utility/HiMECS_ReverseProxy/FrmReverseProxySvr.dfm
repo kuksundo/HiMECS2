@@ -11,6 +11,8 @@ object ReverseProxyF: TReverseProxyF
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
@@ -28,9 +30,6 @@ object ReverseProxyF: TReverseProxyF
     Height = 201
     Align = alTop
     TabOrder = 0
-    ExplicitLeft = 48
-    ExplicitTop = 136
-    ExplicitWidth = 457
   end
   object Panel1: TPanel
     Left = 0
@@ -47,8 +46,6 @@ object ReverseProxyF: TReverseProxyF
     Height = 226
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 105
-    ExplicitHeight = 201
   end
   object IdMappedPortTCP1: TIdMappedPortTCP
     Bindings = <>
