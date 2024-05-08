@@ -7,7 +7,8 @@ uses
   UProxyType in 'UProxyType.pas',
   UProxyClass in 'UProxyClass.pas',
   UProxyWorkerThrd in 'UProxyWorkerThrd.pas',
-  UProyConfig in 'UProyConfig.pas';
+  UProyConfig in 'UProyConfig.pas',
+  FrmProxyConfig in 'FrmProxyConfig.pas' {TraderConfigF};
 
 {$R *.res}
 
@@ -16,5 +17,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TReverseProxyF, ReverseProxyF);
   Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TTraderConfigF, TraderConfigF);
   Application.Run;
 end.

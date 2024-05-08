@@ -7,7 +7,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
   IdMappedPortTCP, IdContext, IdBaseComponent, IdComponent, IdCustomTCPServer,
   OtlComm, OtlCommon,
-  UProxyWorkerThrd, UnitWorker4OmniMsgQ
+  UProxyWorkerThrd, UnitWorker4OmniMsgQ, UProxyType
   ;
 
 type
@@ -26,6 +26,7 @@ type
     FSendMsgQueue   : TOmniMessageQueue;
 
     FReverseProxyWorker: TReverseProxyWorker;
+    FProxyIPRec: TProxyIPRec;
 
     procedure StartWorker;
     procedure StopWorker;
@@ -69,7 +70,9 @@ var
 begin
   if FResponseQueue.TryDequeue(LMsg) then
   begin
-
+    case TProxyMsgKind(LMsg.MsgID) of
+      pmkLog: Log(LMsg.MsgData.AsString);
+    end;
   end;
 end;
 
@@ -79,7 +82,8 @@ begin
   FResponseQueue := TOmniMessageQueue.Create(1000, false);
   FSendMsgQueue := TOmniMessageQueue.Create(1000);
 
-  FReverseProxyWorker := TReverseProxyWorker.Create(FCommandQueue, FResponseQueue, FSendMsgQueue);
+  FReverseProxyWorker := TReverseProxyWorker.Create(FCommandQueue, FResponseQueue,
+    FSendMsgQueue, FProxyIPRec);
 end;
 
 procedure TReverseProxyF.StopWorker;
