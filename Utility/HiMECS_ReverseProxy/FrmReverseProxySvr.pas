@@ -17,9 +17,9 @@ type
     Splitter1: TSplitter;
     Panel1: TPanel;
     Memo2: TMemo;
-    procedure IdMappedPortTCP1Execute(AContext: TIdContext);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure IdMappedPortTCP1Execute(AContext: TIdContext);
   private
     FCommandQueue   : TOmniMessageQueue;
     FResponseQueue  : TOmniMessageQueue;
