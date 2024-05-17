@@ -3528,14 +3528,25 @@ end;
 
 procedure TWatchF2.SetFormsPath2EnvirontalVar;
 var
-  LStr: string;
+  LStr, LPath: string;
 begin
   LStr := GetGlobalEnvironment('PATH');
 
   if LStr <> '' then
     LStr := LStr + ';';
-    
-  SetGlobalEnvironment('PATH', LStr + FFilePath + 'SystemBpl');
+
+{$IFDEF USE_PACKAGE}
+  LPath := FFilePath + 'SystemBpl';
+
+  if Pos(LPath, LStr) = 0 then
+    SetGlobalEnvironment('PATH', LStr + LPath);
+
+//{$ELSEIF DEFINED(NOUSE_PACKAGE)}
+  LPath := ExtractFilePath(ExcludeTrailingPathDelimiter(FFilePath)) + 'Forms';
+
+  if Pos(LPath, LStr) = 0 then
+    SetGlobalEnvironment('PATH', LStr + LPath);
+{$ENDIF}
 end;
 
 procedure TWatchF2.SetMatrix;
