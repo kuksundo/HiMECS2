@@ -1,0 +1,176 @@
+
+<TDesignFormConfig>
+	<DesignFormConfigCollect>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__5</DesignFormFileName>
+			<DesignFormCaption>Start</DesignFormCaption>
+			<DesignFormIndex>5</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__6</DesignFormFileName>
+			<DesignFormCaption>Setting</DesignFormCaption>
+			<DesignFormIndex>6</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__7</DesignFormFileName>
+			<DesignFormCaption>Overview</DesignFormCaption>
+			<DesignFormIndex>7</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__8</DesignFormFileName>
+			<DesignFormCaption>Alarm</DesignFormCaption>
+			<DesignFormIndex>8</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__9</DesignFormFileName>
+			<DesignFormCaption>Log</DesignFormCaption>
+			<DesignFormIndex>9</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__10</DesignFormFileName>
+			<DesignFormCaption>Test Mode-1</DesignFormCaption>
+			<DesignFormIndex>10</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__11</DesignFormFileName>
+			<DesignFormCaption>Test Mode-2</DesignFormCaption>
+			<DesignFormIndex>11</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__12</DesignFormFileName>
+			<DesignFormCaption>Test Mode-3</DesignFormCaption>
+			<DesignFormIndex>12</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__13</DesignFormFileName>
+			<DesignFormCaption>Test Mode-4</DesignFormCaption>
+			<DesignFormIndex>13</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__14</DesignFormFileName>
+			<DesignFormCaption>Overspeed Login</DesignFormCaption>
+			<DesignFormIndex>14</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__15</DesignFormFileName>
+			<DesignFormCaption>Overspeed Test</DesignFormCaption>
+			<DesignFormIndex>15</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__16</DesignFormFileName>
+			<DesignFormCaption>Combustion Air System</DesignFormCaption>
+			<DesignFormIndex>16</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__17</DesignFormFileName>
+			<DesignFormCaption>Fuel Oil System</DesignFormCaption>
+			<DesignFormIndex>17</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__18</DesignFormFileName>
+			<DesignFormCaption>Fuel Gas System</DesignFormCaption>
+			<DesignFormIndex>18</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__19</DesignFormFileName>
+			<DesignFormCaption>CW & LO System</DesignFormCaption>
+			<DesignFormIndex>19</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__20</DesignFormFileName>
+			<DesignFormCaption>Bearing & Liner Temp</DesignFormCaption>
+			<DesignFormIndex>20</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__21</DesignFormFileName>
+			<DesignFormCaption>Knocking</DesignFormCaption>
+			<DesignFormIndex>21</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__22</DesignFormFileName>
+			<DesignFormCaption>Cylinder Press</DesignFormCaption>
+			<DesignFormIndex>22</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__23</DesignFormFileName>
+			<DesignFormCaption>Start Block</DesignFormCaption>
+			<DesignFormIndex>23</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__24</DesignFormFileName>
+			<DesignFormCaption>System Overview-Run Hour</DesignFormCaption>
+			<DesignFormIndex>24</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__25</DesignFormFileName>
+			<DesignFormCaption>System Overview-SW version</DesignFormCaption>
+			<DesignFormIndex>25</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__26</DesignFormFileName>
+			<DesignFormCaption>Abbreviation</DesignFormCaption>
+			<DesignFormIndex>26</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__27</DesignFormFileName>
+			<DesignFormCaption>Coil Information</DesignFormCaption>
+			<DesignFormIndex>27</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__28</DesignFormFileName>
+			<DesignFormCaption>Alarm Definition</DesignFormCaption>
+			<DesignFormIndex>28</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__29</DesignFormFileName>
+			<DesignFormCaption>CRC Check</DesignFormCaption>
+			<DesignFormIndex>29</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__30</DesignFormFileName>
+			<DesignFormCaption>Monitoring</DesignFormCaption>
+			<DesignFormIndex>30</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__31</DesignFormFileName>
+			<DesignFormCaption>Test-ManPurge</DesignFormCaption>
+			<DesignFormIndex>31</DesignFormIndex>
+		</TDesignFormConfigItem>
+		<TDesignFormConfigItem>
+			<BplFileList>pjhDelphiStandardPkg.bpl,pjhJvCompPkg.bpl,pjhIOCompStdPkg.bpl,pjhCyCompPkg.bpl,pjhTMSCompPkg.bpl</BplFileList>
+			<DesignFormFileName>..\WatchList\5HDF-LM\LOP-A2p\5HDF-LM-LOP__32</DesignFormFileName>
+			<DesignFormCaption>Test-Tightness</DesignFormCaption>
+			<DesignFormIndex>32</DesignFormIndex>
+		</TDesignFormConfigItem>
+	</DesignFormConfigCollect>
+	<MainFormCaption>HHI-Scrubber Open Type</MainFormCaption>
+	<BorderStyle>2</BorderStyle>
+	<TabHeight>26</TabHeight>
+</TDesignFormConfig>
