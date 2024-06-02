@@ -1135,6 +1135,9 @@ begin
   FMonitorStart := False;
   FFirst := True;
 
+  //..\Forms\ 경로를 환경변수 Path에 추가 함 : LoadPackage() 실행시 필요함
+  SetFormsPath2EnvirontalVar();
+
 {$IFDEF USE_PACKAGE}
   LoadDesignComponentPackageAll;
 {$ELSE}
@@ -1180,9 +1183,6 @@ begin
   InitJsonCompValue4Simulate();
   FTopologicalSortItemList := TStringList.Create;
   FPipeFlowTreeList := TStringList.Create;
-
-  //..\Forms\ 경로를 환경변수 Path에 추가 함 : LoadPackage() 실행시 필요함
-  SetFormsPath2EnvirontalVar();
 end;
 
 procedure TWatchF2.AssignPanel2Designer(AForm: TForm);
@@ -3528,7 +3528,7 @@ end;
 
 procedure TWatchF2.SetFormsPath2EnvirontalVar;
 var
-  LStr, LPath: string;
+  LStr, LPath, LPath2: string;
 begin
   LStr := GetGlobalEnvironment('PATH');
 
@@ -3541,11 +3541,12 @@ begin
   if Pos(LPath, LStr) = 0 then
     SetGlobalEnvironment('PATH', LStr + LPath);
 
-//{$ELSEIF DEFINED(NOUSE_PACKAGE)}
-  LPath := ExtractFilePath(ExcludeTrailingPathDelimiter(FFilePath)) + 'Forms';
+  LPath2 := FFilePath + 'Forms';
 
-  if Pos(LPath, LStr) = 0 then
-    SetGlobalEnvironment('PATH', LStr + LPath);
+  if Pos(LPath2, LStr) = 0 then
+    SetGlobalEnvironment('PATH', LStr + LPath2);
+
+//  LPath := ExtractFilePath(ExcludeTrailingPathDelimiter(FFilePath)) + 'Forms';
 {$ENDIF}
 end;
 
