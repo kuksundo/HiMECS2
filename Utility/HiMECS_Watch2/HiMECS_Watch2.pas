@@ -122,7 +122,10 @@ uses
 {$ELSE}
   , pjhFlowChartCompnents
 {$ENDIF}
-  ,pjhDesignCompIntf, UnitFrameWatchGrid2, UnitFrameIPCMonitorAll2, CalcExpress,
+  ,pjhDesignCompIntf
+  , UnitFrameWatchGrid2 //E:\pjh\Dev\Lang\Delphi\Project\HiMECS2\Utility\HiMECS_Common
+  , UnitFrameIPCMonitorAll2 //E:\pjh\Dev\Lang\Delphi\NoGitHub\Frame2
+  , CalcExpress,
   iAnalogDisplay
  ;
 
